@@ -2,8 +2,8 @@ div
   h1 Collection
   md-button.md-primary.md-raised(@click="openSearchDialog") Add Card
   md-layout(md-align="center")
-    md-layout(md-flex="30",v-for="(card, key) in cards",:key="key")
-      mtg-card.card(:card="card")
+    md-layout(md-flex="30",v-for="(set, key) in $store.state.collection.sets",:key="key")
+      mtg-set.set(:set="set")
   md-dialog(ref="searchDialog")
     md-dialog-title Search for Cards
     md-dialog-content

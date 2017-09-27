@@ -1,12 +1,14 @@
 import electron from 'electron';
 import Card from '../../classes/card';
 import mtgCard from '../../components/mtg-card/mtg-card.vue';
+import mtgSet from '../../components/mtg-set/mtg-set.vue';
 
 const { ipcRenderer } = electron;
 
 export default {
   components: {
     mtgCard,
+    mtgSet,
   },
   data() {
     return {
@@ -16,11 +18,6 @@ export default {
       fromCache: false,
       selected: new Card(),
     };
-  },
-  computed: {
-    cards() {
-      return this.$store.state.collection.cards;
-    },
   },
   methods: {
     openSearchDialog() {

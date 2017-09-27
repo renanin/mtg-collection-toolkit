@@ -1,0 +1,8 @@
+md-card
+  md-card-header
+    div.md-title {{set.name}}
+    div.md-subhead {{set.code}} - {{set.cardCount()}} cards
+  md-card-content
+    md-progress(:md-progress="complete")
+  md-card-actions
+    md-button.md-primary(@click.native="openSet") View Set
