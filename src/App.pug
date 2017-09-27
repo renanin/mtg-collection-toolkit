@@ -1,0 +1,12 @@
+div
+  md-toolbar
+    router-link.md-title(tag="h2",to="/",style="flex:1") MTG Collection Toolkit
+    router-link(tag="md-button",to="collection") Collection
+    router-link(tag="md-button",to="trades") Trades
+    md-menu
+      md-button(md-menu-trigger) Import
+      md-menu-content
+        md-menu-item From CSV
+        md-menu-item From Collection
+  div.page
+    router-view

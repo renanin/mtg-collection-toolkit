@@ -1,0 +1,38 @@
+div
+  h1 Collection
+  md-button.md-primary.md-raised(@click="openSearchDialog") Add Card
+  md-layout(md-align="center")
+    md-layout(md-flex="30",v-for="(card, key) in cards",:key="key")
+      mtg-card.card(:card="card")
+  md-dialog(ref="searchDialog")
+    md-dialog-title Search for Cards
+    md-dialog-content
+      md-input-container
+        label Card Name
+        md-input(v-model="newCard.name")
+      md-button.md-raised(@click="search") Search
+      div.notice(v-if="fromCache")
+        span Cached Results -&nbsp;
+        a(@click="updateCache()") Update Cache
+      md-table(v-if="showResults")
+        md-table-header
+          md-table-row
+            md-table-head Name
+            md-table-head Set
+            md-table-head
+        md-table-body
+          md-table-row(v-for="(card, key) in results",:key="key")
+            md-table-cell {{card.name}}
+            md-table-cell {{card.setName}}
+            md-table-cell
+              md-button.md-icon-button(@click="add(key)")
+                md-icon add
+    md-dialog-actions
+      md-button.md-warn(@click="cancel()") Cancel
+  md-dialog(ref="addDialog")
+    md-dialog-title Add Cards
+    md-dialog-content
+      mtg-card(:card="selected")
+    md-dialog-actions
+      md-button.md-warn(@click="cancel()") Cancel
+      md-button.md-primary(@click="addCard()") Add Card
