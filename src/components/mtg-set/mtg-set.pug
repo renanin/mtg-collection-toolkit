@@ -1,7 +1,7 @@
 md-card
   md-card-header
     div.md-title {{set.name}}
-    div.md-subhead {{set.code}} - {{set.cardCount()}} cards - {{complete()}}% collected
+    div.md-subhead {{set.code}} - {{cardMessage()}} - {{complete()}}% collected
   md-card-content
     md-progress(:md-progress="complete()")
   md-card-actions

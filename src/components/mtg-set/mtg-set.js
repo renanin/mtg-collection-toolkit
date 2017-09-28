@@ -12,6 +12,12 @@ export default {
     complete() {
       return Math.round((this.set.cards.length / this.setInfo().cards.length) * 100);
     },
+    cardMessage() {
+      if (this.set.cardCount() === 1) {
+        return `${this.set.cardCount()} card`;
+      }
+      return `${this.set.cardCount()} cards`;
+    },
   },
   mounted() {
     bus.$on('update', () => {
