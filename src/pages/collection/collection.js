@@ -2,6 +2,7 @@ import electron from 'electron';
 import Card from '../../classes/card';
 import mtgCard from '../../components/mtg-card/mtg-card.vue';
 import mtgSet from '../../components/mtg-set/mtg-set.vue';
+import bus from '../../bus';
 
 const { ipcRenderer } = electron;
 
@@ -60,7 +61,7 @@ export default {
       this.fromCache = results.fromCache;
     });
     ipcRenderer.on('set-result', (event, results) => {
-      console.log(results);
+      this.$store.commit('loadSet', results);
     });
   },
 };

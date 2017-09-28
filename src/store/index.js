@@ -8,6 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     collection: new Collection(),
+    setInfo: {},
   },
   mutations,
 });
