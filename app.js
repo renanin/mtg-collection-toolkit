@@ -2,6 +2,7 @@
 const electron = require('electron');
 const path = require('path');
 const search = require('./lib/search');
+const set = require('./lib/set');
 const error = require('./lib/error');
 
 const { app } = electron;
@@ -37,6 +38,14 @@ app.on('activate', () => {
 ipcMain.on('search', (event, name) => {
   search(name).then((results) => {
     event.sender.send('search-result', results);
+  }).catch((err) => {
+    error(err);
+  });
+});
+
+ipcMain.on('set', (event, code) => {
+  set(code).then((results) => {
+    event.sender.send('set-result', results);
   }).catch((err) => {
     error(err);
   });

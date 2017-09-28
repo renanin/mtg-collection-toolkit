@@ -1,6 +1,6 @@
 {
   "name": "mtg-collection-toolkit",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "main": "app.js",
   "description": "Manage your Magic: The Gathering collection, trades and more.",
   "author": "nmde <nmde@protonmail.com>",
@@ -25,6 +25,7 @@
     "webpack": "^3.0.0"
   },
   "dependencies": {
+    "async": "^2.5.0",
     "request": "^2.82.0",
     "vue": "^2.3.4",
     "vue-material": "^0.7.4",

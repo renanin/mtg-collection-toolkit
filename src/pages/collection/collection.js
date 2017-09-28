@@ -59,5 +59,8 @@ export default {
       this.showResults = true;
       this.fromCache = results.fromCache;
     });
+    ipcRenderer.on('set-result', (event, results) => {
+      console.log(results);
+    });
   },
 };
