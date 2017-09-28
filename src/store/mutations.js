@@ -8,14 +8,13 @@ const { ipcRenderer } = electron;
 
 export default {
   addCard(state, card) {
-    if (!state.collection.sets[card.set]) {
-      ipcRenderer.send('set', card.set);
-      state.collection.sets[card.set] = new Set(card.set, card.setName);
-    }
     state.collection.sets[card.set].cards.push(card);
     bus.$emit('update');
   },
   loadSet(state, setData) {
+    if (!state.collection.sets[setData.code]) {
+      state.collection.sets[setData.code] = new Set(setData.code, setData.name);
+    }
     state.setInfo[setData.code] = setData;
     bus.$emit('update');
   },

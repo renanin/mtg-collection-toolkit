@@ -43,8 +43,8 @@ ipcMain.on('search', (event, name) => {
   });
 });
 
-ipcMain.on('set', (event, code) => {
-  set(code).then((results) => {
+ipcMain.on('set', (event, data) => {
+  set(data.code, data.name).then((results) => {
     event.sender.send('set-result', results);
   }).catch((err) => {
     error(err);

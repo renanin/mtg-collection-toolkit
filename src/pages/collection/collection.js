@@ -18,6 +18,7 @@ export default {
       results: [],
       fromCache: false,
       selected: new Card(),
+      searching: false,
     };
   },
   methods: {
@@ -30,6 +31,7 @@ export default {
       this.reset();
     },
     search() {
+      this.searching = true;
       ipcRenderer.send('search', this.newCard.name);
     },
     add(index) {
@@ -49,19 +51,26 @@ export default {
       // @TODO
     },
     addCard() {
-      this.$store.commit('addCard', this.selected);
-      this.$refs.addDialog.close();
-      this.reset();
+      ipcRenderer.send('set', {
+        code: this.selected.set,
+        name: this.selected.setName,
+      });
+      this.searching = true;
     },
   },
   mounted() {
     ipcRenderer.on('search-result', (event, results) => {
+      this.searching = false;
       this.results = results.cards;
       this.showResults = true;
       this.fromCache = results.fromCache;
     });
     ipcRenderer.on('set-result', (event, results) => {
       this.$store.commit('loadSet', results);
+      this.searching = false;
+      this.$store.commit('addCard', this.selected);
+      this.$refs.addDialog.close();
+      this.reset();
     });
   },
 };

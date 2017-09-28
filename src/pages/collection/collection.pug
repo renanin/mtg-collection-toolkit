@@ -11,6 +11,7 @@ div
         label Card Name
         md-input(v-model="newCard.name")
       md-button.md-raised(@click="search") Search
+      md-progress(v-if="searching",md-indeterminate)
       div.notice(v-if="fromCache")
         span Cached Results -&nbsp;
         a(@click="updateCache()") Update Cache
@@ -32,6 +33,7 @@ div
   md-dialog(ref="addDialog")
     md-dialog-title Add Cards
     md-dialog-content
+      md-progress(v-if="searching",md-indeterminate)
       mtg-card(:card="selected")
     md-dialog-actions
       md-button.md-warn(@click="cancel()") Cancel
