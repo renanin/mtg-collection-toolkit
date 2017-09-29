@@ -1,1 +1,15 @@
-h1 Set {{set.name}}
+div
+  h1 {{set.name}}
+  h2.md-subhead {{collection.cards.length}} / {{set.cards.length}} - {{complete}}% collected
+  md-progress(:md-progress="complete")
+  md-table
+    md-table-header
+      md-table-row
+        md-table-head Name
+        md-table-head Quantity
+        md-table-head Foil
+    md-table-body
+      md-table-row(v-for="(card, key) in set.cards",:key="key")
+        md-table-cell {{card.name}}
+        md-table-cell {{collection.findCard(card.name).quantity}}
+        md-table-cell {{collection.findCard(card.name).foilQuantity}}

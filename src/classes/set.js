@@ -1,3 +1,5 @@
+import Card from './card';
+
 export default class Set {
   constructor(code, name) {
     this.name = name;
@@ -14,5 +16,13 @@ export default class Set {
       count += Number(card.foilQuantity);
     });
     return count;
+  }
+  findCard(name) {
+    for (let i = 0; i < this.cards.length; i += 1) {
+      if (this.cards[i].name === name) {
+        return this.cards[i];
+      }
+    }
+    return new Card();
   }
 }

@@ -1,13 +1,12 @@
 /* eslint no-param-reassign: ["off"] */
 
-import electron from 'electron';
 import Set from '../classes/set';
 import bus from '../bus';
 
-const { ipcRenderer } = electron;
-
 export default {
   addCard(state, card) {
+    console.log(`${card.set}`);
+    console.log(state.collection);
     state.collection.sets[card.set].cards.push(card);
     bus.$emit('update');
   },
