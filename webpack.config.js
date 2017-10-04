@@ -36,5 +36,6 @@ module.exports = {
   },
   externals: {
     electron: 'commonjs electron',
+    'simple-sort': 'commonjs simple-sort',
   },
 };
