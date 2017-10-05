@@ -4,6 +4,8 @@ const path = require('path');
 const search = require('./lib/search');
 const set = require('./lib/set');
 const error = require('./lib/error');
+const cacheSize = require('./lib/cacheSize');
+const clearCache = require('./lib/clearCache');
 
 const { app } = electron;
 const { BrowserWindow } = electron;
@@ -46,6 +48,26 @@ ipcMain.on('search', (event, name) => {
 ipcMain.on('set', (event, data) => {
   set(data.code, data.name).then((results) => {
     event.sender.send('set-result', results);
+  }).catch((err) => {
+    error(err);
+  });
+});
+
+ipcMain.on('get-cache-size', (event) => {
+  cacheSize().then((data) => {
+    event.sender.send('cache-size-result', data);
+  }).catch((err) => {
+    error(err);
+  });
+});
+
+ipcMain.on('clear-cache', (event, category) => {
+  clearCache(category).then(() => {
+    cacheSize().then((data) => {
+      event.sender.send('cache-size-result', data);
+    }).catch((err) => {
+      error(err);
+    });
   }).catch((err) => {
     error(err);
   });
