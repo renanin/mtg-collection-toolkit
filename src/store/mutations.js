@@ -5,8 +5,6 @@ import bus from '../bus';
 
 export default {
   addCard(state, card) {
-    console.log(`${card.set}`);
-    console.log(state.collection);
     state.collection.sets[card.set].cards.push(card);
     bus.$emit('update');
   },
