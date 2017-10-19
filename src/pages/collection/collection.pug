@@ -1,6 +1,7 @@
 div
   h1 Collection
   md-button.md-primary.md-raised(@click="openSearchDialog") Add Card
+  md-button.md-raised(@click="saveCollection") Save Collection
   md-layout(md-align="center")
     md-layout(md-flex="30",v-for="(set, key) in $store.state.collection.sets",:key="key")
       mtg-set.set(:set="set")

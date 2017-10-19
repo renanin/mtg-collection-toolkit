@@ -97,3 +97,6 @@ error.log
 
 # Local cache
 **.mtgcache
+
+# My collection
+userdata/collection.mtgcollection

@@ -6,6 +6,8 @@ const set = require('./lib/set');
 const error = require('./lib/error');
 const cacheSize = require('./lib/cacheSize');
 const clearCache = require('./lib/clearCache');
+const saveCollection = require('./lib/saveCollection');
+const readCollection = require('./lib/readCollection');
 
 const { app } = electron;
 const { BrowserWindow } = electron;
@@ -68,6 +70,22 @@ ipcMain.on('clear-cache', (event, category) => {
     }).catch((err) => {
       error(err);
     });
+  }).catch((err) => {
+    error(err);
+  });
+});
+
+ipcMain.on('save-collection', (event, collection) => {
+  saveCollection(collection).then(() => {
+    event.sender.send('collection-saved');
+  }).catch((err) => {
+    error(err);
+  });
+});
+
+ipcMain.on('request-collection', (event) => {
+  readCollection().then((collection) => {
+    event.sender.send('load-collection', collection);
   }).catch((err) => {
     error(err);
   });

@@ -57,6 +57,10 @@ export default {
       });
       this.searching = true;
     },
+    saveCollection() {
+      console.log(this.$store.state.collection);
+      ipcRenderer.send('save-collection', JSON.stringify(this.$store.state.collection));
+    },
   },
   mounted() {
     ipcRenderer.on('search-result', (event, results) => {
@@ -71,6 +75,9 @@ export default {
       this.$store.commit('addCard', this.selected);
       this.$refs.addDialog.close();
       this.reset();
+    });
+    ipcRenderer.on('collection-saved', () => {
+      console.log('Collection saved');
     });
   },
 };
