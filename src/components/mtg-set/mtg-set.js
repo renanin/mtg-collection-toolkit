@@ -10,7 +10,10 @@ export default {
       return this.$store.state.setInfo[this.set.code];
     },
     complete() {
-      return Math.round((this.set.cards.length / this.setInfo().cards.length) * 100);
+      if (this.setInfo()) {
+        return Math.round((this.set.cards.length / this.setInfo().cards.length) * 100);
+      }
+      return 0;
     },
     cardMessage() {
       if (this.set.cardCount() === 1) {
