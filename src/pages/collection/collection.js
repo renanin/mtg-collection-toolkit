@@ -2,7 +2,6 @@ import electron from 'electron';
 import Card from '../../classes/card';
 import mtgCard from '../../components/mtg-card/mtg-card.vue';
 import mtgSet from '../../components/mtg-set/mtg-set.vue';
-import bus from '../../bus';
 
 const { ipcRenderer } = electron;
 

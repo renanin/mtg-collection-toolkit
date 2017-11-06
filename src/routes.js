@@ -3,6 +3,7 @@ import collection from './pages/collection/collection.vue';
 import trades from './pages/trades/trades.vue';
 import set from './pages/set/set.vue';
 import cache from './pages/cache/cache.vue';
+import csv from './pages/import/csv/csv.vue';
 
 export default [
   {
@@ -20,5 +21,8 @@ export default [
   }, {
     path: '/cache',
     component: cache,
+  }, {
+    path: '/import/csv',
+    component: csv,
   },
 ];

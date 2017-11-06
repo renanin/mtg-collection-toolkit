@@ -2885,6 +2885,10 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+read-big-file:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/read-big-file/-/read-big-file-1.0.0.tgz#cc9a0e8d5b210c844362321f914a99c86c6617e6"
+
 read-pkg-up@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/read-pkg-up/-/read-pkg-up-2.0.0.tgz#6b72a8048984e0c41e79510fd5e9fa99b3b549be"

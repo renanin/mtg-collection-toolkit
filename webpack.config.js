@@ -37,5 +37,8 @@ module.exports = {
   externals: {
     electron: 'commonjs electron',
     'simple-sort': 'commonjs simple-sort',
+    'read-big-file': 'commonjs read-big-file',
+    request: 'commonjs request',
+    async: 'commonjs async',
   },
 };

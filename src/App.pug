@@ -7,7 +7,7 @@ div
     md-menu
       md-button(md-menu-trigger) Import
       md-menu-content
-        md-menu-item From CSV
+        router-link(tag="md-menu-item",to="/import/csv") From CSV
         md-menu-item From Collection
   div.page
     router-view
