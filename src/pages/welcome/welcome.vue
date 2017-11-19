@@ -1,2 +1,2 @@
 <template lang="pug" src="./welcome.pug"></template>
-<script src="./welcome.js"></script>
+<script lang="ts" src="./welcome.ts"></script>

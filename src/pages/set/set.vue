@@ -1,2 +1,2 @@
 <template lang="pug" src="./set.pug"></template>
-<script src="./set.js"></script>
+<script lang="ts" src="./set.ts"></script>

@@ -1,3 +1,3 @@
 <template lang="pug" src="./collection.pug"></template>
-<script src="./collection.js"></script>
+<script lang="ts" src="./collection.ts"></script>
 <style src="./collection.css"></style>

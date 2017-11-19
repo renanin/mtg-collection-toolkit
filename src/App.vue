@@ -1,3 +1,3 @@
 <template lang="pug" src="./App.pug"></template>
-<script src="./App.js"></script>
+<script lang="ts" src="./App.ts"></script>
 <style src="./App.css"></style>

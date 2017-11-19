@@ -1,6 +1,8 @@
 import electron from 'electron';
+import Vue from 'vue';
 import router from './bootstrap';
 import store from './store';
+import AppComponent from './component';
 
 const { ipcRenderer } = electron;
 
@@ -13,4 +15,4 @@ export default {
       this.$store.commit('loadCollection', JSON.parse(collection));
     });
   },
-};
+} as Vue.ComponentOptions<AppComponent>;

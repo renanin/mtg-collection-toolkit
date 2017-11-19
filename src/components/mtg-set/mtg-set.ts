@@ -1,17 +1,19 @@
+import Vue from 'vue';
+import MTGSetComponent from './component';
 import bus from '../../bus';
 
 export default {
   props: ['set'],
   methods: {
     openSet() {
-      this.$router.push(`set/${this.set.code}`);
+      this.$router.push(`set/${this.set.getCode()}`);
     },
     setInfo() {
-      return this.$store.state.setInfo[this.set.code];
+      return this.$store.state.setInfo[this.set.getCode()];
     },
     complete() {
       if (this.setInfo()) {
-        return Math.round((this.set.cards.length / this.setInfo().cards.length) * 100);
+        return Math.round((this.set.getCards().length / this.setInfo().cards.length) * 100);
       }
       return 0;
     },
@@ -27,4 +29,4 @@ export default {
       this.$forceUpdate();
     });
   },
-};
+} as Vue.ComponentOptions<MTGSetComponent>;

@@ -1,2 +1,2 @@
 <template lang="pug" src="./trades.pug"></template>
-<script src="./trades.js"></script>
+<script lang="ts" src="./trades.ts"></script>

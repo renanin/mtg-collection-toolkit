@@ -12,9 +12,9 @@ const router = new VueRouter({
   routes,
 });
 
-Vue.router = router;
+(Vue as any).router = router;
 
-Vue.material.registerTheme('default', {
+(Vue as any).material.registerTheme('default', {
   primary: 'orange',
   secondary: 'light-blue',
 });

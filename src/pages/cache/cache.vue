@@ -1,2 +1,2 @@
 <template lang="pug" src="./cache.pug"></template>
-<script src="./cache.js"></script>
+<script lang="ts" src="./cache.ts"></script>

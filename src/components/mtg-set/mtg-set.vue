@@ -1,2 +1,2 @@
 <template lang="pug" src="./mtg-set.pug"></template>
-<script src="./mtg-set.js"></script>
+<script lang="ts" src="./mtg-set.ts"></script>

@@ -1,2 +1,2 @@
 <template lang="pug" src="./mtg-card.pug"></template>
-<script src="./mtg-card.js"></script>
+<script lang="ts" src="./mtg-card.ts"></script>

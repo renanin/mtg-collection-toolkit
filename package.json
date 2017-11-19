@@ -10,7 +10,6 @@
   },
   "devDependencies": {
     "babel-core": "^6.25.0",
-    "babel-loader": "^7.1.1",
     "babel-preset-latest": "^6.24.1",
     "css-loader": "0.14.5",
     "eslint": "3.19.0",
@@ -19,6 +18,10 @@
     "file-loader": "^0.11.2",
     "pug": "^2.0.0-rc.2",
     "style-loader": "^0.18.2",
+    "ts-loader": "^3.1.1",
+    "tslint": "^5.8.0",
+    "tslint-config-airbnb": "^5.3.0",
+    "typescript": "^2.6.1",
     "url-loader": "^0.5.9",
     "vue-loader": "^13.0.0",
     "vue-template-compiler": "^2.3.4",

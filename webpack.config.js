@@ -2,14 +2,14 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    bundle: [path.resolve(__dirname, 'src', 'main.js')],
+    bundle: [path.resolve(__dirname, 'src', 'main.ts')],
   },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
   },
   resolve: {
-    extensions: ['.js', '.vue'],
+    extensions: ['.js', '.vue', '.ts'],
     alias: {
       vue: 'vue/dist/vue.js',
     },
@@ -17,8 +17,17 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        },
+      }, {
         test: /\.vue$/,
         loader: 'vue-loader',
+        options: {
+          esModule: true,
+        },
       }, {
         test: /\.js$/,
         loader: 'babel-loader?cacheDirectory',
@@ -39,6 +48,5 @@ module.exports = {
     'simple-sort': 'commonjs simple-sort',
     'read-big-file': 'commonjs read-big-file',
     request: 'commonjs request',
-    async: 'commonjs async',
   },
 };

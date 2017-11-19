@@ -1,4 +1,6 @@
 import { ipcRenderer } from 'electron';
+import Vue from 'vue';
+import CacheComponent from './component';
 
 export default {
   data() {
@@ -13,11 +15,11 @@ export default {
     });
   },
   methods: {
-    convertToMb(bytes) {
+    convertToMb(bytes: number): number {
       return Math.round((bytes / 1000000) * 100) / 100;
     },
-    clear(category) {
+    clear(category: number) {
       ipcRenderer.send('clear-cache', category);
     },
   },
-};
+} as Vue.ComponentOptions<CacheComponent>;
