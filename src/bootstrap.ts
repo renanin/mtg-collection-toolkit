@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.css';
 import './assets/fonts/fonts.css';
-import routes from './routes';
+import routes from './app/routes';
 
 Vue.use(VueRouter);
 Vue.use(VueMaterial);

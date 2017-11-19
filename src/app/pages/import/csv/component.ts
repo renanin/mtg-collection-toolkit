@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-export default interface ImportCSVComponent extends Vue {
+export default interface CSVPageComponent extends Vue {
   path: string;
   headers: string[];
   body: string[][];

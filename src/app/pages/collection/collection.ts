@@ -1,11 +1,9 @@
-import electron from 'electron';
+import { ipcRenderer } from 'electron';
 import Vue from 'vue';
 import Card from '../../classes/card';
 import mtgCard from '../../components/mtg-card/mtg-card.vue';
 import mtgSet from '../../components/mtg-set/mtg-set.vue';
-import CollectionComponent from './component';
-
-const { ipcRenderer } = electron;
+import CollectionPageComponent from './component';
 
 export default {
   components: {
@@ -60,7 +58,6 @@ export default {
       this.searching = true;
     },
     saveCollection() {
-      console.log(this.$store.state.collection);
       ipcRenderer.send('save-collection', JSON.stringify(this.$store.state.collection));
     },
   },
@@ -82,4 +79,4 @@ export default {
       console.log('Collection saved');
     });
   },
-} as Vue.ComponentOptions<CollectionComponent>;
+} as Vue.ComponentOptions<CollectionPageComponent>;

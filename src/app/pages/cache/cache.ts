@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 import Vue from 'vue';
-import CacheComponent from './component';
+import CachePageComponent from './component';
 
 export default {
   data() {
@@ -22,4 +22,4 @@ export default {
       ipcRenderer.send('clear-cache', category);
     },
   },
-} as Vue.ComponentOptions<CacheComponent>;
+} as Vue.ComponentOptions<CachePageComponent>;

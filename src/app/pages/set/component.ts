@@ -3,7 +3,7 @@ import Set from '../../classes/set';
 import Card from '../../classes/card';
 import Collection from '../../classes/collection';
 
-export default interface SetComponent extends Vue {
+export default interface SetPageComponent extends Vue {
   set: Set;
   collection: Set;
   complete: number;

@@ -4,6 +4,6 @@ interface CacheSize {
   // @TODO
 }
 
-export default interface CacheComponent extends Vue {
+export default interface CachePageComponent extends Vue {
   cacheSize: CacheSize;
 }

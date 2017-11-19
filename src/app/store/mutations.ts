@@ -1,12 +1,10 @@
 /* eslint no-param-reassign: ["off"] */
 
-import electron from 'electron';
+import { ipcRenderer } from 'electron';
 import Collection from '../classes/collection';
 import Set from '../classes/set';
 import Card from '../classes/card';
-import bus from '../bus';
-
-const { ipcRenderer } = electron;
+import bus from '../../bus';
 
 export default {
   addCard(state, card: Card) {

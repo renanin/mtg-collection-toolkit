@@ -1,10 +1,8 @@
-import electron from 'electron';
+import { ipcRenderer } from 'electron';
 import Vue from 'vue';
-import router from './bootstrap';
+import router from '../bootstrap';
 import store from './store';
 import AppComponent from './component';
-
-const { ipcRenderer } = electron;
 
 export default {
   router,

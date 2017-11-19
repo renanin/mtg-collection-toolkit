@@ -5,7 +5,7 @@ import Vue from 'vue';
 import Card from '../../../classes/card';
 import Collection from '../../../classes/collection';
 import Set from '../../../classes/set';
-import ImportCSVComponent from './component';
+import CSVPageComponent from './component';
 
 export default {
   data() {
@@ -149,4 +149,4 @@ export default {
         });
     },
   },
-} as Vue.ComponentOptions<ImportCSVComponent>;
+} as Vue.ComponentOptions<CSVPageComponent>;

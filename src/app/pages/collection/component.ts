@@ -1,14 +1,8 @@
 import Vue from 'vue';
 import Card from '../../classes/card';
+import SearchResult from '../../classes/searchResult';
 
-interface SearchResult {
-  name: string;
-  set: string;
-  setName: string;
-  multiverseid: number;
-}
-
-export default interface CollectionComponent extends Vue {
+export default interface CollectionPageComponent extends Vue {
   reset: Function;
   searching: boolean;
   newCard: Card;

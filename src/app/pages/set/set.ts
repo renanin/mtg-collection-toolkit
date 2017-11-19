@@ -3,7 +3,7 @@ import Vue from 'vue';
 import SimpleSort from 'simple-sort';
 import Set from '../../classes/set';
 import Collection from '../../classes/collection';
-import SetComponent from './component';
+import SetPageComponent from './component';
 
 export default {
   data() {
@@ -56,4 +56,4 @@ export default {
       }
     });
   },
-} as Vue.ComponentOptions<SetComponent>;
+} as Vue.ComponentOptions<SetPageComponent>;
