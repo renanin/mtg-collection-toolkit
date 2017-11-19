@@ -38,16 +38,14 @@ export default {
     add(index) {
       const selected = this.results[index];
       this.selected = new Card(
-        selected.getName(), selected.getSet(), selected.getSetName(), selected.getId());
+        selected.name, selected.set, selected.setName, selected.multiverseid);
       (this.$refs.searchDialog as any).close();
       (this.$refs.addDialog as any).open();
     },
     reset() {
       this.newCard = new Card();
       this.showResults = false;
-      this.results = {
-        cards: [],
-      };
+      this.results = [];
       this.fromCache = false;
       this.selected = new Card();
     },
