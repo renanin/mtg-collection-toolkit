@@ -48,5 +48,8 @@ module.exports = {
     'simple-sort': 'commonjs simple-sort',
     'read-big-file': 'commonjs read-big-file',
     request: 'commonjs request',
+    fs: 'commonjs fs',
+    path: 'commonjs path',
+    async: 'commonjs async',
   },
 };

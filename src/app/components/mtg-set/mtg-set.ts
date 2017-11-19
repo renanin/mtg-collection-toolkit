@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import MTGSetComponent from './component';
-import bus from '../../bus';
+import bus from '../../../bus';
 
 export default {
   props: ['set'],

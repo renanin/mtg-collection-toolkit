@@ -10,7 +10,9 @@ export default {
   mounted() {
     ipcRenderer.send('request-collection');
     ipcRenderer.on('load-collection', (event, collection) => {
-      this.$store.commit('loadCollection', JSON.parse(collection));
+      if (collection && collection.length > 0) {
+        this.$store.commit('loadCollection', JSON.parse(collection));
+      }
     });
   },
 } as Vue.ComponentOptions<AppComponent>;

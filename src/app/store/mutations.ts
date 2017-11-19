@@ -1,6 +1,5 @@
 /* eslint no-param-reassign: ["off"] */
 
-import { ipcRenderer } from 'electron';
 import Collection from '../classes/collection';
 import Set from '../classes/set';
 import Card from '../classes/card';
@@ -18,16 +17,13 @@ export default {
     state.setInfo[setData.getCode()] = setData;
     bus.$emit('update');
   },
-  loadCollection(state, collection: Collection) {
+  loadCollection({ state, dispatch }, collection: Collection) {
     const sets = Object.keys(collection.sets);
     const newCollection = new Collection();
     for (let i = 0; i < sets.length; i += 1) {
       const set = collection.sets[sets[i]];
       newCollection.sets[sets[i]] = new Set(set.getCode(), set.getName());
-      ipcRenderer.send('set', {
-        code: set.getCode(),
-        name: set.getName(),
-      });
+      dispatch('loadSet', set.getCode(), set.getName());
       for (let a = 0; a < set.getCards().length; a += 1) {
         const card = set.getCard(a);
         newCollection.sets[sets[i]].addCard(
