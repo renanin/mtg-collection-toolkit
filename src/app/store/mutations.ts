@@ -2,6 +2,7 @@
 
 import Collection from '../classes/collection';
 import Set from '../classes/set';
+import BasicSetInfo from '../classes/basicSetInfo';
 import Card from '../classes/card';
 import bus from '../../bus';
 
@@ -10,11 +11,11 @@ export default {
     state.collection.sets[card.getSet()].cards.push(card);
     bus.$emit('update');
   },
-  loadSet(state, setData: Set) {
-    if (!state.collection.sets[setData.getCode()]) {
-      state.collection.sets[setData.getCode()] = new Set(setData.getCode(), setData.getName());
+  loadSet(state, setData: BasicSetInfo) {
+    if (!state.collection.sets[setData.code]) {
+      state.collection.sets[setData.code] = new Set(setData.code, setData.name);
     }
-    state.setInfo[setData.getCode()] = setData;
+    state.setInfo[setData.code] = setData;
     bus.$emit('update');
   },
   loadCollection({ state, dispatch }, collection: Collection) {
