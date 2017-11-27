@@ -1,7 +1,11 @@
 md-card.mtg-set
-  md-card-media-cover(md-text-scrim)
-    md-card-media(md-ratio="16:9")
+  md-card-header
+    md-card-header-text
+      div.md-title {{name}}
+      div.md-subhead 0 / {{cardCount}} Collected
+    md-card-media
       img(:src="icon")
-  md-card-area
-    md-card-header
-      h3.md-title {{name}}
+  md-card-content
+    md-progress(:md-progress="progress")
+  md-card-actions
+    md-button.md-raised.md-primary(@click="edit") Edit Set
