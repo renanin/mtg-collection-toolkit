@@ -1,8 +1,7 @@
-md-card
-  md-card-header
-    div.md-title {{set.name}}
-    div.md-subhead {{set.code}} - {{cardMessage()}} - {{complete()}}% collected
-  md-card-content
-    md-progress(:md-progress="complete()")
-  md-card-actions
-    md-button.md-primary(@click.native="openSet") View Set
+md-card.mtg-set
+  md-card-media-cover(md-text-scrim)
+    md-card-media(md-ratio="16:9")
+      img(:src="icon")
+  md-card-area
+    md-card-header
+      h3.md-title {{name}}

@@ -1,13 +1,6 @@
 import Vue from 'vue';
-import Card from '../../classes/card';
-import SearchResult from '../../classes/searchResult';
+import Set from '../../classes/set';
 
 export default interface CollectionPageComponent extends Vue {
-  reset: Function;
-  searching: boolean;
-  newCard: Card;
-  results: SearchResult[];
-  selected: Card;
-  showResults: boolean;
-  fromCache: boolean;
+  sets: Set[];
 }
