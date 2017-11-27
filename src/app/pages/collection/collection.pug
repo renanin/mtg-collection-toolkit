@@ -1,5 +1,5 @@
 div
   h1 My Collection
   md-layout(md-align="center")
-    md-layout(md-flex="33",v-for="(set, index) in sets",:key="index")
+    md-layout(md-flex="33",v-for="(set, index) in $store.state.sets",:key="index")
       mtg-set(:name="set.name",:icon="set.iconURI",:cardCount="set.cardCount",:code="set.code")
