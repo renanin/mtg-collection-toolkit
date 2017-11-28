@@ -7,6 +7,11 @@ interface CardList {
   cards: Card[];
 }
 
+interface QuantityTarget {
+  set: string;
+  index: number;
+}
+
 export default {
   addSet(state, set: Set) {
     Vue.set(state.sets, set.getCode(), set);
@@ -14,4 +19,10 @@ export default {
   setCards(state, cards: CardList) {
     Vue.set(state.sets[cards.code], 'cards', cards.cards);
   },
+  incrementQuantity(state, target: QuantityTarget) {
+    state.sets[target.set].cards[target.index].increment();
+  },
+  decrementQuantity(state, target: QuantityTarget) {
+    state.sets[target.set].cards[target.index].decrement();
+  }
 };

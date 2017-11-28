@@ -27,5 +27,17 @@ export default {
     getCards(): Card[] {
       return this.$store.state.sets[this.code].cards;
     },
+    increment(index: number) {
+      this.$store.commit('incrementQuantity', {
+        index,
+        set: this.code,
+      });
+    },
+    decrement(index: number) {
+      this.$store.commit('decrementQuantity', {
+        index,
+        set: this.code,
+      });
+    },
   },
 } as Vue.ComponentOptions<SetPageComponent>;

@@ -8,4 +8,11 @@ div
     md-table-body
       md-table-row(v-for="(card, index) in getCards()",:key="index")
         md-table-cell {{card.name}}
+        md-table-cell
+          md-button.md-icon-button(@click="increment(index)")
+            md-icon add
+          md-input-container
+            md-input(v-model="card.quantity")
+          md-button.md-icon-button(@click="decrement(index)")
+            md-icon remove
         md-table-cell.price-cell ${{card.price}}
