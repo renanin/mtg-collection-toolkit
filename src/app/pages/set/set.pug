@@ -8,4 +8,4 @@ div
     md-table-body
       md-table-row(v-for="(card, index) in getCards()",:key="index")
         md-table-cell {{card.name}}
-        md-table-cell ${{card.price}}
+        md-table-cell.price-cell ${{card.price}}
