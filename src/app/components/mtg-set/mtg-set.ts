@@ -2,21 +2,15 @@ import Vue from 'vue';
 import MTGSetComponent from './component';
 
 export default {
-  props: {
-    name: String,
-    icon: String,
-    cardCount: Number,
-    code: String,
-  },
+  props: ['set'],
   computed: {
     progress(): number {
-      // @TODO
-      return 0;
+      return (this.set.uniqueCount() / this.set.getCardCount()) * 100;
     },
   },
   methods: {
     edit() {
-      this.$router.push(`/set/${this.code}`);
+      this.$router.push(`/set/${this.set.getCode()}`);
     },
   },
 } as Vue.ComponentOptions<MTGSetComponent>;

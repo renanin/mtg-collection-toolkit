@@ -21,4 +21,23 @@ export default class Set {
   getCode(): string {
     return this.code;
   }
+  getCardCount(): number {
+    return this.cardCount;
+  }
+  totalCount(): number {
+    let sum = 0;
+    this.cards.forEach((card) => {
+      sum += card.getQuantity();
+    });
+    return sum;
+  }
+  uniqueCount(): number {
+    let sum = 0;
+    this.cards.forEach((card) => {
+      if (card.getQuantity() > 0) {
+        sum += 1;
+      }
+    });
+    return sum;
+  }
 }

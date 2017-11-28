@@ -7,6 +7,9 @@ export default class Card {
     this.price = Number(price);
     this.quantity = quantity;
   }
+  getQuantity(): number {
+    return this.quantity;
+  }
   increment() {
     this.quantity += 1;
   }

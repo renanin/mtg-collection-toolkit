@@ -6,4 +6,9 @@ export default {
   components: {
     mtgSet,
   },
+  methods: {
+    requestSets() {
+      this.$store.dispatch('requestSets');
+    },
+  },
 } as Vue.ComponentOptions<CollectionPageComponent>;

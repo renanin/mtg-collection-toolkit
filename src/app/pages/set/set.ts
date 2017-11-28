@@ -54,5 +54,8 @@ export default {
         },
       );
     },
+    requestCards() {
+      this.$store.dispatch('loadCards', this.code);
+    },
   },
 } as Vue.ComponentOptions<SetPageComponent>;

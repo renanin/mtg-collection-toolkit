@@ -1,10 +1,8 @@
 import Vue from 'vue';
+import Set from '../../classes/set';
 
 export default interface MTGSetComponent extends Vue {
-  name: string;
-  icon: string;
-  cardCount: number;
-  code: string;
+  set: Set;
   progress: number;
   edit: Function;
 }
