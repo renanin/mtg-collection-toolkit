@@ -10,6 +10,6 @@ export default new Vuex.Store({
   mutations,
   actions,
   state: {
-    sets: [],
+    sets: {},
   },
 }) as Vuex.Store<state>;

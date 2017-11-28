@@ -1,1 +1,11 @@
-h1 {{code}}
+div
+  h1 {{set.name}}
+  md-table
+    md-table-header
+      md-table-row
+        md-table-head Name
+        md-table-head Price (USD)
+    md-table-body
+      md-table-row(v-for="(card, index) in getCards()",:key="index")
+        md-table-cell {{card.name}}
+        md-table-cell ${{card.price}}

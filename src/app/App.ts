@@ -9,12 +9,6 @@ export default {
   router,
   store,
   mounted() {
-    paginate('https://api.scryfall.com/sets/').then((sets) => {
-      sets.forEach((set) => {
-        this.$store.commit('addSet', new Set(set.name, set.code, set.icon_svg_uri, set.card_count));
-      });
-    }).catch((e) => {
-      console.error(e);
-    });
+    this.$store.dispatch('loadSets');
   },
 } as Vue.ComponentOptions<AppComponent>;
