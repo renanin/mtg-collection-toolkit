@@ -2,10 +2,10 @@ export default class Card {
   private name: string;
   private price: number;
   private quantity: number;
-  constructor(name: string, price: string) {
+  constructor(name: string, price: string, quantity: number) {
     this.name = name;
     this.price = Number(price);
-    this.quantity = 0;
+    this.quantity = quantity;
   }
   increment() {
     this.quantity += 1;

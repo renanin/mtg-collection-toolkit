@@ -6,12 +6,17 @@ export default class Set {
   private iconURI: string;
   private cardCount: number;
   private cards: Card[];
-  constructor(name: string = '', code: string = '', iconURI: string = '', cardCount: number = -1) {
+  constructor(
+    name: string = '',
+    code: string = '',
+    iconURI: string = '',
+    cardCount: number = -1,
+    cards: Card[] = []) {
     this.name = name;
     this.code = code;
     this.iconURI = iconURI;
     this.cardCount = cardCount;
-    this.cards = [];
+    this.cards = cards;
   }
   getCode(): string {
     return this.code;

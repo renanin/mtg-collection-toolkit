@@ -24,5 +24,5 @@ export default {
   },
   decrementQuantity(state, target: QuantityTarget) {
     state.sets[target.set].cards[target.index].decrement();
-  }
+  },
 };
