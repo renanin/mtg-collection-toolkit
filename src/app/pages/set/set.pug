@@ -1,5 +1,7 @@
 div
-  h1 {{set.name}}
+  h1 {{set.getName()}}
+  md-progress(:md-progress="progress")
+  p {{set.uniqueCount()}} / {{set.getCardCount()}} Collected - {{set.totalCount()}} Total
   md-button.md-raised.md-primary(@click="save()") Save Changes
   md-button(@click="requestCards()") Request Cards
   md-table
@@ -13,8 +15,7 @@ div
         md-table-cell
           md-button.md-icon-button(@click="increment(index)")
             md-icon add
-          md-input-container
-            md-input(v-model="card.quantity")
+          p {{card.quantity}}
           md-button.md-icon-button(@click="decrement(index)")
             md-icon remove
         md-table-cell.price-cell ${{card.price}}

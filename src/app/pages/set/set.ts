@@ -10,6 +10,9 @@ export default {
     code() {
       return this.$route.params.code;
     },
+    progress() {
+      return (this.set.uniqueCount() / this.set.getCardCount()) * 100;
+    },
   },
   data() {
     return {
@@ -17,17 +20,14 @@ export default {
     };
   },
   created() {
-    this.loadCards();
+    this.requestCards();
   },
   watch: {
-    $route: 'loadCards',
+    $route: 'requestCards',
   },
   methods: {
-    loadCards() {
-      // this.$store.dispatch('loadCards', this.code);
-    },
     getCards(): Card[] {
-      return this.$store.state.sets[this.code].cards;
+      return this.set.getCards();
     },
     increment(index: number) {
       this.$store.commit('incrementQuantity', {
@@ -56,6 +56,9 @@ export default {
     },
     requestCards() {
       this.$store.dispatch('loadCards', this.code);
+      if (this.$store.state.sets[this.code]) {
+        this.set = this.$store.state.sets[this.code];
+      }
     },
   },
 } as Vue.ComponentOptions<SetPageComponent>;

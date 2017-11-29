@@ -18,8 +18,14 @@ export default class Set {
     this.cardCount = cardCount;
     this.cards = cards;
   }
+  getName(): string {
+    return this.name;
+  }
   getCode(): string {
     return this.code;
+  }
+  getCards(): Card[] {
+    return this.cards;
   }
   getCardCount(): number {
     return this.cardCount;

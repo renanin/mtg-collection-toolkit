@@ -26,7 +26,6 @@ export default {
         Object.keys(collection).forEach((set) => {
           const cards: Card[] = [];
           collection[set].cards.forEach((card) => {
-            console.log(card);
             cards.push(new Card(card.name, card.price, card.quantity));
           });
           commit(
