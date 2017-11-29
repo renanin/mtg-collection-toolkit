@@ -7,6 +7,12 @@ export default class Card {
     this.price = Number(price);
     this.quantity = quantity;
   }
+  getName(): string {
+    return this.name;
+  }
+  getPrice(): number {
+    return this.price;
+  }
   getQuantity(): number {
     return this.quantity;
   }
@@ -14,6 +20,8 @@ export default class Card {
     this.quantity += 1;
   }
   decrement() {
-    this.quantity -= 1;
+    if (this.quantity > 0) {
+      this.quantity -= 1;
+    }
   }
 }

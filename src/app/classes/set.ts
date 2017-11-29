@@ -24,11 +24,14 @@ export default class Set {
   getCode(): string {
     return this.code;
   }
-  getCards(): Card[] {
-    return this.cards;
+  getIconURI(): string {
+    return this.iconURI;
   }
   getCardCount(): number {
     return this.cardCount;
+  }
+  getCards(): Card[] {
+    return this.cards;
   }
   totalCount(): number {
     let sum = 0;
@@ -43,6 +46,13 @@ export default class Set {
       if (card.getQuantity() > 0) {
         sum += 1;
       }
+    });
+    return sum;
+  }
+  totalPrice(): number {
+    let sum = 0;
+    this.cards.forEach((card) => {
+      sum += (card.getPrice() * card.getQuantity());
     });
     return sum;
   }

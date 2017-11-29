@@ -2,7 +2,7 @@ md-card.mtg-set
   md-card-header
     md-card-header-text
       div.md-title {{set.name}}
-      div.md-subhead {{set.uniqueCount()}} / {{set.cardCount}} Collected
+      div.md-subhead {{set.uniqueCount()}} / {{set.cardCount}} Collected - ${{set.totalPrice()}}
     // md-card-media
       img(:src="set.iconURI")
   md-card-content

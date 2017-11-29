@@ -1,6 +1,8 @@
 div
   h1 My Collection
   md-button(@click="requestSets()") Request Sets
+  md-progress(:md-progress="progress")
+  p.md-subhead {{unique}} / {{uniqueTotal}} Collected - {{total}} Total - ${{totalPrice}}
   md-layout(md-align="center")
     md-layout(md-flex="33",v-for="(set, index) of $store.state.sets",:key="index")
       mtg-set(:set="set")

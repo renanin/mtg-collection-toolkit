@@ -1,7 +1,7 @@
 div
   h1 {{set.getName()}}
   md-progress(:md-progress="progress")
-  p {{set.uniqueCount()}} / {{set.getCardCount()}} Collected - {{set.totalCount()}} Total
+  p {{set.uniqueCount()}} / {{set.getCardCount()}} Collected - {{set.totalCount()}} Total - ${{set.totalPrice()}}
   md-button.md-raised.md-primary(@click="save()") Save Changes
   md-button(@click="requestCards()") Request Cards
   md-table
