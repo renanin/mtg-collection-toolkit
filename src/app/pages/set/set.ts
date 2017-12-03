@@ -20,10 +20,10 @@ export default {
     };
   },
   created() {
-    this.requestCards();
+    this.updateSet();
   },
   watch: {
-    $route: 'requestCards',
+    $route: 'updateSet',
   },
   methods: {
     getCards(): Card[] {
@@ -59,6 +59,9 @@ export default {
       if (this.$store.state.sets[this.code]) {
         this.set = this.$store.state.sets[this.code];
       }
+    },
+    updateSet() {
+      this.set = this.$store.state.sets[this.code];
     },
   },
 } as Vue.ComponentOptions<SetPageComponent>;

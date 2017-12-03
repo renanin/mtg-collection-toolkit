@@ -16,6 +16,9 @@ export default class Card {
   getQuantity(): number {
     return this.quantity;
   }
+  setQuantity(quantity: number) {
+    this.quantity = quantity;
+  }
   increment() {
     this.quantity += 1;
   }

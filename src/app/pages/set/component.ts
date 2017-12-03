@@ -5,4 +5,5 @@ export default interface SetPageComponent extends Vue {
   requestCards: Function;
   code: string;
   set: Set;
+  updateSet: Function;
 }
