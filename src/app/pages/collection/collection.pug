@@ -1,7 +1,7 @@
 div
   h1 My Collection
   md-button(@click="requestSets()") Request Sets
-  // md-progress-bar(md-mode="determinate",:md-value="progress")
+  md-progress(:md-progress="progress")
   p.md-subhead {{unique}} / {{uniqueTotal}} Collected - {{total}} Total - ${{totalPrice}}
   div.collection
     mtg-set(v-for="(set, index) of $store.state.sets",:key="index",:set="set")
