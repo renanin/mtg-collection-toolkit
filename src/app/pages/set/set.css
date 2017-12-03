@@ -1,3 +1,5 @@
-.set-cell {
-  text-align: right;
+.set {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }

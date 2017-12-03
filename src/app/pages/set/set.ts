@@ -4,8 +4,12 @@ import fs from 'fs';
 import Set from '../../classes/set';
 import Card from '../../classes/card';
 import SetPageComponent from './component';
+import mtgCard from '../../components/mtg-card/mtg-card.vue';
 
 export default {
+  components: {
+    mtgCard,
+  },
   computed: {
     code() {
       return this.$route.params.code;
@@ -28,18 +32,6 @@ export default {
   methods: {
     getCards(): Card[] {
       return this.set.getCards();
-    },
-    increment(index: number) {
-      this.$store.commit('incrementQuantity', {
-        index,
-        set: this.code,
-      });
-    },
-    decrement(index: number) {
-      this.$store.commit('decrementQuantity', {
-        index,
-        set: this.code,
-      });
     },
     save() {
       fs.writeFile(

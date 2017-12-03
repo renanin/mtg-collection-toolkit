@@ -31,7 +31,18 @@ export default class Set {
     return this.cardCount;
   }
   getCards(): Card[] {
-    return this.cards;
+    const cards = this.cards;
+    const output = [];
+    for (let i = 0; i < cards.length; i += 1) {
+      let a = 0;
+      for (; a < output.length; a += 1) {
+        if (cards[i].getName() < output[a].getName()) {
+          break;
+        }
+      }
+      output.splice(a, 0, cards[i]);
+    }
+    return output;
   }
   totalCount(): number {
     let sum = 0;

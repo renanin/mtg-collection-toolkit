@@ -1,0 +1,10 @@
+md-card.mtg-card
+  md-card-header
+    div.md-title {{card.name}}
+  md-card-content
+    p ${{card.price}} x {{card.quantity}}
+  md-card-actions
+    md-button.md-icon-button(@click="increment")
+      md-icon add
+    md-button.md-icon-button(@click="decrement")
+      md-icon remove
