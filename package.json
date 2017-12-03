@@ -23,8 +23,8 @@
     "tslint-config-airbnb": "^5.3.0",
     "typescript": "^2.6.1",
     "url-loader": "^0.5.9",
-    "vue-loader": "^13.0.0",
-    "vue-template-compiler": "^2.3.4",
+    "vue-loader": "^13.5.0",
+    "vue-template-compiler": "^2.5.9",
     "webpack": "^3.0.0"
   },
   "dependencies": {
@@ -33,10 +33,10 @@
     "read-big-file": "^1.0.0",
     "request": "^2.82.0",
     "simple-sort": "^0.1.2",
-    "vue": "^2.3.4",
+    "vue": "^2.5.9",
     "vue-material": "^0.8.1",
-    "vue-router": "^2.7.0",
-    "vuex": "^2.3.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^2.4.0"
   },
   "engines": {
     "node": ">= 4.0.0",

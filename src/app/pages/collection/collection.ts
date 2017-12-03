@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import { ComponentOptions } from 'vue';
 import CollectionPageComponent from './component';
 import mtgSet from '../../components/mtg-set/mtg-set.vue';
 
@@ -44,4 +44,4 @@ export default {
       this.$store.dispatch('requestSets');
     },
   },
-} as Vue.ComponentOptions<CollectionPageComponent>;
+} as ComponentOptions<CollectionPageComponent>;

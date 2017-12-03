@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import { ComponentOptions } from 'vue';
 import MTGSetComponent from './component';
 
 export default {
@@ -13,4 +13,4 @@ export default {
       this.$router.push(`/set/${this.set.getCode()}`);
     },
   },
-} as Vue.ComponentOptions<MTGSetComponent>;
+} as ComponentOptions<MTGSetComponent>;

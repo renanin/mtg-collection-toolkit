@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import { ComponentOptions } from 'vue';
 import router from '../bootstrap';
 import store from './store';
 import AppComponent from './component';
@@ -11,4 +11,4 @@ export default {
   mounted() {
     this.$store.dispatch('loadSets');
   },
-} as Vue.ComponentOptions<AppComponent>;
+} as ComponentOptions<AppComponent>;

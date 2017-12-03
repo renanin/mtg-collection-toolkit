@@ -1,5 +1,5 @@
 import { remote } from 'electron';
-import Vue from 'vue';
+import { ComponentOptions } from 'vue';
 import fs from 'fs';
 import Set from '../../classes/set';
 import Card from '../../classes/card';
@@ -63,5 +63,8 @@ export default {
     updateSet() {
       this.set = this.$store.state.sets[this.code];
     },
+    hasCards() {
+      return this.set.getCards().length > 0;
+    },
   },
-} as Vue.ComponentOptions<SetPageComponent>;
+} as ComponentOptions<SetPageComponent>;
