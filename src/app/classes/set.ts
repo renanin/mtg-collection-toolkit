@@ -1,4 +1,5 @@
 import Card from './card';
+import price from '../filters/price';
 
 export default class Set {
   private name: string;
@@ -65,6 +66,6 @@ export default class Set {
     this.cards.forEach((card) => {
       sum += (card.getPrice() * card.getQuantity());
     });
-    return sum;
+    return price(sum);
   }
 }

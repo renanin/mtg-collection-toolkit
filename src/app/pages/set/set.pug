@@ -4,5 +4,14 @@ div
   p {{set.uniqueCount()}} / {{set.getCardCount()}} Collected - {{set.totalCount()}} Total - ${{set.totalPrice()}}
   md-button.md-raised.md-primary(@click="save()") Save Changes
   md-button(@click="requestCards()") Request Cards
-  div.set
-    mtg-card(v-for="(card, index) in getCards()",:key="index",:card="card")
+  md-table
+    md-table-row
+      md-table-head Name
+      md-table-head Quantity
+      md-table-head Price
+    md-table-row(v-for="(card, index) in getCards()",:key="index")
+      md-table-cell {{card.name}}
+      md-input-container
+          label Quantity
+          md-input(v-model="card.quantity",type="number",:min="0")
+      md-table-cell ${{card.price}}

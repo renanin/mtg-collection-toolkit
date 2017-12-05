@@ -58,5 +58,17 @@ export default {
     hasCards() {
       return this.set.getCards().length > 0;
     },
+    increment(index: number) {
+      this.$store.commit('incrementQuantity', {
+        index,
+        set: this.code,
+      });
+    },
+    decrement(index: number) {
+      this.$store.commit('decrementQuantity', {
+        index,
+        set: this.code,
+      });
+    },
   },
 } as ComponentOptions<SetPageComponent>;

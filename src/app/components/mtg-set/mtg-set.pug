@@ -1,4 +1,4 @@
-md-card.mtg-set(md-with-hover)
+md-card.mtg-set(md-with-hover,@click.native="edit")
   md-card-header
     md-card-header-text
       div.md-title {{set.name}}
@@ -7,5 +7,3 @@ md-card.mtg-set(md-with-hover)
       img(:src="set.iconURI")
   md-card-content
     md-progress(:md-progress="progress")
-  md-card-actions
-    md-button.md-raised.md-primary(@click="edit") Edit Set

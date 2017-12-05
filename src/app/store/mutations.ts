@@ -10,6 +10,7 @@ interface CardList {
 interface QuantityTarget {
   set: string;
   index: number;
+  quantity?: number;
 }
 
 export default {

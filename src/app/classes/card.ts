@@ -5,7 +5,7 @@ export default class Card {
   constructor(name: string, price: string, quantity: number) {
     this.name = name;
     this.price = Number(price);
-    this.quantity = quantity;
+    this.quantity = Number(quantity);
   }
   getName(): string {
     return this.name;
@@ -14,7 +14,7 @@ export default class Card {
     return this.price;
   }
   getQuantity(): number {
-    return this.quantity;
+    return Number(this.quantity);
   }
   setQuantity(quantity: number) {
     this.quantity = quantity;
