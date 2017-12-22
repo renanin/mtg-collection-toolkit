@@ -11,11 +11,9 @@ import bus from '../../bus';
 export default {
   fetchSets({ commit }) {
     paginate('https://api.scryfall.com/sets/').then((response) => {
-      const sets: SetsObject = {};
       response.forEach((set: SetResponse) => {
-        sets[set.code] = new Set(set.code, set.name, set.card_count);
+        commit('loadSet', set);
       });
-      commit('loadSets', sets);
       bus.$emit('setsLoaded');
     }).catch((e) => {
       bus.$emit('notify', `Could not fetch sets: ${e}`);

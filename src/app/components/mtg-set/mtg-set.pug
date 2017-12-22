@@ -1,9 +1,6 @@
 md-card.mtg-set(md-with-hover,@click.native="viewSet")
-  md-card-header
+  md-card-header.set-header
     md-card-header-text
       div.md-title {{set.getName()}}
-      div.md-subhead 0 / {{set.getCardCount()}} Collected - $0.00
-    // md-card-media
-      img(:src="set.iconURI")
   md-card-content
     md-progress(:md-progress="progress")

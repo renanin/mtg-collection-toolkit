@@ -3,3 +3,10 @@
   min-width: 200px;
   margin: 8px;
 }
+
+.set-header {
+  min-height: 104px;
+  max-height: 104px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

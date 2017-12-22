@@ -5,7 +5,11 @@ export default {
   props: ['set'],
   computed: {
     progress() {
-      return 0;
+      let count = 0;
+      if (this.$store.state.collection[this.set.getCode()]) {
+        count = Object.keys(this.$store.state.collection[this.set.getCode()]).length;
+      }
+      return (count / this.set.getCardCount()) * 100;
     },
   },
   methods: {

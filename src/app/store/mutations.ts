@@ -1,11 +1,13 @@
 import SetsObject from '../classes/setsObject';
+import SetResponse from '../classes/setResponse';
+import Set from '../classes/set';
 import CardResponse from '../classes/cardResponse';
 import Card from '../classes/card';
 import Collection from '../classes/collection';
 
 export default {
-  loadSets(state, sets: SetsObject) {
-    state.sets = sets;
+  loadSet(state, set: SetResponse) {
+    state.sets[set.code] = new Set(set.code, set.name, set.card_count);
   },
   addCard(state, payload: {
     set: string;
