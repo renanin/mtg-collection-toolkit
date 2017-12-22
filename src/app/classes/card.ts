@@ -16,9 +16,15 @@ export default class Card {
     return this.name;
   }
   getPrice() {
+    if (isNaN(this.price)) {
+      return 0;
+    }
     return this.price;
   }
   getQuantity() {
     return this.quantity;
+  }
+  setQuantity(quantity: number) {
+    this.quantity = quantity;
   }
 }

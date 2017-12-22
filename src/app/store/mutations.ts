@@ -1,3 +1,5 @@
+import { Store } from 'vuex';
+import state from './state';
 import SetsObject from '../classes/setsObject';
 import SetResponse from '../classes/setResponse';
 import Set from '../classes/set';
@@ -6,10 +8,10 @@ import Card from '../classes/card';
 import Collection from '../classes/collection';
 
 export default {
-  loadSet(state, set: SetResponse) {
+  loadSet(state: state, set: SetResponse) {
     state.sets[set.code] = new Set(set.code, set.name, set.card_count);
   },
-  addCard(state, payload: {
+  addCard(state: state, payload: {
     set: string;
     card: CardResponse;
   }) {
@@ -23,11 +25,22 @@ export default {
         payload.card.id,
         payload.card.name,
         Number(payload.card.usd),
-        quantity,
+        Number(quantity),
       ),
     );
   },
-  loadCollection(state, collection: Collection) {
+  loadCollection(state: state, collection: Collection) {
     state.collection = collection;
+  },
+  setQuantity(state: state, payload: {
+    quantity: string;
+    set: string;
+    id: string;
+  }) {
+    for (let i = 0; i < state.sets[payload.set].getCards().length; i += 1) {
+      if (state.sets[payload.set].getCards()[i].getID() === payload.id) {
+        state.sets[payload.set].getCards()[i].setQuantity(Number(payload.quantity));
+      }
+    }
   },
 };

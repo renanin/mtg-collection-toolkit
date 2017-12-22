@@ -1,11 +1,20 @@
 import Vue from 'vue';
 import Set from '../../classes/set';
+import Card from '../../classes/card';
 
 export default interface SetPageComponent extends Vue {
   progress: number;
-  fetchSet: Function;
-  set: Set;
+  myUnique: number;
+  myTotal: number;
+  myCashUnique: number;
+  myCashTotal: number;
+  cashMax: number;
+  cashToComplete: number;
   loading: boolean;
-  cardsLoaded: Function;
-  save: Function;
+  set: Set;
+  selected: Card;
+  fetchSet();
+  cardsLoaded();
+  save();
+  updateCounts();
 }
