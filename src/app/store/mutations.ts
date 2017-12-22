@@ -43,4 +43,8 @@ export default {
       }
     }
   },
+  emptySets(state: state) {
+    console.log('Emptying sets');
+    state.sets = {};
+  },
 };

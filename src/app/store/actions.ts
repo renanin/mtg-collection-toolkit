@@ -32,11 +32,12 @@ export default {
       bus.$emit('notify', `Could not fetch cards: ${e}`);
     });
   },
-  readCollection({ commit }) {
+  readCollection({ commit, dispatch }) {
     console.log('Reading collection');
     read('userdata/collection.mtgcollection', true).then((response) => {
       commit('loadCollection', response);
-      console.log('Collection ready');
+      commit('emptySets');
+      dispatch('fetchSets');
     }).catch((e) => {
       bus.$emit('notify', `Could not read collection: ${e}`);
     });

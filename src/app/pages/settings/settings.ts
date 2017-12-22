@@ -49,6 +49,7 @@ export default {
           bus.$emit('notify', 'Successfully reset collection');
         }
       });
+      this.$store.dispatch('readCollection');
     },
     confirmReset() {
       if (this.backupBeforeReset) {
