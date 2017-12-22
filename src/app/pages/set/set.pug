@@ -4,7 +4,7 @@ div
     .header
       h1 {{set.getName()}}
       md-progress(:md-progress="progress")
-      p {{myUnique}} / {{set.getCardCount()}} Unique Collected - ${{myCashUnique}} - %{{progress}}
+      p {{myUnique}} / {{set.getCardCount()}} Unique Collected - {{progress}}%
       p {{myTotal}} Total - ${{myCashTotal}}
       p ${{cashToComplete}} to complete - ${{cashMax}} Total
       md-button.md-raised.md-primary(@click="save") Save Changes

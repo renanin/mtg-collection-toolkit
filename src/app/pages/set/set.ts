@@ -3,6 +3,7 @@ import SetPageComponent from './component';
 import bus from '../../../bus';
 import save from '../../util/save';
 import Card from '../../classes/card';
+import price from '../../filters/price';
 
 export default {
   data() {
@@ -83,13 +84,13 @@ export default {
         }
         cashMax += card.getPrice();
       });
-      this.myUnique = unique;
+      this.myUnique = price(unique);
       this.myTotal = total;
       this.myCashUnique = cashUnique;
-      this.myCashTotal = cashTotal;
-      this.cashMax = cashMax;
-      this.progress = (unique / this.set.getCardCount()) * 100;
-      this.cashToComplete = cashMax - cashUnique;
+      this.myCashTotal = price(cashTotal);
+      this.cashMax = price(cashMax);
+      this.progress = price((unique / this.set.getCardCount()) * 100);
+      this.cashToComplete = price(cashMax - cashUnique);
     },
   },
 } as ComponentOptions<SetPageComponent>;
