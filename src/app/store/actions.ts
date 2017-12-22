@@ -18,10 +18,10 @@ export default {
       commit('loadSets', sets);
       bus.$emit('setsLoaded');
     }).catch((e) => {
-      console.error(e);
+      bus.$emit('notify', `Could not fetch sets: ${e}`);
     });
   },
-  fetchSet({ commit }, code: string) {
+  fetchCards({ commit }, code: string) {
     paginate(`https://api.scryfall.com/cards/search?q=e%3A${code}`).then((response) => {
       response.forEach((card: Card) => {
         commit('addCard', {
@@ -31,14 +31,16 @@ export default {
       });
       bus.$emit('cardsLoaded');
     }).catch((e) => {
-      console.error(e);
+      bus.$emit('notify', `Could not fetch cards: ${e}`);
     });
   },
   readCollection({ commit }) {
+    console.log('Reading collection');
     read('userdata/collection.mtgcollection', true).then((response) => {
       commit('loadCollection', response);
+      console.log('Collection ready');
     }).catch((e) => {
-      console.error(e);
+      bus.$emit('notify', `Could not read collection: ${e}`);
     });
   },
 };

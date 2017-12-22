@@ -33,14 +33,21 @@ export default {
         console.log('Cards present in memory');
         this.loading = false; 
       } else {
-        this.$store.dispatch('fetchSet', this.$route.params.code);
+        this.$store.dispatch('fetchCards', this.$route.params.code);
       }
     },
     cardsLoaded() {
       this.loading = false;
     },
     save() {
-      save(this.$store.state.sets[this.$route.params.code], this.$store.state.collection);
+      save(
+        this.$store.state.sets[this.$route.params.code],
+        this.$store.state.collection,
+      ).then(() => {
+        bus.$emit('notify', 'Set saved');
+      }).catch((e) => {
+        bus.$emit('notify', `Could not save set: ${e}`);
+      });
     },
   },
 } as ComponentOptions<SetPageComponent>;

@@ -4,3 +4,5 @@ div
     router-link(tag="md-button",to="/database") Database
   div.page
     router-view
+  md-snackbar(ref="notification",md-position="bottom left")
+    span {{notification}}

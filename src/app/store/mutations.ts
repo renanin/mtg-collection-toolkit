@@ -11,11 +11,17 @@ export default {
     set: string;
     card: CardResponse;
   }) {
+    let quantity = 0;
+    // @TODO: This assumes the collection is in the memory
+    if (state.collection[payload.set] && state.collection[payload.set][payload.card.id]) {
+      quantity = state.collection[payload.set][payload.card.id];
+    }
     state.sets[payload.set].addCard(
       new Card(
         payload.card.id,
         payload.card.name,
         Number(payload.card.usd),
+        quantity,
       ),
     );
   },

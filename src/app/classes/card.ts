@@ -3,11 +3,11 @@ export default class Card {
   private name: string;
   private price: number;
   private quantity: number;
-  constructor(id: string, name: string, price: number) {
+  constructor(id: string, name: string, price: number, quantity: number = 0) {
     this.id = id;
     this.name = name;
     this.price = price;
-    this.quantity = 0;
+    this.quantity = quantity;
   }
   getID() {
     return this.id;
