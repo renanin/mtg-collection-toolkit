@@ -26,7 +26,12 @@ export default {
   },
   methods: {
     fetchSets() {
-      this.$store.dispatch('fetchSets');
+      if (Object.keys(this.$store.state.sets).length === 0) {
+        this.$store.dispatch('fetchSets');
+      } else {
+        console.log('Sets present in memory');
+        this.loading = false;
+      }
     },
     setsLoaded() {
       this.loading = false;

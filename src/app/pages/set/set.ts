@@ -25,7 +25,15 @@ export default {
   },
   methods: {
     fetchSet() {
-      this.$store.dispatch('fetchSet', this.$route.params.code);
+      if (
+        this.$store.state.sets[this.$route.params.code].getCards().length
+        === this.$store.state.sets[this.$route.params.code].getCardCount()
+      ) {
+        console.log('Cards present in memory');
+        this.loading = false; 
+      } else {
+        this.$store.dispatch('fetchSet', this.$route.params.code);
+      }
     },
     cardsLoaded() {
       this.loading = false;
