@@ -4,12 +4,12 @@ import MTGSetComponent from './component';
 export default {
   props: ['set'],
   computed: {
-    progress(): number {
-      return (this.set.uniqueCount() / this.set.getCardCount()) * 100;
+    progress() {
+      return 0;
     },
   },
   methods: {
-    edit() {
+    viewSet() {
       this.$router.push(`/set/${this.set.getCode()}`);
     },
   },

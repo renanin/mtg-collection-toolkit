@@ -2,8 +2,9 @@ import Vue from 'vue';
 import Set from '../../classes/set';
 
 export default interface SetPageComponent extends Vue {
-  requestCards: Function;
-  code: string;
+  progress: number;
+  fetchSet: Function;
   set: Set;
-  updateSet: Function;
+  loading: boolean;
+  cardsLoaded: Function;
 }

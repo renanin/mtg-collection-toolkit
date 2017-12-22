@@ -1,3 +1,4 @@
 div
   md-progress(v-if="loading",md-indeterminate)
-  p(v-else) {{$store.state.sets}}
+  div.sets(v-else)
+    mtg-set(v-for="(set, key) in sets",:key="key",:set="set")

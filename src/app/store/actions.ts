@@ -4,6 +4,7 @@ import paginate from '../util/paginate';
 import SetsObject from '../classes/setsObject';
 import SetResponse from '../classes/setResponse';
 import Set from '../classes/set';
+import Card from '../classes/card';
 import bus from '../../bus';
 
 export default {
@@ -15,6 +16,19 @@ export default {
       });
       commit('loadSets', sets);
       bus.$emit('setsLoaded');
+    }).catch((e) => {
+      console.error(e);
+    });
+  },
+  fetchSet({ commit }, code: string) {
+    paginate(`https://api.scryfall.com/cards/search?q=e%3A${code}`).then((response) => {
+      response.forEach((card: Card) => {
+        commit('addCard', {
+          card,
+          set: code,
+        });
+      });
+      bus.$emit('cardsLoaded');
     }).catch((e) => {
       console.error(e);
     });
