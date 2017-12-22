@@ -1,5 +1,6 @@
 import async from 'async';
 import request from 'request';
+import read from 'read-big-file';
 import paginate from '../util/paginate';
 import SetsObject from '../classes/setsObject';
 import SetResponse from '../classes/setResponse';
@@ -29,6 +30,13 @@ export default {
         });
       });
       bus.$emit('cardsLoaded');
+    }).catch((e) => {
+      console.error(e);
+    });
+  },
+  readCollection({ commit }) {
+    read('userdata/collection.mtgcollection', true).then((response) => {
+      commit('loadCollection', response);
     }).catch((e) => {
       console.error(e);
     });

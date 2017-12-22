@@ -1,5 +1,3 @@
-.set {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+.quantity-input {
+  width: auto;
 }

@@ -7,4 +7,5 @@ export default interface SetPageComponent extends Vue {
   set: Set;
   loading: boolean;
   cardsLoaded: Function;
+  save: Function;
 }

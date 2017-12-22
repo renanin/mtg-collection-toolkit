@@ -1,6 +1,7 @@
 import { ComponentOptions } from 'vue';
 import SetPageComponent from './component';
 import bus from '../../../bus';
+import save from '../../util/save';
 
 export default {
   data() {
@@ -37,6 +38,9 @@ export default {
     },
     cardsLoaded() {
       this.loading = false;
+    },
+    save() {
+      save(this.$store.state.sets[this.$route.params.code], this.$store.state.collection);
     },
   },
 } as ComponentOptions<SetPageComponent>;

@@ -1,9 +1,11 @@
 div
   md-progress(v-if="loading",md-indeterminate)
   template(v-else)
-    h1 {{set.getName()}}
-    md-progress(:md-progress="progress")
-    p 0 / {{set.getCardCount()}} Collected - $0.00 / $0.00 Total
+    .header
+      h1 {{set.getName()}}
+      md-progress(:md-progress="progress")
+      p 0 / {{set.getCardCount()}} Collected - $0.00 / $0.00 Total
+      md-button.md-raised.md-primary(@click="save") Save Changes
     md-table
       md-table-header
         md-table-row
@@ -13,5 +15,7 @@ div
       md-table-body
         md-table-row(v-for="(card, key) in set.getCards()",:key="key")
           md-table-cell {{card.getName()}}
-          md-table-cell 0
+          md-table-cell
+            md-input-container.quantity-input
+              md-input(type="number",v-model="card.quantity",:min="0")
           md-table-cell {{card.getPrice()}}
