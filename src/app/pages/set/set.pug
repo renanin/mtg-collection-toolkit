@@ -1,23 +1,25 @@
-div
+.set
   md-progress(v-if="loading",md-indeterminate)
   template(v-else)
     .header
-      h1 {{set.getName()}}
-      md-progress(:md-progress="progress")
-      p {{myUnique}} / {{set.getCardCount()}} Unique Collected - {{progress}}%
-      p {{myTotal}} Total - ${{myCashTotal}}
-      p ${{cashToComplete}} to complete - ${{cashMax}} Total
-      md-button.md-raised.md-primary(@click="save") Save Changes
-    md-table
-      md-table-header
-        md-table-row
-          md-table-head Name
-          md-table-head Quantity
-          md-table-head Price
-      md-table-body
-        md-table-row(v-for="(card, key) in set.getCards()",:key="key")
-          md-table-cell {{card.getName()}}
-          md-table-cell
-            md-input-container.quantity-input
-              md-input(type="number",:value="card.quantity",:min="0",@focus="select(card)",@input="setQuantity")
-          md-table-cell {{card.getPrice()}}
+      .header-inner
+        h1 {{set.getName()}}
+        md-progress(:md-progress="progress")
+        p {{myUnique}} / {{set.getCardCount()}} Unique Collected - {{progress}}%
+        p {{myTotal}} Total - ${{myCashTotal}}
+        p ${{cashToComplete}} to complete - ${{cashMax}} Total
+        md-button.md-raised.md-primary(@click="save") Save Changes
+    .cardlist
+      md-table
+        md-table-header
+          md-table-row
+            md-table-head Name
+            md-table-head Quantity
+            md-table-head Price
+        md-table-body
+          md-table-row(v-for="(card, key) in set.getCards()",:key="key")
+            md-table-cell {{card.getName()}}
+            md-table-cell
+              md-input-container.quantity-input
+                md-input(type="number",:value="card.quantity",:min="0",@focus="select(card)",@input="setQuantity")
+            md-table-cell {{card.getPrice()}}

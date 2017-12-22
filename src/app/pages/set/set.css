@@ -1,3 +1,19 @@
+.set {
+  display: flex;
+}
+
+.cardlist {
+  flex: 1;
+}
+
+.header {
+  min-width: 262px;
+}
+
+.header-inner {
+  position: fixed;
+}
+
 .quantity-input {
   width: auto;
 }
