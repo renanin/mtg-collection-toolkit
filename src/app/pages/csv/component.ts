@@ -18,6 +18,7 @@ export default interface CSVPageComponent extends Vue {
   total: number;
   errors: string[];
   manualSetName: string;
+  done: boolean;
   setCodeResults: SetCodeResults;
   resolveSetChoice: Function;
   importCSV();

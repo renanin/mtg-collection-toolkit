@@ -10,7 +10,7 @@ async function createSetDir(set: string) {
       } else {
         fs.mkdir(`cache/search/${set}`, (err) => {
           if (err) {
-            reject(err);
+            reject(`Could not create folder 'cache/search/${set}'!`);
           } else {
             resolve();
           }
@@ -25,31 +25,32 @@ export default function cardSearch(name: string, set: string) {
     try {
       await createSetDir(set);
     } catch (e) {
-      reject(`Could not create search cache directory for ${set}: ${e}`);
+      reject(e);
     }
-    fs.exists(`cache/search/${set}/${name}`, (exists) => {
+    fs.exists(`cache/search/${set}/${name}.mtgcache`, (exists) => {
       if (exists) {
-        read(`cache/search/${set}/${name}`, true).then((res) => {
+        read(`cache/search/${set}/${name}.mtgcache`, true).then((res) => {
           resolve(res);
         }).catch((e) => {
-          reject(`Could not read cache ${set}/${name}: ${e}`);
+          reject(`Could not read 'cache/search/${set}/${name}.mtgcache': ${e}`);
         });
       } else {
         request(
           `https://api.scryfall.com/cards/search?q=${encodeURIComponent(name)}+e%3A${set}`,
           (err, res, body) => {
             if (err) {
-              reject(`Could not access API: ${set}`);
+              reject(
+                `Error requesting 'https://api.scryfall.com/cards/search?q=`
+                + `${encodeURIComponent(name)}+e%3A${set}': ${err}`);
             } else {
-              fs.writeFile(`cache/search/${set}/${name}`, body, (err) => {
+              fs.writeFile(`cache/search/${set}/${name}.mtgcache`, body, (err) => {
                 if (err) {
-                  reject(`Could not write to cache: ${err}`);
-                } else {
-                  try {
-                    resolve(JSON.parse(body));
-                  } catch (e) {
-                    reject(`Could not parse search results for ${name} in ${set}: ${e}`);
-                  }
+                  reject(`Could not write to 'cache/search/${set}/${name}.mtgcache': ${err}`);
+                }
+                try {
+                  resolve(JSON.parse(body));
+                } catch (e) {
+                  reject(`Could not parse search results: ${e}`);
                 }
               });
             }

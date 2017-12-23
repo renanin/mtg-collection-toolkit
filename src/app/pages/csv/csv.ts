@@ -28,6 +28,7 @@ export default {
       manualSetName: '',
       setCodeResults: {},
       resolveSetChoice() {},
+      done: false,
     };
   },
   methods: {
@@ -88,13 +89,11 @@ export default {
     },
     chooseSet(results): Promise<string> {
       return new Promise((resolve) => {
-        console.log('Waiting for choice...');
         (this.$refs.chooseSetDialog as any).open();
         this.resolveSetChoice = resolve;
       });
     },
     setChoice(code: string) {
-      console.log(`Got choice: ${code}, resolving...`);
       this.resolveSetChoice(code);
       this.resolveSetChoice = () => {};
       (this.$refs.chooseSetDialog as any).close();
@@ -109,24 +108,17 @@ export default {
           this.completed += 1;
           this.progress = (this.completed / this.total) * 100;
           const setName = line[this.setCol];
-          console.log(`Set name: ${setName}`);
           const setCode = async () => {
             return new Promise(async (resolve, reject) => {
-              console.log(`Determining set code of ${setName}`);
               if (this.setNameMap[setName]) {
-                console.log(`Set code (${this.setNameMap[setName]}) is already in memory`);
                 resolve(this.setNameMap[setName]);
               } else {
                 try {
-                  console.log('Getting set code...');
                   const setCodeResults = await getSetCode(setName);
                   if (setCodeResults.sets.length > 1) {
-                    console.log('Multiple possibilities');
                     this.manualSetName = setName;
                     this.setCodeResults = setCodeResults;
-                    console.log('Waiting for user response...');
                     const choice = await this.chooseSet(setCodeResults);
-                    console.log(`User chose ${choice}`);
                     // Wait for previous dialog to close :\
                     setTimeout(
                       () => {
@@ -135,21 +127,17 @@ export default {
                       1000,
                     );
                   } else {
-                    console.log(`Found 1 possibility: ${setCodeResults.sets[0].code}`);
                     resolve(setCodeResults.sets[0].code);
                   }
                 } catch (e) {
-                  console.error(`Error getting set code for ${setName}: ${e}`);
-                  reject(`Error getting set code for ${setName}: ${e}`);
+                  reject(`Error determining set code for '${setName}': ${e}`);
                 }
               }
             });
           };
           try {
             const code = <string>await setCode();
-            console.log(`Determined set code: ${code}`);
             this.setNameMap[setName] = code;
-            console.log(`Searching for ${line[this.nameCol]} in ${code}`);
             cardSearch(line[this.nameCol], code).then((result: {
               code: string;
               data: {
@@ -157,26 +145,22 @@ export default {
               }[];
             }) => {
               if (result.code === 'not_found') {
-                console.error(`No such card ${line[this.nameCol]} in set ${code}`);
-                this.errors.push(`No such card ${line[this.nameCol]} in set ${code}`);
+                this.errors.push(`No such card '${line[this.nameCol]}' in set ${code}`);
                 next();
               } else {
                 if (!collection[code]) {
-                  console.log('Creating new set entry');
                   collection[code.toLowerCase()] = {};
                 }
-                console.log(`Done: ${line}`);
                 collection[code.toLowerCase()][result.data[0].id] = Number(line[this.quantityCol]);
                 next();
               }
             }).catch((e) => {
-              console.error(`Error searching for ${line[this.nameCol]}: ${e}`);
-              this.errors.push(`Error searching for ${line[this.nameCol]}: ${e}`);
+              this.errors.push(e);
               next();
             });
           } catch (e) {
-            console.error(e);
             this.errors.push(e);
+            next();
           }
         },
         () => {
@@ -189,7 +173,7 @@ export default {
               bus.$emit('notify', `Could not write to collection: ${err}`);
             } else {
               bus.$emit('notify', `Successfully imported ${this.total - this.errors.length} cards`);
-              this.$router.push('/database');
+              this.done = true;
             }
           });
         },

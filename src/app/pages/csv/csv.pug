@@ -4,7 +4,10 @@ div
     p
       span {{completed}} / {{total}}
       i &nbsp;(This may take several minutes)
-    p {{errors}}
+  template(v-else-if="done")
+    h2 Import Report
+    p Completed with {{errors.length}} errors
+    code(v-for="(error, key) in errors",:key="key") {{error}}
   template(v-else)
     h1 CSV Tools
     md-button.md-primary.md-raised(@click="importCSV") Import CSV
@@ -63,7 +66,7 @@ div
         md-button(@click="cancelImport") Cancel
         md-button.md-raised.md-primary(@click="importStage2") Continue
   md-dialog(ref="chooseSetDialog",:md-click-outside-to-close="false")
-    md-dialog-title Determine Set Code
+    md-dialog-title Manual Set Code
     md-dialog-content
       p The program could not automatically determine the set code for {{manualSetName}}.
       p Please select the correct set code below:
