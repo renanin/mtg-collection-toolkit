@@ -148,7 +148,7 @@ export default {
                 this.errors.push(`No such card '${line[this.nameCol]}' in set ${code}`);
                 next();
               } else {
-                if (!collection[code]) {
+                if (!collection[code.toLowerCase()]) {
                   collection[code.toLowerCase()] = {};
                 }
                 collection[code.toLowerCase()][result.data[0].id] = Number(line[this.quantityCol]);
