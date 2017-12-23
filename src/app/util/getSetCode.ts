@@ -1,16 +1,10 @@
 import fs from 'fs';
 import read from 'read-big-file';
 import request from 'request';
+import SetCodeResults from '../classes/setCodeResults';
 
-interface SetCodeResults {
-  sets: {
-    code: string;
-    onlineOnly?: boolean;
-  }[];
-}
-
-function readSetCode(name: string): Promise<SetCodeResults> {
-  return new Promise((resolve, reject) => {
+export default function getSetCode(name: string): Promise<SetCodeResults> {
+  return new Promise(async (resolve, reject) => {
     fs.exists(`cache/set_codes/${name}.mtgcache`, (exists) => {
       if (exists) {
         read(`cache/set_codes/${name}.mtgcache`, true).then((res) => {
@@ -41,18 +35,5 @@ function readSetCode(name: string): Promise<SetCodeResults> {
         );
       }
     });
-  });
-}
-
-export default function getSetCode(name: string): Promise<string> {
-  return new Promise(async (resolve, reject) => {
-    const results: SetCodeResults = await readSetCode(name);
-    for (let i = 0; i < results.sets.length; i += 1) {
-      // @TODO
-      if (!results.sets[i].onlineOnly) {
-        resolve(results.sets[i].code);
-      }
-    }
-    reject(`No set ${name} found!`);
   });
 }
