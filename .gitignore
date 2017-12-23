@@ -96,7 +96,7 @@ src/assets/fonts/
 error.log
 
 # Local cache
-**.mtgcache
+cache/
 
 # My collection
 userdata/
