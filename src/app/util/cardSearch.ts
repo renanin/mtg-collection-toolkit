@@ -27,32 +27,37 @@ export default function cardSearch(name: string, set: string) {
     } catch (e) {
       reject(e);
     }
-    fs.exists(`cache/search/${set}/${name}.mtgcache`, (exists) => {
+    const fname = encodeURIComponent(name);
+    fs.exists(`cache/search/${set}/${fname}.mtgcache`, (exists) => {
       if (exists) {
-        read(`cache/search/${set}/${name}.mtgcache`, true).then((res) => {
+        read(`cache/search/${set}/${fname}.mtgcache`, true).then((res) => {
           resolve(res);
         }).catch((e) => {
           reject(`Could not read 'cache/search/${set}/${name}.mtgcache': ${e}`);
         });
       } else {
         request(
-          `https://api.scryfall.com/cards/search?q=${encodeURIComponent(name)}+e%3A${set}`,
+          `https://api.scryfall.com/cards/search?q=${fname}+e%3A${set}`,
           (err, res, body) => {
             if (err) {
               reject(
                 `Error requesting 'https://api.scryfall.com/cards/search?q=`
-                + `${encodeURIComponent(name)}+e%3A${set}': ${err}`);
+                + `${fname}+e%3A${set}': ${err}`);
             } else {
-              fs.writeFile(`cache/search/${set}/${name}.mtgcache`, body, (err) => {
-                if (err) {
-                  reject(`Could not write to 'cache/search/${set}/${name}.mtgcache': ${err}`);
-                }
-                try {
-                  resolve(JSON.parse(body));
-                } catch (e) {
-                  reject(`Could not parse search results: ${e}`);
-                }
-              });
+              fs.writeFile(
+                `cache/search/${set}/${fname}.mtgcache`,
+                body,
+                (err) => {
+                  if (err) {
+                    reject(`Could not write to 'cache/search/${set}/${fname}.mtgcache': ${err}`);
+                  }
+                  try {
+                    resolve(JSON.parse(body));
+                  } catch (e) {
+                    reject(`Could not parse search results: ${e}`);
+                  }
+                },
+              );
             }
           },
         );
