@@ -1,6 +1,8 @@
+import request from 'request';
 import fs from 'fs';
 import read from 'read-big-file';
-import request from 'request';
+import path from 'path';
+import CardResponse from '../classes/cardResponse';
 
 async function createSetDir(set: string) {
   return new Promise((resolve, reject) => {
@@ -20,48 +22,48 @@ async function createSetDir(set: string) {
   });
 }
 
-export default function cardSearch(name: string, set: string) {
+export default async function cardSearch2(name: string, targetSet: string) {
   return new Promise(async (resolve, reject) => {
-    try {
-      await createSetDir(set);
-    } catch (e) {
-      reject(e);
-    }
-    const fname = encodeURIComponent(name);
-    fs.exists(`cache/search/${set}/${fname}.mtgcache`, (exists) => {
-      if (exists) {
-        read(`cache/search/${set}/${fname}.mtgcache`, true).then((res) => {
-          resolve(res);
-        }).catch((e) => {
-          reject(`Could not read 'cache/search/${set}/${name}.mtgcache': ${e}`);
-        });
-      } else {
-        request(
-          `https://api.scryfall.com/cards/search?q=${fname}+e%3A${set}`,
-          (err, res, body) => {
-            if (err) {
-              reject(
-                `Error requesting 'https://api.scryfall.com/cards/search?q=`
-                + `${fname}+e%3A${set}': ${err}`);
-            } else {
-              fs.writeFile(
-                `cache/search/${set}/${fname}.mtgcache`,
-                body,
-                (err) => {
-                  if (err) {
-                    reject(`Could not write to 'cache/search/${set}/${fname}.mtgcache': ${err}`);
-                  }
-                  try {
-                    resolve(JSON.parse(body));
-                  } catch (e) {
-                    reject(`Could not parse search results: ${e}`);
-                  }
-                },
-              );
-            }
-          },
-        );
-      }
-    });
+    await createSetDir(encodeURIComponent(targetSet));
+    const cacheFile = `cache/search/${encodeURIComponent(targetSet)}`
+                    + `/${encodeURIComponent(name)}.mtgcache`;
+    fs.exists(
+      cacheFile,
+      (exists) => {
+        if (exists) {
+          read(cacheFile, true).then((res) => {
+            resolve(res);
+          }).catch((e) => {
+            reject(`Error reading cache: ${e}`);
+          });
+        } else {
+          request(
+            `https://api.scryfall.com/cards/search?order=set`
+            + `&q=%2B%2B%21%22${name}%22+game%3Apaper`,
+            (err, res, body) => {
+              if (err) {
+                reject(`Error requesting API: ${err}`);
+              } else {
+                try {
+                  fs.writeFile(
+                    cacheFile,
+                    body,
+                    (err) => {
+                      if (err) {
+                        reject(`Could not write to cache: ${err}`);
+                      } else {
+                        resolve(JSON.parse(body));
+                      }
+                    },
+                  );
+                } catch (e) {
+                  reject(e);
+                }
+              }
+            },
+          );
+        }
+      },
+    );
   });
 }

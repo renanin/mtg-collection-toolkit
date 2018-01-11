@@ -8,6 +8,7 @@ import bus from '../../../bus';
 import Collection from '../../classes/collection';
 import getSetCode from '../../util/getSetCode';
 import cardSearch from '../../util/cardSearch';
+import CardResponse from '../../classes/cardResponse';
 
 export default {
   data() {
@@ -108,57 +109,31 @@ export default {
           this.completed += 1;
           this.progress = (this.completed / this.total) * 100;
           const setName = line[this.setCol];
-          const setCode = async () => {
-            return new Promise(async (resolve, reject) => {
-              if (this.setNameMap[setName]) {
-                resolve(this.setNameMap[setName]);
-              } else {
-                try {
-                  const setCodeResults = await getSetCode(setName);
-                  if (setCodeResults.sets.length > 1) {
-                    this.manualSetName = setName;
-                    this.setCodeResults = setCodeResults;
-                    const choice = await this.chooseSet(setCodeResults);
-                    // Wait for previous dialog to close :\
-                    setTimeout(
-                      () => {
-                        resolve(choice);
-                      },
-                      1000,
-                    );
-                  } else {
-                    resolve(setCodeResults.sets[0].code);
-                  }
-                } catch (e) {
-                  reject(`Error determining set code for '${setName}': ${e}`);
-                }
-              }
-            });
-          };
+          const cardName = line[this.nameCol];
           try {
-            const code = <string>await setCode();
-            this.setNameMap[setName] = code;
-            cardSearch(line[this.nameCol], code).then((result: {
-              code: string;
-              data: {
-                id: string;
-              }[];
-            }) => {
-              if (result.code === 'not_found') {
-                this.errors.push(`No such card '${line[this.nameCol]}' in set ${code}`);
-                next();
-              } else {
-                if (!collection[code.toLowerCase()]) {
-                  collection[code.toLowerCase()] = {};
+            const cardInfo = <any>await cardSearch(cardName, setName);
+            const printings = <CardResponse[]>cardInfo.data;
+            let match = null;
+            if (printings) {
+              printings.forEach((printing) => {
+                if (printing.set === setName || printing.set_name === setName) {
+                  match = printing;
                 }
-                collection[code.toLowerCase()][result.data[0].id] = Number(line[this.quantityCol]);
-                next();
+              });
+            }
+            if (match) {
+              const code = cardInfo.set;
+              if (!collection[code]) {
+                collection[code] = {};
               }
-            }).catch((e) => {
-              this.errors.push(e);
+              collection[code][cardInfo.id] = Number(line[this.quantityCol]);
               next();
-            });
+            } else {
+              this.errors.push(`No printing of ${name} in ${setName}`);
+              next();
+            }
           } catch (e) {
+            console.error(e);
             this.errors.push(e);
             next();
           }
