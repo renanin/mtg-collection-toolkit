@@ -3,11 +3,15 @@ export default class Card {
   private name: string;
   private price: number;
   private quantity: number;
-  constructor(id: string, name: string, price: number, quantity: number = 0) {
+  public printing: string;
+  public printings: Card[];
+  constructor(id: string = '', name: string = '', price: number = 0, quantity: number = 0) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.quantity = quantity;
+    this.printing = '';
+    this.printings = [];
   }
   getID() {
     return this.id;

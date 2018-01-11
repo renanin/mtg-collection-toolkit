@@ -7,6 +7,8 @@ import settings from './pages/settings/settings.vue';
 import SettingsPageComponent from './pages/settings/component';
 import csv from './pages/csv/csv.vue';
 import CSVPageComponent from './pages/csv/component';
+import trades from './pages/trades/trades.vue';
+import TradesPageComponent from './pages/trades/component';
 
 export default [
   {
@@ -24,5 +26,8 @@ export default [
   }, {
     path: '/csv',
     component: <ComponentOptions<CSVPageComponent>>csv,
+  }, {
+    path: '/trades',
+    component: <ComponentOptions<TradesPageComponent>>trades,
   },
 ];
