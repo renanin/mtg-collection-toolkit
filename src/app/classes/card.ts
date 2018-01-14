@@ -31,4 +31,10 @@ export default class Card {
   setQuantity(quantity: number) {
     this.quantity = quantity;
   }
+  isCash() {
+    return false;
+  }
+  getAmount() {
+    return null;
+  }
 }

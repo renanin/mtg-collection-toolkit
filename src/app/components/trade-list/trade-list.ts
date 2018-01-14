@@ -2,6 +2,7 @@ import { ComponentOptions } from 'vue';
 import request from 'request';
 import TradeListComponent from './component';
 import Card from '../../classes/card';
+import Cash from '../../classes/cash';
 
 export default {
   props: ['label','value','editable'],
@@ -25,11 +26,18 @@ export default {
     addCard() {
       this.cards.push(new Card());
     },
+    addCash() {
+      this.cards.push(new Cash());
+    },
     getTotalPrice() {
       let total = 0;
       this.cards.forEach((card) => {
-        if (!isNaN(card.getPrice())) {
-          total += card.getPrice();
+        if (card.isCash()) {
+          total += card.getAmount();
+        } else {
+          if (!isNaN(card.getPrice())) {
+            total += card.getPrice();
+          }
         }
       });
       return total;
@@ -78,15 +86,22 @@ export default {
       );
     },
     updatePrice(card) {
-      card.printings.forEach((printing) => {
-        if (printing.set === card.printing) {
-          card.price = Number(printing.usd);
-        }
-      });
+      if (card.isCash()) {
+        card.price = card.getAmount();
+      } else {
+        card.printings.forEach((printing) => {
+          if (printing.set === card.printing) {
+            card.price = Number(printing.usd);
+          }
+        });
+      }
       this.$emit('input', this.cards);
     },
     toggleEditable() {
       this.isEditable = !this.isEditable;
+    },
+    isCash(card) {
+      return card.isCash();
     },
   },
 } as ComponentOptions<TradeListComponent>;
