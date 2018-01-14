@@ -1,12 +1,17 @@
 div
   h1 Trades
   md-button.md-raised.md-primary(@click="addTrade()") Add Trade
-  p {{$store.state.trades}}
+  .trades
+    md-card(v-for="(trade, key) in $store.state.trades",:key="key")
+      md-card-content
+        .trade-lists
+          trade-list(label="My Cards",:value="trade.myCards",:editable="false")
+          trade-list(label="Their Cards",:value="trade.theirCards",:editable="false")
   md-dialog(ref="addTradeDialog")
     md-dialog-title Add Trade
     md-dialog-content
       .trade-lists
-        trade-list(label="My Cards",v-model="myCards")
-        trade-list(label="Their Cards",v-model="theirCards")
+        trade-list(label="My Cards",v-model="myCards",:editable="true")
+        trade-list(label="Their Cards",v-model="theirCards",:editable="true")
     md-dialog-actions
       md-button.md-raised.md-primary(@click="submitTrade()") Add Trade

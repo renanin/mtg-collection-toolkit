@@ -4,13 +4,24 @@ import TradeListComponent from './component';
 import Card from '../../classes/card';
 
 export default {
-  props: ['label'],
+  props: ['label','value','editable'],
   data() {
     return {
       cards: [],
+      isEditable: false,
     };
   },
+  watch: {
+    value: 'updateCards',
+  },
+  created() {
+    this.updateCards();
+  },
   methods: {
+    updateCards() {
+      this.cards = this.value;
+      this.isEditable = this.editable;
+    },
     addCard() {
       this.cards.push(new Card());
     },
@@ -73,6 +84,9 @@ export default {
         }
       });
       this.$emit('input', this.cards);
+    },
+    toggleEditable() {
+      this.isEditable = !this.isEditable;
     },
   },
 } as ComponentOptions<TradeListComponent>;

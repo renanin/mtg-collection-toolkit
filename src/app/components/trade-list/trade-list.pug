@@ -1,9 +1,9 @@
-md-card
+md-card.trade-list
   md-card-header
     .md-title {{label}}
     .md-subhead ${{getTotalPrice()}}
   md-card-content
-    md-button(@click="addCard()") Add Card
+    md-button(v-if="isEditable",@click="addCard()") Add Card
     md-table.card-list
       md-table-header
         md-table-row
@@ -13,12 +13,18 @@ md-card
       md-table-body
         md-table-row(v-for="(card, key) in cards",:key="key")
           md-table-cell
-            md-input-container
+            md-input-container(v-if="isEditable")
               label Card Name
               md-autocomplete(v-model="card.name",:fetch="autocomplete",@selected="getPrintings(card)")
+            template(v-else) {{card.name}}
           md-table-cell
-            md-input-container
+            md-input-container(v-if="isEditable")
               label Set
               md-select(v-model="card.printing",@selected="updatePrice(card)")
                 md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing.set") {{printing.set}}
+            template(v-else) {{card.printing}}
           md-table-cell ${{card.price}}
+  md-card-actions
+    md-button.md-raised.md-primary.md-icon-button(v-if="!editable",@click="toggleEditable()")
+      md-icon(v-if="isEditable") check
+      md-icon(v-else) edit
