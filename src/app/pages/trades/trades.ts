@@ -22,6 +22,8 @@ export default {
     submitTrade() {
       this.$store.commit('addTrade', new Trade(this.myCards, this.theirCards));
       (this.$refs.addTradeDialog as any).close();
+      this.myCards = [];
+      this.theirCards = [];
     },
   },
 } as ComponentOptions<TradesPageComponent>;
