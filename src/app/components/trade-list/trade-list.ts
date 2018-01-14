@@ -17,11 +17,11 @@ export default {
   },
   created() {
     this.updateCards();
+    this.isEditable = this.editable;
   },
   methods: {
     updateCards() {
       this.cards = this.value;
-      this.isEditable = this.editable;
     },
     addCard() {
       this.cards.push(new Card());
