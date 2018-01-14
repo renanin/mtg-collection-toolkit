@@ -10,8 +10,7 @@ div
   md-dialog(ref="addTradeDialog")
     md-dialog-title Add Trade
     md-dialog-content
-      .trade-lists
-        trade-list(label="My Cards",v-model="myCards",:editable="true")
-        trade-list(label="Their Cards",v-model="theirCards",:editable="true")
+      trade-list(label="My Cards",v-model="myCards",:editable="true")
+      trade-list(label="Their Cards",v-model="theirCards",:editable="true")
     md-dialog-actions
       md-button.md-raised.md-primary(@click="submitTrade()") Add Trade
