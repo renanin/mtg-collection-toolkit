@@ -6,6 +6,7 @@ import Set from '../classes/set';
 import CardResponse from '../classes/cardResponse';
 import Card from '../classes/card';
 import Collection from '../classes/collection';
+import Trade from '../classes/trade';
 
 export default {
   loadSet(state: state, set: SetResponse) {
@@ -45,5 +46,8 @@ export default {
   },
   emptySets(state: state) {
     state.sets = {};
+  },
+  addTrade(state: state, trade: Trade) {
+    state.trades.push(trade);
   },
 };

@@ -12,5 +12,6 @@ export default new Vuex.Store({
   state: {
     sets: {},
     collection: {},
+    trades: [],
   },
 }) as Store<state>;

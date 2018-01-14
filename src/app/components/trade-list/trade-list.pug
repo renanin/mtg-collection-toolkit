@@ -1,0 +1,24 @@
+md-card
+  md-card-header
+    .md-title {{label}}
+    .md-subhead ${{getTotalPrice()}}
+  md-card-content
+    md-button(@click="addCard()") Add Card
+    md-table.card-list
+      md-table-header
+        md-table-row
+          md-table-head Name
+          md-table-head Set
+          md-table-head Price
+      md-table-body
+        md-table-row(v-for="(card, key) in cards",:key="key")
+          md-table-cell
+            md-input-container
+              label Card Name
+              md-autocomplete(v-model="card.name",:fetch="autocomplete",@selected="getPrintings(card)")
+          md-table-cell
+            md-input-container
+              label Set
+              md-select(v-model="card.printing",@selected="updatePrice(card)")
+                md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing.set") {{printing.set}}
+          md-table-cell ${{card.price}}

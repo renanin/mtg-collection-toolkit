@@ -1,30 +1,12 @@
 div
   h1 Trades
   md-button.md-raised.md-primary(@click="addTrade()") Add Trade
+  p {{$store.state.trades}}
   md-dialog(ref="addTradeDialog")
     md-dialog-title Add Trade
     md-dialog-content
-      md-card
-        md-card-header
-          .md-title My Cards
-          .md-subhead ${{getMyTotalPrice()}}
-        md-card-content
-          md-button(@click="addCard()") Add Card
-          md-table.card-list
-            md-table-header
-              md-table-row
-                md-table-head Name
-                md-table-head Set
-                md-table-head Price
-            md-table-body
-              md-table-row(v-for="(card, key) in myCards",:key="key")
-                md-table-cell
-                  md-input-container
-                    label Card Name
-                    md-autocomplete(v-model="card.name",:fetch="autocomplete",@selected="getPrintings(card)")
-                md-table-cell
-                  md-input-container
-                    label Set
-                    md-select(v-model="card.printing",@selected="updatePrice(card)")
-                      md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing.set") {{printing.set}}
-                md-table-cell ${{card.price}}
+      .trade-lists
+        trade-list(label="My Cards",v-model="myCards")
+        trade-list(label="Their Cards",v-model="theirCards")
+    md-dialog-actions
+      md-button.md-raised.md-primary(@click="submitTrade()") Add Trade

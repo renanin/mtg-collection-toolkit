@@ -2,78 +2,26 @@ import { ComponentOptions } from 'vue';
 import request from 'request';
 import TradesPageComponent from './component';
 import Card from '../../classes/card';
+import tradeList from '../../components/trade-list/trade-list.vue';
+import Trade from '../../classes/trade';
 
 export default {
+  components: {
+    tradeList,
+  },
   data() {
     return {
       myCards: [],
+      theirCards: [],
     };
   },
   methods: {
     addTrade() {
-      this.$refs.addTradeDialog.open();
+      (this.$refs.addTradeDialog as any).open();
     },
-    addCard() {
-      this.myCards.push(new Card());
-    },
-    autocomplete(chars) {
-      return new Promise((resolve, reject) => {
-        request(
-          `https://api.scryfall.com/cards/autocomplete?q=${chars.q}`,
-          (err, res, body) => {
-            if (err) {
-              reject(err);
-            } else {
-              try {
-                const results = JSON.parse(body);
-                const transformed = [];
-                results.data.forEach((name) => {
-                  transformed.push({
-                    name,
-                  });
-                });
-                resolve(transformed);
-              } catch (e) {
-                reject(e);
-              }
-            }
-          },
-        );
-      });
-    },
-    getPrintings(card) {
-      request(
-        `https://api.scryfall.com/cards/search?order=set&q=%2B%2B%21%22`
-         + `${encodeURIComponent(card.name)}%22`,
-        (err, res, body) => {
-          if (err) {
-            console.error(err);
-          } else {
-            try {
-              const results = JSON.parse(body);
-              card.printings = results.data;
-            } catch (e) {
-              console.error(e);
-            }
-          }
-        },
-      );
-    },
-    updatePrice(card) {
-      card.printings.forEach((printing) => {
-        if (printing.set === card.printing) {
-          card.price = Number(printing.usd);
-        }
-      });
-    },
-    getMyTotalPrice() {
-      let total = 0;
-      this.myCards.forEach((card) => {
-        if (!isNaN(card.price)) {
-          total += card.price;
-        }
-      });
-      return total;
+    submitTrade() {
+      this.$store.commit('addTrade', new Trade(this.myCards, this.theirCards));
+      (this.$refs.addTradeDialog as any).close();
     },
   },
 } as ComponentOptions<TradesPageComponent>;
