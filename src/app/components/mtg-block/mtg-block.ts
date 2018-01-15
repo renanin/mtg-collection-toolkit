@@ -37,9 +37,9 @@ export default class MtgBlock extends Vue {
   popup: boolean = false;
 
   /**
-   * Expands the list of sets when clicked
+   * Toggles the visibility of the popup
    */
-  expand() {
-    this.popup = true;
+  togglePopup() {
+    this.popup = !this.popup;
   }
 }
