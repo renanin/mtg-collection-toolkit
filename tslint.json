@@ -7,5 +7,5 @@
   "rules": {
       "import-name": ["off"]
   },
-  "rulesDirectory": []
+  "rulesDirectory": [],
 }

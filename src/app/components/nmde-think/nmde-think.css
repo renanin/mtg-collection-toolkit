@@ -1,0 +1,17 @@
+.nmde-think {
+  background-color: #ffa726;
+  width: 25px;
+  height: 25px;
+  -webkit-clip-path: circle(25% at 50% 50%);
+  clip-path: circle(25% at 50% 50%);
+  transition: transform 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
+}
+
+.nmde-think.up {
+  transform: translateY(-20px);
+}
+
+.nmde-think.down {
+  transform: translateY(20px);
+}
