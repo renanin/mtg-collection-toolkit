@@ -1,4 +1,4 @@
-div
+//div
   md-toolbar
     router-link.md-title(tag="h2",to="/",style="flex:1") MTG Collection Toolkit
     router-link(tag="md-button",to="/database") Database
@@ -10,3 +10,10 @@ div
     router-view
   md-snackbar(ref="notification",md-position="bottom left")
     span {{notification}}
+
+nmde-app
+  nmde-toolbar(title="Collection Toolkit")
+    router-link(to="/csv") CSV Tools
+    router-link(to="/database") Database
+    router-link(to="/settings") Settings
+    router-link(to="/trades") Trades

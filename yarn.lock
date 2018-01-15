@@ -3649,7 +3649,7 @@ vrsource-tslint-rules@^5.1.0:
   dependencies:
     tslint "~5.8.0"
 
-vue, vue@^2.4.4:
+vue:
   version "2.5.9"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.9.tgz#b2380cd040915dca69881dafd121d760952e65f7"
 
@@ -3674,12 +3674,6 @@ vue-loader:
     vue-hot-reload-api "^2.2.0"
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
-
-vue-material:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/vue-material/-/vue-material-0.8.1.tgz#8f54666f52ef07b546ca0da93fbcd71574c599b2"
-  dependencies:
-    vue "^2.4.4"
 
 vue-router:
   version "3.0.1"

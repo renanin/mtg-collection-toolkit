@@ -1,0 +1,33 @@
+.nmde-toolbar {
+  flex: 1;
+  max-height: 76px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #ffa726;
+  color: #ffffff;
+}
+
+.nmde-toolbar-title {
+  order: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.nmde-toolbar a {
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 0px solid white;
+  transition: border-bottom 150ms ease-in-out;
+}
+
+.nmde-toolbar a:nth-child(odd) {
+  order: -1;
+}
+
+.nmde-toolbar a:nth-child(even) {
+  order: 1;
+}
+
+.nmde-toolbar .router-link-active {
+  border-bottom-width: 2px;
+}

@@ -1,12 +1,3 @@
-a:hover {
-  cursor: pointer;
-}
-
-.page {
-  margin: 8px;
-}
-
-.notice {
-  color: #757575;
-  font-style: italic;
+body {
+  margin: 0;
 }
