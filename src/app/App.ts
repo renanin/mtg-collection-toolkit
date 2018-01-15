@@ -12,4 +12,7 @@ export default {
     NmdeApp,
     NmdeToolbar,
   },
+  created() {
+    this.$store.dispatch('fetchSets');
+  },
 } as ComponentOptions<AppComponent>;
