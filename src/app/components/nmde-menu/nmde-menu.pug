@@ -1,3 +1,4 @@
-.nmde-menu(:class="{ active: active }",@click="toggleMenu()")
-  slot
-  .nmde-menu-background(:class="{ active: active }")
+.nmde-menu(:class="{ active: active, closing: closing }",@click="toggleMenu()")
+  .nmde-menu-content
+    slot
+  .nmde-menu-background
