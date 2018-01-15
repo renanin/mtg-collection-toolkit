@@ -1,0 +1,8 @@
+.header {
+  display: flex;
+  align-items: baseline;
+}
+
+.header .nmde-thinking {
+  margin-left: 8px;
+}
