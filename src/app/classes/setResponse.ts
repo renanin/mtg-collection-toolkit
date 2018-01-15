@@ -27,4 +27,16 @@ export default interface SetResponse {
    * @type {boolean}
    */
   digital: boolean;
+  /**
+   * The code of the block the set belongs to
+   * @name SetResponse#block_code
+   * @type {string}
+   */
+  block_code: string;
+  /**
+   * The full name of the block the set belongs to
+   * @name SetResponse#block
+   * @type {string}
+   */
+  block: string;
 }

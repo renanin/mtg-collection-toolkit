@@ -5,7 +5,8 @@
   ],
   "jsRules": {},
   "rules": {
-      "import-name": ["off"]
+      "import-name": ["off"],
+      "no-unused-variable": [true, "error"]
   },
   "rulesDirectory": [],
 }

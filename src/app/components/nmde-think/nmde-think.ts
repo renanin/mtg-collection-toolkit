@@ -17,14 +17,14 @@ export default class NmdeThink extends Vue {
    */
   up: boolean = false;
 
-  @Prop({
-    default: 0,
-  })
   /**
    * The amount, in pixels, the ball is from the leftmost ball
    * @name NmdeThink#left
    * @type {number}
    */
+  @Prop({
+    default: 0,
+  })
   left: number;
 
   created() {

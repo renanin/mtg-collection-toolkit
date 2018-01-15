@@ -12,3 +12,9 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.blocks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

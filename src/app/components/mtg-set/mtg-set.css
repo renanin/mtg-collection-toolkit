@@ -1,0 +1,8 @@
+.mtg-set {
+  padding: 8px;
+  border-bottom: 1px solid #eeeeee;
+  max-width: 275px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
