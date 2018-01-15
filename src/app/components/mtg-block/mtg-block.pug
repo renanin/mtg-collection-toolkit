@@ -1,7 +1,6 @@
 .mtg-block(@click="togglePopup()")
   h2 {{name}}
-  .popup(:class="{ active: popup }")
+  nmde-menu(ref="popup")
     h2 {{name}}
     .sets
       mtg-set(v-for="(set, key) in block",:key="key",:set="set")
-  .popup-background(:class="{ active: popup }")

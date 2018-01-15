@@ -3,11 +3,13 @@ import Component from 'vue-class-component';
 import Vue from 'vue';
 import Block from '../../classes/block';
 import MtgSet from '../mtg-set/mtg-set.vue';
+import NmdeMenu from '../nmde-menu/nmde-menu.vue';
 import Set from '../../classes/set';
 
 @Component({
   components: {
     MtgSet,
+    NmdeMenu,
   },
 })
 
@@ -30,16 +32,9 @@ export default class MtgBlock extends Vue {
   }
 
   /**
-   * Whether the popup is open or not
-   * @name MtgBlock#popup
-   * @type {boolean}
-   */
-  popup: boolean = false;
-
-  /**
    * Toggles the visibility of the popup
    */
   togglePopup() {
-    this.popup = !this.popup;
+    (this.$refs.popup as Vue).$emit('toggle');
   }
 }
