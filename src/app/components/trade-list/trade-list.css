@@ -1,8 +1,0 @@
-.card-list {
-  max-height: 400px;
-  overflow-y: scroll;
-}
-
-.trade-list {
-  flex: 1;
-}

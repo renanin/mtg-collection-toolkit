@@ -2,4 +2,5 @@
   display: flex;
   color: #212121;
   font-family: 'Open Sans', sans-serif;
+  flex-direction: column;
 }
