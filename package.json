@@ -9,6 +9,7 @@
     "start": "electron ."
   },
   "devDependencies": {
+    "@types/node": "^9.3.0",
     "babel-core": "^6.25.0",
     "babel-preset-latest": "^6.24.1",
     "css-loader": "0.14.5",
@@ -23,8 +24,10 @@
     "tslint-config-airbnb": "^5.3.0",
     "typescript": "^2.6.1",
     "url-loader": "^0.5.9",
+    "vue-class-component": "^6.1.2",
     "vue-loader": "^13.5.0",
     "vue-template-compiler": "^2.5.9",
+    "vuex-class": "^0.3.0",
     "webpack": "^3.0.0"
   },
   "dependencies": {
@@ -35,7 +38,7 @@
     "simple-sort": "^0.1.2",
     "vue": "^2.5.9",
     "vue-router": "^3.0.1",
-    "vuex": "^2.4.0"
+    "vuex": "^3.0.0"
   },
   "engines": {
     "node": ">= 4.0.0",

@@ -1,4 +1,6 @@
-import { ComponentOptions } from 'vue';
-import NmdeAppComponent from './component';
+import Component from 'vue-class-component';
+import Vue from 'vue';
 
-export default {} as ComponentOptions<NmdeAppComponent>;
+@Component({})
+
+export default class NmdeApp extends Vue {}

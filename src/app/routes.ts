@@ -1,6 +1,5 @@
 import { ComponentOptions } from 'vue';
 import database from './pages/database/database.vue';
-import DatabasePageComponent from './pages/database/component';
 
 export default [
   {
@@ -8,6 +7,6 @@ export default [
     redirect: 'database',
   }, {
     path: '/database',
-    component: <ComponentOptions<DatabasePageComponent>>database,
+    component: database,
   },
 ];

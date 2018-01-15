@@ -1,4 +1,6 @@
-import { ComponentOptions } from 'vue';
-import DatabasePageComponent from './component';
+import Component from 'vue-class-component';
+import Vue from 'vue';
 
-export default {} as ComponentOptions<DatabasePageComponent>;
+@Component({})
+
+export default class Database extends Vue {}

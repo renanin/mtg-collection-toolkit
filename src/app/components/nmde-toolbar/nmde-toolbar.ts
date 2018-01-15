@@ -1,11 +1,13 @@
-import { ComponentOptions } from 'vue';
-import NmdeToolbarComponent from './component';
+import Component from 'vue-class-component';
+import Vue from 'vue';
 
-export default {
+@Component({
   props: {
     title: {
       type: String,
       required: true,
     },
   },
-} as ComponentOptions<NmdeToolbarComponent>;
+})
+
+export default class NmdeToolbar extends Vue {}

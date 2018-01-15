@@ -1,18 +1,23 @@
-import { ComponentOptions } from 'vue';
-import AppComponent from './component';
+import { Action } from 'vuex-class';
+import Component from 'vue-class-component';
+import Vue from 'vue';
 import router from '../bootstrap';
 import store from './store';
 import NmdeApp from './components/nmde-app/nmde-app.vue';
 import NmdeToolbar from './components/nmde-toolbar/nmde-toolbar.vue';
 
-export default {
+@Component({
   router,
   store,
   components: {
     NmdeApp,
     NmdeToolbar,
   },
+})
+
+export default class App extends Vue {
+  @Action fetchSets;
   created() {
-    this.$store.dispatch('fetchSets');
-  },
-} as ComponentOptions<AppComponent>;
+    this.fetchSets();
+  }
+}

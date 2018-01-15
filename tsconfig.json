@@ -7,6 +7,7 @@
       "es2015.promise"
     ],
     "module": "es2015",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "experimentalDecorators": true
   }
 }
