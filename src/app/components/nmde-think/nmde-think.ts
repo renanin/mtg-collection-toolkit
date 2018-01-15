@@ -10,30 +10,36 @@ import { setInterval } from 'timers';
  * @classdesc An individual ball for NmdeThinking
  */
 export default class NmdeThink extends Vue {
-  @Prop({
-    default: 0,
-  })
-  offset: number;
-
   /**
    * If the ball is up or not
    * @name NmdeThink#up
    * @type {boolean}
-   * @private
    */
   up: boolean = false;
 
+  @Prop({
+    default: 0,
+  })
+  /**
+   * The amount, in pixels, the ball is from the leftmost ball
+   * @name NmdeThink#left
+   * @type {number}
+   */
+  left: number;
+
   created() {
-    setTimeout(
-      () => {
-        setInterval(
-          () => {
-            this.up = !this.up;
-          },
-          500,
-        );
-      },
-      this.offset,
-    );
+    let animationLoop;
+    this.$on('start', () => {
+      animationLoop = setInterval(
+        () => {
+          this.up = !this.up;
+        },
+        500,
+      );
+    });
+    this.$on('stop', () => {
+      clearInterval(animationLoop._id);
+      this.up = false;
+    });
   }
 }

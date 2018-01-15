@@ -15,9 +15,4 @@ import NmdeToolbar from './components/nmde-toolbar/nmde-toolbar.vue';
   },
 })
 
-export default class App extends Vue {
-  @Action fetchSets;
-  created() {
-    this.fetchSets();
-  }
-}
+export default class App extends Vue {}
