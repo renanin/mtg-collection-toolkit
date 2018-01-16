@@ -22,9 +22,10 @@
 
 .name-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   height: 100%;
+  flex-direction: column;
 }
 
 .nmde-menu .name-container {

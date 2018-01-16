@@ -4,12 +4,14 @@ import Vue from 'vue';
 import Block from '../../classes/block';
 import MtgSet from '../mtg-set/mtg-set.vue';
 import NmdeMenu from '../nmde-menu/nmde-menu.vue';
+import NmdeProgress from '../nmde-progress/nmde-progress.vue';
 import Set from '../../classes/set';
 
 @Component({
   components: {
     MtgSet,
     NmdeMenu,
+    NmdeProgress,
   },
 })
 
