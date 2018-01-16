@@ -39,4 +39,10 @@ export default interface SetResponse {
    * @type {string}
    */
   block: string;
+  /**
+   * The URL of the set icon
+   * @name SetResponse#icon_svg_uri
+   * @type {string}
+   */
+  icon_svg_uri: string;
 }

@@ -58,7 +58,6 @@ export default class Database extends Vue {
    * @return {Set[][]} A list of blocks, each of which is a list of sets.
    */
   blocks(): Set[][] {
-    console.log('Building blocks');
     const codes = Object.keys(this.localSets);
     const blocks: Block = {};
     const result: Set[][] = [];

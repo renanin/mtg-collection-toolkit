@@ -39,19 +39,28 @@ export default class Set {
    */
   private blockName: string;
   /**
+   * The URL of the set icon
+   * @name Set#icon
+   * @type {string}
+   * @private
+   */
+  private icon: string;
+  /**
    * @constructs
    * @param {string} code The code of the set
    * @param {string} name The full name of the set
    * @param {number} cardCount The number of cards in the set
    * @param {string} block The block the set belongs to
    * @param {string} blockName The full name of the block the set belongs to
+   * @param {string} icon The full URL of the set icon
    */
-  constructor(code: string, name: string, cardCount: number, block: string, blockName: string) {
+  constructor(code: string, name: string, cardCount: number, block: string, blockName: string, icon: string) {
     this.code = code;
     this.name = name;
     this.cardCount = cardCount;
     this.block = block;
     this.blockName = blockName;
+    this.icon = icon;
   }
 
   getCode() {
@@ -68,6 +77,9 @@ export default class Set {
   }
   getBlockName() {
     return this.blockName;
+  }
+  getIcon() {
+    return this.icon;
   }
 
   /**

@@ -1,6 +1,7 @@
 import fs from 'fs';
 import read from 'read-big-file';
 import request from 'request';
+import Set from '../classes/set';
 import SetResponse from '../classes/setResponse';
 import paginate from '../util/paginate';
 
@@ -8,7 +9,7 @@ export default {
   /**
    * Attempts to fetch set information from Scryfall, or otherwise from the cache
    */
-  fetchSets({ commit }) {
+  fetchSets({ commit, dispatch }) {
     return new Promise(async (resolve, reject) => {
       try {
         const sets = <SetResponse[]>await paginate('https://api.scryfall.com/sets/');
