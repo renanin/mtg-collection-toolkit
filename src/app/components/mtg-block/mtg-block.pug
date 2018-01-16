@@ -1,6 +1,8 @@
 .mtg-block(@click="togglePopup()")
-  h2 {{name}}
-  nmde-menu(ref="popup")
+  .name-container
     h2 {{name}}
+  nmde-menu(ref="popup")
+    .name-container
+      h2 {{name}}
     .sets
       mtg-set(v-for="(set, key) in block",:key="key",:set="set")

@@ -5,4 +5,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  display: flex;
+  align-items: baseline;
+}
+
+.mtg-set img {
+  width: 18px;
+  margin-right: 4px;
 }

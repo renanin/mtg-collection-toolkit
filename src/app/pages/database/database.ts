@@ -59,20 +59,18 @@ export default class Database extends Vue {
    */
   blocks(): Set[][] {
     const codes = Object.keys(this.localSets);
-    const blocks: Block = {};
+    const groups: Block = {};
     const result: Set[][] = [];
     codes.forEach((code) => {
-      if (this.localSets[code].inBlock()) {
-        const block = this.localSets[code].getBlock();
-        if (!blocks[block]) {
-          blocks[block] = [];
-        }
-        blocks[block].push(this.localSets[code]);
+      const group = this.localSets[code].getGroupCode();
+      if (!groups[group]) {
+        groups[group] = [];
       }
+      groups[group].push(this.localSets[code]);
     });
-    const blockCodes = Object.keys(blocks);
-    blockCodes.forEach((code) => {
-      result.push(blocks[code]);
+    const groupCodes = Object.keys(groups);
+    groupCodes.forEach((code) => {
+      result.push(groups[code]);
     });
     return result;
   }
@@ -99,6 +97,36 @@ export default class Database extends Vue {
     );
   }
 
+  /**
+   * Plays the text gradient animation
+   */
+  textAnimation() {
+    return new Promise((resolve, reject) => {
+      this.blackPercent = 0;
+      let x = 0;
+      const u0 = 0.15;
+      const u1 = 0.35;
+      const u2 = 0.2;
+      const u3 = 0.85;
+      async.whilst(
+        () => this.orangePercent > 0,
+        (next) => {
+          this.orangePercent -= (u0 * Math.pow(1 - x, 3)) + (3 * u1 * Math.pow(1 - x, 2) * x) + (3 * u2 * (1 - x) * Math.pow(x, 2)) + (u3 * Math.pow(x, 3));
+          x += 0.07;
+          setTimeout(
+            () => {
+              next();
+            },
+            4,
+          );
+        },
+        () => {
+          resolve();
+        }
+      );
+    });
+  }
+
   mounted() {
     (this.$refs.loadingIndicator as Vue).$emit('start');
     this.fetchSets()
@@ -106,28 +134,9 @@ export default class Database extends Vue {
         (this.$refs.loadingIndicator as Vue).$emit('stop');
         setTimeout(
           () => {
-            this.blackPercent = 0;
-            let x = 0;
-            const u0 = 0.15;
-            const u1 = 0.35;
-            const u2 = 0.2;
-            const u3 = 0.85;
-            async.whilst(
-              () => this.orangePercent > 0,
-              (next) => {
-                this.orangePercent -= (u0 * Math.pow(1 - x, 3)) + (3 * u1 * Math.pow(1 - x, 2) * x) + (3 * u2 * (1 - x) * Math.pow(x, 2)) + (u3 * Math.pow(x, 3));
-                x += 0.07;
-                setTimeout(
-                  () => {
-                    next();
-                  },
-                  4,
-                );
-              },
-              () => {
-                this.displaySets();
-              }
-            );
+            this.textAnimation().then(() => {
+              this.displaySets();
+            });
           },
           850,
         );

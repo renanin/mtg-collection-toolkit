@@ -45,4 +45,10 @@ export default interface SetResponse {
    * @type {string}
    */
   icon_svg_uri: string;
+  /**
+   * The code of the parent set
+   * @name SetResponse#parent_set_code
+   * @type {string}
+   */
+  parent_set_code: string;
 }

@@ -28,7 +28,17 @@ export default class MtgBlock extends Vue {
    * @type {string}
    */
   get name(): string {
-    return this.block[0].getBlockName();
+    let found = false;
+    let re = this.block[0].getGroupName();
+    let i = 0;
+    while (!found && i < this.block.length) {
+      if (this.block[i].getGroupName()) {
+        re = this.block[i].getGroupName();
+        found = true;
+      }
+      i += 1;
+    }
+    return re;
   }
 
   /**
