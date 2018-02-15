@@ -1,10 +1,10 @@
 .mtg-block(@click="togglePopup()")
   .name-container
-    nmde-progress(:progress="0")
+    nmde-progress(progress="0")
     h2 {{name}}
   nmde-menu(ref="popup")
     .name-container
-      nmde-progress(:progress="0")
+      nmde-progress(progress="0")
       h2 {{name}}
     .sets
       mtg-set(v-for="(set, key) in block",:key="key",:set="set")

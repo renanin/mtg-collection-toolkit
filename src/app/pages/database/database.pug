@@ -2,5 +2,6 @@
   .header
     h1.title(:style="{ 'background-image': gradient }") Database
     nmde-thinking(ref="loadingIndicator")
-  .blocks
-    mtg-block(v-for="(block, key) in blocks()",:key="key",:block="block")
+  transition-group(name="slide-down",tag="div").blocks
+    div(v-for="(block, key) in blocks()",:key="key")
+      mtg-block(:block="block")

@@ -79,17 +79,23 @@ export default class Database extends Vue {
    * Displays and animates the blocks and sets
    */
   displaySets() {
+    let i = 0;
     async.eachSeries(
       Object.keys(this.sets),
       (code, next) => {
         this.localSets[code] = this.sets[code];
         this.$forceUpdate();
-        setTimeout(
-          () => {
-            next();
-          },
-          10,
-        );
+        if (i <= 50) {
+          setTimeout(
+            () => {
+              next();
+            },
+            10,
+          );
+        } else {
+          next();
+        }
+        i += 1;
       },
       () => {
         console.log('Done');

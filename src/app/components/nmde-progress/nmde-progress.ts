@@ -15,5 +15,5 @@ export default class NmdeProgress extends Vue {
    * @type {number}
    */
   @Prop({})
-  progress: number = 0;
+  progress: number;
 }

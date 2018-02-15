@@ -18,3 +18,19 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.slide-down-enter-active {
+  transition-property: opacity, transform;
+  transition-duration: 250ms, 300ms;
+  transition-timing-function: ease, ease-in-out;
+}
+
+.slide-down-enter {
+  opacity: 0;
+  transform: translateY(-26px);
+}
+
+.slide-down-enter-to {
+  opacity: 1;
+  transform: translateY(0px);
+}
