@@ -1,6 +1,6 @@
 {
   "name": "mtg-collection-toolkit",
-  "version": "0.41.0",
+  "version": "0.42.0",
   "main": "app.js",
   "description": "Manage your Magic: The Gathering collection, trades and more.",
   "author": "nmde <nmde@protonmail.com>",
@@ -12,6 +12,7 @@
     "@types/node": "^9.3.0",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-latest": "^6.24.1",
     "css-loader": "0.14.5",
     "eslint": "3.19.0",
@@ -38,6 +39,7 @@
     "request": "^2.82.0",
     "simple-sort": "^0.1.2",
     "vue": "^2.5.9",
+    "vue-material": "beta",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.0"
   },

@@ -9,7 +9,5 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   mutations,
   actions,
-  state: {
-    sets: {},
-  },
+  state: {},
 }) as Store<state>;

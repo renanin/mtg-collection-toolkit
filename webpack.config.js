@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    bundle: [path.resolve(__dirname, 'src', 'main.ts')],
+    bundle: ['babel-polyfill', path.resolve(__dirname, 'src', 'main.ts')],
   },
   output: {
     path: path.join(__dirname, 'dist'),
