@@ -1,2 +1,46 @@
 .app
-  p Hello, World!
+  dashboard-item(title="Recent Gains")
+    md-table
+      md-table-row
+        md-table-head Name
+        md-table-head Current Price
+        md-table-head Acquired Price
+        md-table-head Weekly Change
+        md-table-head Total Profit
+      md-table-row(v-for="(card, key) in demoGains",:key="key")
+        md-table-cell
+          span {{card.name}} (
+          span.gray {{card.set}}
+          span )
+        md-table-cell ${{card.currentPrice}}
+        md-table-cell
+          span.gray(v-if="card.acquiredPrice === 'N/A'") N/A
+          span(v-else) ${{card.acquiredPrice}}
+        md-table-cell
+          span.green(v-if="card.weeklyChangePercent > 0.01") {{card.weeklyChangePercent}}%
+          span.red(v-else) {{card.weeklyChangePercent}}%
+        md-table-cell
+          span.gray(v-if="card.totalChangePercent === 'N/A'") N/A
+          span.green(v-else-if="card.totalChangePercent > 0.01") {{card.totalChangePercent}}%
+          span.red(v-else) {{card.totalChangePercent}}%
+  dashboard-item(title="Recent Trades")
+    md-button.md-icon-button(slot="menu")
+      md-icon add
+    md-table
+      md-table-row
+        md-table-head My Value
+        md-table-head Their Value
+        md-table-head My Value Now
+        md-table-head Their Value Now
+        md-table-head Profit
+        md-table-head Profit Now
+      md-table-row
+        md-table-cell $5.00
+        md-table-cell $3.35
+        md-table-cell $4.95
+        md-table-cell $4.00
+        md-table-cell.green $1.65
+        md-table-cell.green $0.95
+  dashboard-item(title="Wishlist")
+    md-button.md-icon-button(slot="menu")
+      md-icon add

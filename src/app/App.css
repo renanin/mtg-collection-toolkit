@@ -2,6 +2,20 @@ body {
   margin: 0;
 }
 
-.page {
-  margin: 8px;
+.app {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.red {
+  color: #F44336;
+}
+
+.gray {
+  color: rgba(0, 0, 0, 0.87);
+  font-style: italic;
+}
+
+.green {
+  color: #4CAF50;
 }
