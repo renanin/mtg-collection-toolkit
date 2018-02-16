@@ -1,1 +1,5 @@
-export default interface state {}
+import Trade from '../classes/trade';
+
+export default interface state {
+  trades: Trade[];
+}

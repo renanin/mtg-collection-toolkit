@@ -1,0 +1,15 @@
+body {
+  margin: 8px;
+}
+
+.green {
+  color: #4CAF50;
+}
+
+.red {
+  color: #F44336;
+}
+
+.md-menu-content {
+  z-index: 110;
+}

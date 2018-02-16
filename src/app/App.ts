@@ -1,7 +1,12 @@
 import Component from 'vue-class-component';
 import Vue from 'vue';
+import router from '../bootstrap';
+import store from './store';
 
-@Component({})
+@Component({
+  router,
+  store,
+})
 
 /**
  * @class App

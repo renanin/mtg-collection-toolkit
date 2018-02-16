@@ -1,0 +1,4 @@
+.trades {
+  display: flex;
+  flex-direction: column;
+}
