@@ -8,6 +8,7 @@ import Item from '../../classes/item';
 import Printing from '../../classes/printing';
 import SearchResults from '../../classes/searchResults';
 import Trade from '../../classes/trade';
+import TradeDraft from '../../classes/tradeDraft';
 
 @Component({})
 
@@ -17,7 +18,7 @@ import Trade from '../../classes/trade';
  * @extends Vue
  */
 export default class Trades extends Vue {
-  @State trades: Trade[];
+  @State trades: TradeDraft[];
   @Action fetchCard;
   @Mutation addCard;
   @Mutation addTrade;
@@ -36,7 +37,7 @@ export default class Trades extends Vue {
    * @type {Trade}
    * @private
    */
-  private newTrade: Trade = new Trade();
+  private newTrade: TradeDraft = new TradeDraft();
 
   /**
    * Autocomplete search results
@@ -123,7 +124,7 @@ export default class Trades extends Vue {
           () => {
             this.addTrade(trade);
             this.addTradeDialog = false;
-            this.newTrade = new Trade();
+            this.newTrade = new TradeDraft();
           },
         );
       },

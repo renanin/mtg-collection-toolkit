@@ -6,7 +6,7 @@ div
       md-ripple
         md-card-header
           .md-title {{trade.date}}
-          .md-subhead.red -$5.00
+          .md-subhead(:class="{ red: trade.profit < 0 }") {{trade.profit}}
   md-dialog(:md-active.sync="addTradeDialog")
     md-dialog-title Add Trade
     md-tabs(md-alignment="fixed")

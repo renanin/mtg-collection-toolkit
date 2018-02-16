@@ -1,54 +1,75 @@
-import Item from './item';
+import Card from './card';
 
 /**
  * @class Trade
- * @classdesc An individual trade
+ * @classdesc An individual Trade
  */
 export default class Trade {
   /**
-   * The date on which the trade took place
+   * The date on which the Trade took place
    * @name Trade#date
    * @type {Date}
    */
   date: Date;
 
   /**
-   * The user's cards in the trade
+   * The user's cards in the Trade
    * @name Trade#myCards
-   * @type {Item[]}
+   * @type {Card[]}
    */
-  myCards: Item[];
+  myCards: Card[];
 
   /**
-   * The other party's cards in the trade
+   * The other party's cards in the Trade
    * @name Trade#theirCards
-   * @type {Item[]}
+   * @type {Card[]}
    */
-  theirCards: Item[];
+  theirCards: Card[];
   
   /**
    * @constructs
-   * @param {Date} date The date on which the trade took place
+   * @param {Date} date The date on which the Trade took place
    * @param {Item[]} myCards The list of the user's cards
    * @param {Item[]} theirCards The list of the other party's cards
    */
-  constructor(date: Date = new Date(), myCards: Item[] = [], theirCards: Item[] = []) {
+  constructor(date: Date = new Date(), myCards: Card[] = [], theirCards: Card[] = []) {
     this.date = date;
     this.myCards = myCards;
     this.theirCards = theirCards;
   }
 
   /**
-   * Adds a card to the user's side of the trade
+   * Gets the total value of the user's cards
+   * @name Trade#myValue
+   * @type {number}
    */
-  addMyCard() {
-    this.myCards.push(new Item());
+  get myValue(): number {
+    let myValue = 0;
+    this.myCards.forEach((card) => {
+      myValue += card.price;
+    });
+    return myValue;
   }
 
   /**
-   * Adds a card to the party's side of the trade
+   * Gets the total value of the other party's cards
+   * @name Trade#theirValue
+   * @type {number}
    */
-  addTheirCard() {
-    this.theirCards.push(new Item());
+  get theirValue(): number {
+    let theirValue = 0;
+    this.theirCards.forEach((card) => {
+      theirValue += card.price;
+    });
+    return theirValue;
+  }
+
+  /**
+   * Gets the user's profit
+   * @name Trade#profit
+   * @type {number}
+   */
+  get profit(): number {
+    return this.myValue - this.theirValue;
   }
 }
