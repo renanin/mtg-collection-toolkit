@@ -1,23 +1,32 @@
 import request from 'request';
-import Card from '../classes/card';
-import CardResult from '../classes/cardResult';
-import Item from '../classes/item';
-import Printing from '../classes/printing';
-import SearchResults from '../classes/searchResults';
+import Collection from '../classes/collection';
+import SetsResponse from '../classes/response/sets';
 
 export default {
   /**
-   * Fetches and stores information about the supplied item
-   * @param {Item} card The item to fetch info about
+   * Loads the user's collection
    */
-  fetchCard({ commit }, card: Item) {
-    return new Promise((resolve) => {
+  loadCollection({ commit }) {
+    // @TODO: Read from file
+    commit('setCollection', new Collection());
+  },
+  /**
+   * Fetches a list of sets from Scryfall
+   */
+  fetchSets({ commit }) {
+    return new Promise((resolve, reject) => {
       request(
-        `https://api.scryfall.com/cards/search?q=${encodeURIComponent(card.name)}+e%3A${card.printing}`,
+        `https://api.scryfall.com/sets/`,
         (err, res, body) => {
-          const results: SearchResults = JSON.parse(body);
-          const card: CardResult = results.data[0];
-          resolve(new Card(card.name, new Printing(card.set_name, card.set), Number(card.usd)));
+          if (err) {
+            reject(err);
+          } else {
+            const result: SetsResponse = JSON.parse(body);
+            result.data.forEach((set) => {
+              commit('addSet', set);
+            });
+            resolve();
+          }
         },
       );
     });

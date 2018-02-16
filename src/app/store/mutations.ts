@@ -1,22 +1,23 @@
-import Card from '../classes/card';
-import Trade from '../classes/trade';
+import Collection from '../classes/collection';
+import Set from '../classes/set';
+import SetResponse from '../classes/response/set';
 import state from './state';
 
 export default {
   /**
-   * Adds a card into the memory
-   * @param {state} state The Vuex state
-   * @param {Card} card The card to add
+   * Sets/overrides the active collection
+   * @prop {state} state The Vuex state
+   * @prop {Collection} collection The collection to set
    */
-  addCard(state: state, card: Card) {
-    state.cards.push(card);
+  setCollection(state: state, collection: Collection) {
+    state.collection = collection;
   },
   /**
-   * Adds a trade into the memory
-   * @param {state} state The Vuex state
-   * @param {Trade} trade The trade
+   * Adds a set into the memory
+   * @prop {state} state The Vuex state
+   * @prop {SetResponse} set The set response
    */
-  addTrade(state: state, trade: Trade) {
-    state.trades.push(trade);
+  addSet(state: state, set: SetResponse) {
+    state.sets[set.code] = new Set(set.code, set.name, set.icon_svg_uri);
   }
 };

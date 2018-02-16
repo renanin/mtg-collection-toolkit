@@ -1,11 +1,11 @@
-import Trades from './pages/trades/trades.vue';
+import Database from './pages/database/database.vue';
 
 export default [
   {
     path: '/',
-    redirect: 'trades',
+    redirect: 'database',
   }, {
-    path: '/trades',
-    component: Trades,
+    path: '/database',
+    component: Database,
   },
 ];

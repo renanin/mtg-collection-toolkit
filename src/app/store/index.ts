@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex, { Store } from 'vuex';
+import Collection from '../classes/collection';
 import mutations from './mutations';
 import actions from './actions';
 import state from './state';
@@ -10,7 +11,7 @@ export default new Vuex.Store({
   mutations,
   actions,
   state: {
-    trades: [],
-    cards: [],
+    collection: new Collection(),
+    sets: {},
   },
 }) as Store<state>;

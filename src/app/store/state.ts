@@ -1,7 +1,7 @@
-import Card from '../classes/card';
-import Trade from '../classes/trade';
+import Collection from '../classes/collection';
+import SetMap from '../classes/setMap';
 
 export default interface state {
-  trades: Trade[];
-  cards: Card[];
+  collection: Collection;
+  sets: SetMap;
 }
