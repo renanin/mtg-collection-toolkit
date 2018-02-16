@@ -42,3 +42,5 @@ div
               md-field
                 md-select(placeholder="Printing",v-model="card.printing")
                   md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing.code") {{printing.name}}
+    md-dialog-actions
+      md-button.md-primary.md-raised(@click="trade()") Add Trade

@@ -1,11 +1,12 @@
-import { State } from 'vuex-class';
+import { Action, Mutation, State } from 'vuex-class';
 import Component from 'vue-class-component';
 import Vue from 'vue';
+import async from 'async';
 import request from 'request';
 import AutocompleteResults from '../../classes/autocompleteResults';
 import Item from '../../classes/item';
 import Printing from '../../classes/printing';
-import PrintingsResults from '../../classes/printingsResults';
+import SearchResults from '../../classes/searchResults';
 import Trade from '../../classes/trade';
 
 @Component({})
@@ -16,7 +17,10 @@ import Trade from '../../classes/trade';
  * @extends Vue
  */
 export default class Trades extends Vue {
-  @State('trades') trades: Trade[];
+  @State trades: Trade[];
+  @Action fetchCard;
+  @Mutation addCard;
+  @Mutation addTrade;
 
   /**
    * Whether the add trade dialog is open or not
@@ -84,10 +88,44 @@ export default class Trades extends Vue {
     request(
       `https://api.scryfall.com/cards/search?order=set&q=%21%E2%80%9C${encodeURIComponent(card.name)}%E2%80%9D&unique=prints`,
       (err, res, body) => {
-        const results: PrintingsResults = JSON.parse(body);
+        const results: SearchResults = JSON.parse(body);
         for (let i = 0; i < results.data.length; i += 1) {
           card.printings.push(new Printing(results.data[i].set_name, results.data[i].set));
         }
+      },
+    );
+  }
+
+  /**
+   * Adds the trade to the system
+   */
+  trade() {
+    const trade = new Trade(this.newTrade.date);
+    async.eachSeries(
+      this.newTrade.myCards,
+      (card, next) => {
+        this.fetchCard(card).then((card) => {
+          this.addCard(card);
+          trade.myCards.push(card);
+          next();
+        });
+      },
+      () => {
+        async.eachSeries(
+          this.newTrade.theirCards,
+          (card, next) => {
+            this.fetchCard(card).then((card) => {
+              this.addCard(card);
+              trade.theirCards.push(card);
+              next();
+            });
+          },
+          () => {
+            this.addTrade(trade);
+            this.addTradeDialog = false;
+            this.newTrade = new Trade();
+          },
+        );
       },
     );
   }
