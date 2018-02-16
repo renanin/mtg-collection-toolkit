@@ -15,15 +15,22 @@ div
           md-icon add
         md-table
           md-table-row
+            md-table-head Mode
             md-table-head Name
             md-table-head Printing
           md-table-row(v-for="(card, key) in newTrade.myCards",:key="key")
             md-table-cell
-              md-autocomplete(v-model="card.name",:md-options="autocomplete",@md-changed="fetchCardNames",@md-selected="fetchCardPrintings(card)")
+              md-switch(v-model="card.cash") Cash
+            md-table-cell
+              md-field(v-if="card.cash")
+                md-icon attach_money
+                label Cash Amount
+                md-input(v-model="card.price")
+              md-autocomplete(v-else,v-model="card.name",:md-options="autocomplete",@md-changed="fetchCardNames",@md-selected="fetchCardPrintings(card)")
                 label Card Name
                 template(slot="md-autocomplete-item",slot-scope="{ item }") {{item}}
             md-table-cell
-              md-field
+              md-field(v-if="!card.cash")
                 md-select(placeholder="Printing",v-model="card.printing")
                   md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing.code") {{printing.name}}
       md-tab(md-label="Their Cards")
@@ -31,15 +38,22 @@ div
           md-icon add
         md-table
           md-table-row
+            md-table-head Mode
             md-table-head Name
             md-table-head Printing
           md-table-row(v-for="(card, key) in newTrade.theirCards",:key="key")
             md-table-cell
-              md-autocomplete(v-model="card.name",:md-options="autocomplete",@md-changed="fetchCardNames",@md-selected="fetchCardPrintings(card)")
+              md-switch(v-model="card.cash") Cash
+            md-table-cell
+              md-field(v-if="card.cash")
+                md-icon attach_money
+                label Cash Amount
+                md-input(v-model="card.price")
+              md-autocomplete(v-else,v-model="card.name",:md-options="autocomplete",@md-changed="fetchCardNames",@md-selected="fetchCardPrintings(card)")
                 label Card Name
                 template(slot="md-autocomplete-item",slot-scope="{ item }") {{item}}
             md-table-cell
-              md-field
+              md-field(v-if="!card.cash")
                 md-select(placeholder="Printing",v-model="card.printing")
                   md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing.code") {{printing.name}}
     md-dialog-actions

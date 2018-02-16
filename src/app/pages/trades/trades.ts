@@ -105,21 +105,31 @@ export default class Trades extends Vue {
     async.eachSeries(
       this.newTrade.myCards,
       (card, next) => {
-        this.fetchCard(card).then((card) => {
-          this.addCard(card);
-          trade.myCards.push(card);
+        if (card.cash) {
+          trade.myCash += card.price;
           next();
-        });
+        } else {
+          this.fetchCard(card).then((card) => {
+            this.addCard(card);
+            trade.myCards.push(card);
+            next();
+          });
+        }
       },
       () => {
         async.eachSeries(
           this.newTrade.theirCards,
           (card, next) => {
-            this.fetchCard(card).then((card) => {
-              this.addCard(card);
-              trade.theirCards.push(card);
+            if (card.cash) {
+              trade.theirCash += card.price;
               next();
-            });
+            } else {
+              this.fetchCard(card).then((card) => {
+                this.addCard(card);
+                trade.theirCards.push(card);
+                next();
+              });
+            }
           },
           () => {
             this.addTrade(trade);

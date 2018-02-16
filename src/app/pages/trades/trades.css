@@ -2,3 +2,7 @@
   display: flex;
   flex-direction: column;
 }
+
+.md-table {
+  max-height: 275px;
+}
