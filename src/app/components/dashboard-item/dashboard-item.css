@@ -1,8 +1,0 @@
-.dashboard-item {
-  width: calc(50% - 40px);
-  margin: 20px;
-}
-
-.dashboard-item .md-title {
-  flex: 1;
-}
