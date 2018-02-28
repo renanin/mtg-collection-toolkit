@@ -9,3 +9,42 @@ md-card
       md-icon attach_money
       label Cash Amount
       md-input(@input="updateCash")
+    md-table(md-card)
+      md-table-toolbar
+        .md-toolbar-section-end
+          md-button.md-icon-button.md-primary(@click="addCard()")
+            md-icon add
+      md-table-row
+        md-table-head Name
+        md-table-head Printing
+        md-table-head Quantity
+        md-table-head Condition
+        md-table-head Price
+        md-table-head Edit
+      md-table-row(v-for="(card, key) in cards",:key="key")
+        template(v-if="card.editing")
+          md-table-cell
+            md-autocomplete(v-model="card.name",:md-options="searchResults",@md-changed="autocomplete",@md-selected="fetchPrintings(card)")
+          md-table-cell
+            md-field
+              label Printing
+              md-select(v-model="card.printing")
+                md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing") {{printing}}
+          md-table-cell
+            md-field
+              label Quantity
+              md-input(v-model="card.quantity")
+          md-table-cell NM
+          md-table-cell
+          md-table-cell
+            md-button.md-icon-button.md-primary(@click="card.editing = false")
+              md-icon check
+        template(v-else)
+          md-table-cell {{card.name}}
+          md-table-cell {{card.printing}}
+          md-table-cell {{card.quantity}}
+          md-table-cell NM
+          md-table-cell $40.00
+          md-table-cell
+            md-button.md-icon-button(@click="card.editing = true")
+              md-icon mode_edit
