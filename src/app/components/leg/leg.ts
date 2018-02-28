@@ -80,7 +80,6 @@ export default class LegComponent extends Vue {
       name: '',
       quantity: 1,
       printings: [],
-      printing: 0,
       editing: true,
     });
   }
@@ -102,17 +101,11 @@ export default class LegComponent extends Vue {
             printings.push(printing.set);
           });
           card.printings = printings;
+          // Auto-select the latest printing
+          card.printing = printings[0];
         }
       },
     );
-  }
-
-  @Watch('value')
-  /**
-   * Syncs Leg#leg and Leg#value
-   */
-  onValueChanged() {
-    this.leg = this.value;
   }
 
   /**
@@ -143,6 +136,14 @@ export default class LegComponent extends Vue {
     const menu = <HTMLElement>document.querySelectorAll('.md-menu-content-bottom-start.md-menu-content-small')[0];
     menu.style.width = 'auto';
     menu.style.maxWidth = `${window.innerWidth}px`;
+  }
+
+  @Watch('value')
+  /**
+   * Syncs Leg#leg and Leg#value
+   */
+  onValueChanged() {
+    this.leg = this.value;
   }
 
   /**

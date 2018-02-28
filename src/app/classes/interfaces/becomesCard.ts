@@ -27,11 +27,11 @@ export default interface BecomesCard {
   printings: string[];
 
   /**
-   * The index in BecomesCard#printings of the actual printing
+   * The actual printing
    * @name BecomesCard#printing
-   * @type {number}
+   * @type {string}
    */
-  printing: number;
+  printing?: string;
 
   /**
    * The condition of the card
