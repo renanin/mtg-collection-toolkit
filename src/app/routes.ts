@@ -1,3 +1,4 @@
+import Add from './pages/trades/add/add.vue';
 import Trades from './pages/trades/trades.vue';
 
 export default [
@@ -7,5 +8,8 @@ export default [
   }, {
     path: '/trades',
     component: Trades,
+  }, {
+    path: '/trades/add',
+    component: Add,
   },
 ];

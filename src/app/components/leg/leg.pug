@@ -1,0 +1,11 @@
+md-card
+  md-card-header
+    md-toolbar.md-transparent(md-elevation="0")
+      .md-title {{title}}
+      .md-toolbar-section-end
+        .md-subhead {{sum}}
+  md-card-content
+    md-field
+      md-icon attach_money
+      label Cash Amount
+      md-input(@input="updateCash")

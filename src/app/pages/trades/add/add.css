@@ -1,0 +1,8 @@
+.content {
+  display: flex;
+}
+
+.content .md-card {
+  margin: 8px;
+  flex: 1;
+}

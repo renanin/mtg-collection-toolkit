@@ -1,0 +1,8 @@
+.add
+  md-toolbar
+    router-link.md-icon-button(tag="md-button",to="/trades")
+      md-icon arrow_back
+    h1.md-title Add Transaction
+  .content
+    leg(title="My Items",v-model="trade.legs[0]")
+    leg(title="Their Items",v-model="trade.legs[1]")
