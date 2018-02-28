@@ -129,10 +129,20 @@ export default class LegComponent extends Vue {
           } else {
             const result: AutocompleteResults = JSON.parse(body);
             resolve(result.data);
+            this.resizeMenu();
           }
         },
       );
     });
+  }
+
+  /**
+   * Forces the autocomplete menu to be bigger
+   */
+  resizeMenu() {
+    const menu = <HTMLElement>document.querySelectorAll('.md-menu-content-bottom-start.md-menu-content-small')[0];
+    menu.style.width = 'auto';
+    menu.style.maxWidth = `${window.innerWidth}px`;
   }
 
   /**

@@ -23,16 +23,14 @@ md-card
         md-table-head Edit
       md-table-row(v-for="(card, key) in cards",:key="key")
         template(v-if="card.editing")
-          md-table-cell
+          md-table-cell.name-cell
             md-autocomplete(v-model="card.name",:md-options="searchResults",@md-changed="autocomplete",@md-selected="fetchPrintings(card)")
           md-table-cell
             md-field
-              label Printing
               md-select(v-model="card.printing")
                 md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing") {{printing}}
           md-table-cell
             md-field
-              label Quantity
               md-input(v-model="card.quantity")
           md-table-cell NM
           md-table-cell
