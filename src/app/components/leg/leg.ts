@@ -4,6 +4,7 @@ import Vue from 'vue';
 import request from 'request';
 import AutocompleteResults from '../../classes/interfaces/autocompleteResults';
 import BecomesCard from '../../classes/interfaces/becomesCard';
+import Card from '../../classes/card';
 import CardSearchResult from '../../classes/interfaces/cardSearchResult';
 import Leg from '../../classes/leg';
 
@@ -81,6 +82,7 @@ export default class LegComponent extends Vue {
       quantity: 1,
       printings: [],
       editing: true,
+      id: '',
     });
   }
 
@@ -98,11 +100,12 @@ export default class LegComponent extends Vue {
           const result: CardSearchResult = JSON.parse(body);
           const printings = [];
           result.data.forEach((printing) => {
-            printings.push(printing.set);
+            printings.push({
+              code: printing.set,
+              id: printing.id,
+            });
           });
           card.printings = printings;
-          // Auto-select the latest printing
-          card.printing = printings[0];
         }
       },
     );
@@ -136,6 +139,30 @@ export default class LegComponent extends Vue {
     const menu = <HTMLElement>document.querySelectorAll('.md-menu-content-bottom-start.md-menu-content-small')[0];
     menu.style.width = 'auto';
     menu.style.maxWidth = `${window.innerWidth}px`;
+  }
+
+  /**
+   * Pushes changes to the store
+   * @param {number} index The index of the card to push
+   */
+  submitCard(index: number) {
+    let id = '';
+    this.cards[index].printings.forEach((printing) => {
+      if (printing.code === this.cards[index].printing) {
+        id = printing.id;
+      }
+    });
+    this.leg.cards[index] = new Card(id, this.cards[index].quantity, this.cards[index].condition);
+    this.cards[index].editing = false;
+    this.$emit('input', this.leg);
+  }
+
+  /**
+   * Deletes the card at the specified index
+   * @prop {number} index The index of the card to delete
+   */
+  deleteCard(index: number) {
+    // @TODO
   }
 
   @Watch('value')

@@ -28,15 +28,15 @@ md-card
           md-table-cell
             md-field
               md-select(v-model="card.printing")
-                md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing") {{printing}}
+                md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing.code") {{printing.code}}
           md-table-cell
             md-field
               md-input(v-model="card.quantity")
           md-table-cell NM
           md-table-cell
           md-table-cell
-            md-button.md-icon-button.md-primary(@click="card.editing = false")
-              md-icon check
+            md-button.md-icon-button.md-primary(@click="submitCard(key)")
+              md-icon done
         template(v-else)
           md-table-cell {{card.name}}
           md-table-cell {{card.printing}}

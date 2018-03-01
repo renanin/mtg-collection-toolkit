@@ -20,14 +20,17 @@ export default interface BecomesCard {
   quantity: number;
 
   /**
-   * The possible printings of the card
+   * The possible printings and IDs of the card
    * @name BecomesCard#printings
-   * @type {string[]}
+   * @type {Object[]}
    */
-  printings: string[];
+  printings: {
+    code: string;
+    id: string;
+  }[];
 
   /**
-   * The actual printing
+   * The actual printing of the card
    * @name BecomesCard#printing
    * @type {string}
    */
@@ -46,4 +49,11 @@ export default interface BecomesCard {
    * @type {boolean}
    */
   editing: boolean;
+
+  /**
+   * The ID of the card
+   * @name BecomesCard#id
+   * @type {string}
+   */
+  id: string;
 }
