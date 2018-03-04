@@ -44,7 +44,13 @@ export default class LegComponent extends Vue {
    * @type {BecomesCard[]}
    * @private
    */
-  private cards: BecomesCard[] = [];
+  private becomingCard: BecomesCard = {
+    name: '',
+    quantity: 1,
+    printings: [],
+    id: '',
+    marketPrice: 0,
+  };
 
   /**
    * Autocomplete search results
@@ -82,14 +88,24 @@ export default class LegComponent extends Vue {
    * Adds a card
    */
   addCard() {
-    this.cards.push({
+    let id = '';
+    let price = 0;
+    this.becomingCard.printings.forEach((printing) => {
+      if (printing.code === this.becomingCard.printing) {
+        id = printing.id;
+        price = printing.price;
+      }
+    });
+    this.leg.cards.push(new Card(id, this.becomingCard.quantity, this.becomingCard.condition, price));
+    this.becomingCard = {
       name: '',
       quantity: 1,
       printings: [],
-      editing: true,
       id: '',
       marketPrice: 0,
-    });
+    };
+    this.$emit('input', this.leg);
+    this.$forceUpdate();
   }
 
   /**
@@ -132,40 +148,10 @@ export default class LegComponent extends Vue {
           } else {
             const result: AutocompleteResults = JSON.parse(body);
             resolve(result.data);
-            this.resizeMenu();
           }
         },
       );
     });
-  }
-
-  /**
-   * Forces the autocomplete menu to be bigger
-   */
-  resizeMenu() {
-    const menu = <HTMLElement>document.querySelectorAll('.md-menu-content-bottom-start.md-menu-content-small')[0];
-    menu.style.width = 'auto';
-    menu.style.maxWidth = `${window.innerWidth}px`;
-  }
-
-  /**
-   * Pushes changes to the store
-   * @param {number} index The index of the card to push
-   */
-  submitCard(index: number) {
-    let id = '';
-    let price = 0;
-    this.cards[index].printings.forEach((printing) => {
-      if (printing.code === this.cards[index].printing) {
-        id = printing.id;
-        price = printing.price;
-      }
-    });
-    this.leg.cards[index] = new Card(id, this.cards[index].quantity, this.cards[index].condition, price);
-    this.cards[index].editing = false;
-    this.cards[index].marketPrice = price;
-    this.$emit('input', this.leg);
-    this.$forceUpdate();
   }
 
   /**

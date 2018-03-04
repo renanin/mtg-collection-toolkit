@@ -45,13 +45,6 @@ export default interface BecomesCard {
   condition?: Condition;
 
   /**
-   * Whether the card is currently being edited or not
-   * @name BecomesCard#editing
-   * @type {boolean}
-   */
-  editing: boolean;
-
-  /**
    * The ID of the card
    * @name BecomesCard#id
    * @type {string}

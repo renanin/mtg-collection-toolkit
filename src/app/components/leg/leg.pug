@@ -3,46 +3,30 @@ md-card
     md-toolbar.md-transparent(md-elevation="0")
       .md-title {{title}}
       .md-toolbar-section-end
-        .md-subhead {{sum()}}
+        .md-subhead ${{sum()}}
   md-card-content
-    md-field
-      md-icon attach_money
-      label Cash Amount
-      md-input(@input="updateCash",type="number")
+    md-autocomplete(v-model="becomingCard.name",:md-options="searchResults",@md-changed="autocomplete",@md-selected="fetchPrintings(becomingCard)")
+    .fields
+      md-field
+        md-select(v-model="becomingCard.printing")
+          md-option(v-for="(printing, key) in becomingCard.printings",:key="key",:value="printing.code") {{printing.code}}
+      .quantity
+        md-button.md-primary.md-icon-button(@click="becomingCard.quantity -= 1")
+          md-icon remove
+        p {{becomingCard.quantity}}
+        md-button.md-primary.md-icon-button(@click="becomingCard.quantity += 1")
+          md-icon add
+    md-button.md-raised.md-primary(@click="addCard()") Add Card
     md-table(md-card)
-      md-table-toolbar
-        .md-toolbar-section-end
-          md-button.md-icon-button.md-primary(@click="addCard()")
-            md-icon add
       md-table-row
         md-table-head Name
         md-table-head Printing
         md-table-head Quantity
         md-table-head Condition
         md-table-head Price
-        md-table-head Edit
-      md-table-row(v-for="(card, key) in cards",:key="key")
-        template(v-if="card.editing")
-          md-table-cell.name-cell
-            md-autocomplete(v-model="card.name",:md-options="searchResults",@md-changed="autocomplete",@md-selected="fetchPrintings(card)")
-          md-table-cell
-            md-field
-              md-select(v-model="card.printing")
-                md-option(v-for="(printing, key) in card.printings",:key="key",:value="printing.code") {{printing.code}}
-          md-table-cell
-            md-field
-              md-input(v-model="card.quantity")
-          md-table-cell NM
-          md-table-cell
-          md-table-cell
-            md-button.md-icon-button.md-primary(@click="submitCard(key)")
-              md-icon done
-        template(v-else)
-          md-table-cell {{card.name}}
-          md-table-cell {{card.printing}}
-          md-table-cell {{card.quantity}}
-          md-table-cell NM
-          md-table-cell ${{card.marketPrice}}
-          md-table-cell
-            md-button.md-icon-button(@click="card.editing = true")
-              md-icon mode_edit
+      md-table-row(v-for="(card, key) in leg.cards",:key="key")
+        md-table-cell
+        md-table-cell
+        md-table-cell {{card.quantity}}
+        md-table-cell NM
+        md-table-cell ${{card.marketPrice}}
