@@ -7,7 +7,6 @@ import BecomesCard from '../../classes/interfaces/becomesCard';
 import Card from '../../classes/card';
 import CardSearchResult from '../../classes/interfaces/cardSearchResult';
 import Leg from '../../classes/leg';
-import scrapePrices from '../../util/scrapePrices';
 
 @Component({})
 
@@ -61,7 +60,7 @@ export default class LegComponent extends Vue {
    * @type {number}
    * @private
    */
-  private get sum(): number {
+  sum(): number {
     let sum = 0;
     sum += Number(this.leg.cash);
     this.leg.cards.forEach((card) => {

@@ -21,13 +21,12 @@ export default class Add extends Vue {
    * @name Add#trade
    * @type {Trade}
    */
-  trade: Trade;
+  trade: Trade = new Trade(2);
 
   /**
-   * @constructs
+   * The state of the back dialog
+   * @name Add#backDialog
+   * @type {boolean}
    */
-  constructor() {
-    super();
-    this.trade = new Trade(2);
-  }
+  backDialog: boolean = false;
 }
