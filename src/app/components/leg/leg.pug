@@ -10,9 +10,10 @@ md-card
       label Cash Amount
       md-input(@input="updateCash",type="number")
     md-autocomplete(v-model="becomingCard.name",:md-options="searchResults",@md-changed="autocomplete",@md-selected="fetchPrintings(becomingCard)")
-    .fields
+      label Card Name
+    .fields(v-if="stage > 0")
       md-field
-        md-select(v-model="becomingCard.printing")
+        md-select(v-model="becomingCard.printing",@md-selected="stage += 1")
           md-option(v-for="(printing, key) in becomingCard.printings",:key="key",:value="printing.code") {{printing.code}}
       .quantity
         md-button.md-primary.md-icon-button(@click="becomingCard.quantity -= 1")
@@ -20,7 +21,9 @@ md-card
         p {{becomingCard.quantity}}
         md-button.md-primary.md-icon-button(@click="becomingCard.quantity += 1")
           md-icon add
-    md-button.md-raised.md-primary(@click="addCard()") Add Card
+    .placeholder.fields-placeholder(v-else)
+    md-button.md-raised.md-primary(@click="addCard()",v-if="stage > 1") Add Card
+    .placeholder.add-placeholder(v-else)
     md-table
       md-table-row
         md-table-head Name

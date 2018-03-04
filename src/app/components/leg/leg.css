@@ -7,3 +7,11 @@
   display: flex;
   align-items: center;
 }
+
+.fields-placeholder {
+  height: 76px;
+}
+
+.add-placeholder {
+  height: 48px;
+}

@@ -56,6 +56,14 @@ export default class LegComponent extends Vue {
   };
 
   /**
+   * The current progress in adding a new card
+   * @name LegComponent#stage
+   * @type {number}
+   * @private
+   */
+  private stage: number = 0;
+
+  /**
    * Autocomplete search results
    * @name LegComponent#searchResults
    * @type {Promise<string[]>}
@@ -108,6 +116,7 @@ export default class LegComponent extends Vue {
       id: '',
       marketPrice: 0,
     };
+    this.stage = 0;
     this.$emit('input', this.leg);
     this.$forceUpdate();
   }
@@ -134,6 +143,7 @@ export default class LegComponent extends Vue {
             });
           });
           card.printings = printings;
+          this.stage += 1;
         }
       },
     );
