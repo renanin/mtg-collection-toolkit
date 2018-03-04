@@ -27,14 +27,23 @@ export default class Card {
   condition: Condition;
 
   /**
+   * The latest market price of the card
+   * @name Card#marketPrice
+   * @type {number}
+   */
+  marketPrice: number;
+
+  /**
    * @constructs
    * @prop {string} id The ID of the card
    * @prop {number} quantity The quantity of the card
    * @prop {Condition} condition The condition of the card
+   * @prop {number} marketPrice The base market price of the card
    */
-  constructor(id: string, quantity: number, condition: Condition) {
+  constructor(id: string, quantity: number, condition: Condition, marketPrice: number) {
     this.id = id;
     this.quantity = quantity;
     this.condition = condition;
+    this.marketPrice = marketPrice;
   }
 }

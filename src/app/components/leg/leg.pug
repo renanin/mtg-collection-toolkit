@@ -8,7 +8,7 @@ md-card
     md-field
       md-icon attach_money
       label Cash Amount
-      md-input(@input="updateCash")
+      md-input(@input="updateCash",type="number")
     md-table(md-card)
       md-table-toolbar
         .md-toolbar-section-end
@@ -42,7 +42,7 @@ md-card
           md-table-cell {{card.printing}}
           md-table-cell {{card.quantity}}
           md-table-cell NM
-          md-table-cell $40.00
+          md-table-cell ${{card.marketPrice}}
           md-table-cell
             md-button.md-icon-button(@click="card.editing = true")
               md-icon mode_edit

@@ -27,6 +27,7 @@ export default interface BecomesCard {
   printings: {
     code: string;
     id: string;
+    price: number;
   }[];
 
   /**
@@ -56,4 +57,11 @@ export default interface BecomesCard {
    * @type {string}
    */
   id: string;
+
+  /**
+   * The price of the card
+   * @name BecomesCard#marketPrice
+   * @type {number}
+   */
+  marketPrice: number;
 }

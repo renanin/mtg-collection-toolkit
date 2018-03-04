@@ -7,6 +7,7 @@ import BecomesCard from '../../classes/interfaces/becomesCard';
 import Card from '../../classes/card';
 import CardSearchResult from '../../classes/interfaces/cardSearchResult';
 import Leg from '../../classes/leg';
+import scrapePrices from '../../util/scrapePrices';
 
 @Component({})
 
@@ -36,7 +37,7 @@ export default class LegComponent extends Vue {
    * @type {Leg}
    * @private
    */
-  private leg: Leg;
+  private leg: Leg = new Leg();
 
   /**
    * The list of cards displayed and edited in the table
@@ -44,7 +45,7 @@ export default class LegComponent extends Vue {
    * @type {BecomesCard[]}
    * @private
    */
-  private cards: BecomesCard[];
+  private cards: BecomesCard[] = [];
 
   /**
    * Autocomplete search results
@@ -52,7 +53,7 @@ export default class LegComponent extends Vue {
    * @type {Promise<string[]>}
    * @private
    */
-  private searchResults: Promise<string[]>;
+  private searchResults: Promise<string[]> = new Promise((resolve) => resolve([]));
 
   /**
    * The total value of the cash and cards in the leg
@@ -61,7 +62,12 @@ export default class LegComponent extends Vue {
    * @private
    */
   private get sum(): number {
-    return this.leg.cash;
+    let sum = 0;
+    sum += Number(this.leg.cash);
+    this.leg.cards.forEach((card) => {
+      sum += Number(card.marketPrice);
+    });
+    return sum;
   }
 
   /**
@@ -83,6 +89,7 @@ export default class LegComponent extends Vue {
       printings: [],
       editing: true,
       id: '',
+      marketPrice: 0,
     });
   }
 
@@ -103,6 +110,7 @@ export default class LegComponent extends Vue {
             printings.push({
               code: printing.set,
               id: printing.id,
+              price: Number(printing.usd),
             });
           });
           card.printings = printings;
@@ -147,14 +155,18 @@ export default class LegComponent extends Vue {
    */
   submitCard(index: number) {
     let id = '';
+    let price = 0;
     this.cards[index].printings.forEach((printing) => {
       if (printing.code === this.cards[index].printing) {
         id = printing.id;
+        price = printing.price;
       }
     });
-    this.leg.cards[index] = new Card(id, this.cards[index].quantity, this.cards[index].condition);
+    this.leg.cards[index] = new Card(id, this.cards[index].quantity, this.cards[index].condition, price);
     this.cards[index].editing = false;
+    this.cards[index].marketPrice = price;
     this.$emit('input', this.leg);
+    this.$forceUpdate();
   }
 
   /**
@@ -171,15 +183,5 @@ export default class LegComponent extends Vue {
    */
   onValueChanged() {
     this.leg = this.value;
-  }
-
-  /**
-   * @constructs
-   */
-  constructor() {
-    super();
-    this.leg = new Leg();
-    this.cards = [];
-    this.searchResults = new Promise((resolve) => resolve([]));
   }
 }
