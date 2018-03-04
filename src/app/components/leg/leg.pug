@@ -5,6 +5,10 @@ md-card
       .md-toolbar-section-end
         .md-subhead ${{sum()}}
   md-card-content
+    md-field
+      md-icon attach_money
+      label Cash Amount
+      md-input(@input="updateCash",type="number")
     md-autocomplete(v-model="becomingCard.name",:md-options="searchResults",@md-changed="autocomplete",@md-selected="fetchPrintings(becomingCard)")
     .fields
       md-field
