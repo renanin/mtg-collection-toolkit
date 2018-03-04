@@ -25,8 +25,8 @@ md-card
         md-table-head Condition
         md-table-head Price
       md-table-row(v-for="(card, key) in leg.cards",:key="key")
-        md-table-cell
-        md-table-cell
+        md-table-cell {{$store.state.cardInfo[card.id].name}}
+        md-table-cell {{$store.state.cardInfo[card.id].set_name}}
         md-table-cell {{card.quantity}}
         md-table-cell NM
         md-table-cell ${{card.marketPrice}}

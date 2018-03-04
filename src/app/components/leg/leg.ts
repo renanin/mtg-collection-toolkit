@@ -1,3 +1,4 @@
+import { Mutation } from 'vuex-class';
 import { Prop, Watch } from 'vue-property-decorator';
 import Component from 'vue-class-component';
 import Vue from 'vue';
@@ -29,6 +30,8 @@ export default class LegComponent extends Vue {
    * @type {Leg}
    */
   @Prop() value: Leg;
+
+  @Mutation linkCardInfo;
 
   /**
    * A local copy of the leg being edited
@@ -96,7 +99,8 @@ export default class LegComponent extends Vue {
         price = printing.price;
       }
     });
-    this.leg.cards.push(new Card(id, this.becomingCard.quantity, this.becomingCard.condition, price));
+    const card = new Card(id, this.becomingCard.quantity, this.becomingCard.condition, price);
+    this.leg.cards.push(card);
     this.becomingCard = {
       name: '',
       quantity: 1,
@@ -122,6 +126,7 @@ export default class LegComponent extends Vue {
           const result: CardSearchResult = JSON.parse(body);
           const printings = [];
           result.data.forEach((printing) => {
+            this.linkCardInfo(printing);
             printings.push({
               code: printing.set,
               id: printing.id,
