@@ -164,7 +164,8 @@ export default class LegComponent extends Vue {
    * @prop {number} index The index of the card to delete
    */
   deleteCard(index: number) {
-    // @TODO
+    this.leg.cards.splice(index, 1);
+    this.$emit('input', this.leg);
   }
 
   @Watch('value')

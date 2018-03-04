@@ -21,7 +21,7 @@ md-card
         md-button.md-primary.md-icon-button(@click="becomingCard.quantity += 1")
           md-icon add
     md-button.md-raised.md-primary(@click="addCard()") Add Card
-    md-table(md-card)
+    md-table
       md-table-row
         md-table-head Name
         md-table-head Printing
@@ -34,3 +34,6 @@ md-card
         md-table-cell {{card.quantity}}
         md-table-cell NM
         md-table-cell ${{card.marketPrice}}
+        md-table-cell
+          md-button.md-accent.md-icon-button(@click="deleteCard(key)")
+            md-icon delete
