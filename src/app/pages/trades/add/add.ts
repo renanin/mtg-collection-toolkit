@@ -1,3 +1,4 @@
+import { Mutation } from 'vuex-class';
 import Component from 'vue-class-component';
 import Vue from 'vue';
 import Leg from '../../../components/leg/leg.vue';
@@ -16,6 +17,8 @@ import Trade from '../../../classes/trade';
  * @see Trade
  */
 export default class Add extends Vue {
+  @Mutation addTransaction;
+
   /**
    * The trade being created
    * @name Add#trade
@@ -29,4 +32,12 @@ export default class Add extends Vue {
    * @type {boolean}
    */
   backDialog: boolean = false;
+
+  /**
+   * Adds the trade to the store and navigates back
+   */
+  add() {
+    this.addTransaction(this.trade);
+    this.$router.push('/trades');
+  }
 }

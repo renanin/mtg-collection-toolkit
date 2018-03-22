@@ -20,6 +20,19 @@ export default class Leg {
   cards: Card[];
 
   /**
+   * The total value of the cash and cards
+   * @name Leg#value
+   * @type {number}
+   */
+  get value(): number {
+    let value = this.cash;
+    this.cards.forEach((card) => {
+      value += Number(card.marketPrice);
+    });
+    return value;
+  }
+
+  /**
    * @constructs
    */
   constructor() {

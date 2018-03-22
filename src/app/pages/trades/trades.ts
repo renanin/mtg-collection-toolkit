@@ -1,3 +1,4 @@
+import { State } from 'vuex-class';
 import Component from 'vue-class-component';
 import Vue from 'vue';
 
@@ -9,5 +10,5 @@ import Vue from 'vue';
  * @extends Vue
  */
 export default class Trades extends Vue {
-  
+  @State trades;
 }

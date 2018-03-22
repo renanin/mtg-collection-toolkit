@@ -4,3 +4,9 @@
     .md-toolbar-section-end
       router-link.md-raised.md-primary.md-icon-button(tag="md-button",to="/trades/add")
         md-icon add
+  .trades-list
+    md-card(v-for="(trade, key) in trades",:key="key")
+      .trade-inner
+        div(v-for="(leg, key) in trade.legs",:key="key")
+          .md-title ${{leg.value}}
+          .md-subhead ${{leg.cash}} cash - ${{leg.value - leg.cash}} cards

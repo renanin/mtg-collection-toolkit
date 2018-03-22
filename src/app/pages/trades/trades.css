@@ -1,0 +1,20 @@
+.trade-inner {
+  display: flex;
+  padding: 8px;
+}
+
+.trade-inner div {
+  flex: 1;
+}
+
+.trades-list {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+}
+
+.trades-list .md-card {
+  flex: 1;
+  min-width: 300px;
+  margin: 8px;
+}

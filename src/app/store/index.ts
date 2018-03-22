@@ -11,5 +11,6 @@ export default new Vuex.Store({
   actions,
   state: {
     cardInfo: {},
+    trades: [],
   },
 }) as Store<state>;
