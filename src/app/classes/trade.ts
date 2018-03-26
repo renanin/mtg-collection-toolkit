@@ -22,4 +22,19 @@ export default class Trade {
       this.legs.push(new Leg());
     }
   }
+
+  /**
+   * Returns whether the leg at the specified index has the lowest value of all the legs
+   * @param {number} index The index of the leg to check
+   * @return {boolean}
+   */
+  isGreater(index: number): boolean {
+    let greatestValue = this.legs[index].value;
+    this.legs.forEach((leg) => {
+      if (leg.value > greatestValue) {
+        greatestValue = leg.value;
+      }
+    });
+    return !(greatestValue > this.legs[index].value);
+  }
 }

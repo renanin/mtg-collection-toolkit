@@ -31,6 +31,13 @@ export default class LegComponent extends Vue {
    */
   @Prop() value: Leg;
 
+  /**
+   * Whether this leg has the greater value or not
+   * @name LegComponent#greater
+   * @type {boolean}
+   */
+  @Prop() greater: boolean;
+
   @Mutation linkCardInfo;
 
   /**

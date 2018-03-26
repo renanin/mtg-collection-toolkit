@@ -25,7 +25,12 @@ export default class Leg {
    * @type {number}
    */
   get value(): number {
-    let value = this.cash;
+    let value;
+    if (isNaN(Number(this.cash))) {
+      value = 0;
+    } else {
+      value = Number(this.cash);
+    }
     this.cards.forEach((card) => {
       value += Number(card.marketPrice);
     });
