@@ -4,6 +4,13 @@ md-card
       .md-title {{title}}
       .md-toolbar-section-end
         .md-subhead(:class="{ red: greater }") ${{leg.value}}
+        md-menu(md-align-trigger,md-size="auto",md-direction="bottom-end")
+          md-button.md-icon-button(md-menu-trigger)
+            md-icon more_vert
+          md-menu-content
+            md-list
+              md-list-item
+                md-checkbox(v-model="useLatest") Use latest printing
   md-card-content
     md-field
       md-icon attach_money

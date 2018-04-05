@@ -79,6 +79,14 @@ export default class LegComponent extends Vue {
   private searchResults: Promise<string[]> = new Promise((resolve) => resolve([]));
 
   /**
+   * Config option to automatically select the latest printing of a card
+   * @name LegComponent#useLatest
+   * @type {boolean}
+   * @private
+   */
+  private useLatest: boolean = true;
+
+  /**
    * The total value of the cash and cards in the leg
    * @name LegComponent#sum
    * @type {number}
@@ -151,6 +159,10 @@ export default class LegComponent extends Vue {
           });
           card.printings = printings;
           this.stage += 1;
+          if (this.useLatest) {
+            card.printing = printings[0].code;
+            this.stage += 1;
+          }
         }
       },
     );
