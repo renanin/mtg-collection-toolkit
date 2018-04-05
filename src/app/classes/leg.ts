@@ -36,7 +36,7 @@ export default class Leg {
         value += Number(card.marketPrice) * card.quantity;
       }
     });
-    return value;
+    return Math.round(value * 100) / 100;
   }
 
   /**
