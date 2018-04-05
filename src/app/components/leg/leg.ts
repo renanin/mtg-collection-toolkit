@@ -87,6 +87,14 @@ export default class LegComponent extends Vue {
   private useLatest: boolean = true;
 
   /**
+   * Config option to automatically add the card after its name is entered
+   * @name LegComponent#quickAdd
+   * @type {boolean}
+   * @private
+   */
+  private quickAdd: boolean = false;
+
+  /**
    * The total value of the cash and cards in the leg
    * @name LegComponent#sum
    * @type {number}
@@ -159,9 +167,12 @@ export default class LegComponent extends Vue {
           });
           card.printings = printings;
           this.stage += 1;
-          if (this.useLatest) {
+          if (this.useLatest || this.quickAdd) {
             card.printing = printings[0].code;
             this.stage += 1;
+            if (this.quickAdd) {
+              this.addCard();
+            }
           }
         }
       },
@@ -197,10 +208,10 @@ export default class LegComponent extends Vue {
     this.$emit('input', this.leg);
   }
 
-  @Watch('value')
   /**
    * Syncs Leg#leg and Leg#value
    */
+  @Watch('value')
   onValueChanged() {
     this.leg = this.value;
   }
