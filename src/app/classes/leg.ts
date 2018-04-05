@@ -32,7 +32,9 @@ export default class Leg {
       value = Number(this.cash);
     }
     this.cards.forEach((card) => {
-      value += Number(card.marketPrice);
+      if (!isNaN(Number(card.marketPrice))) {
+        value += Number(card.marketPrice) * card.quantity;
+      }
     });
     return value;
   }
