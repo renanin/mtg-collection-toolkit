@@ -10,4 +10,5 @@ export default interface state {
     useLatest: boolean;
     quickAdd: boolean;
   };
+  activeTrade: number;
 }

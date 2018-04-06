@@ -8,6 +8,7 @@ import BecomesCard from '../../classes/interfaces/becomesCard';
 import Card from '../../classes/card';
 import CardSearchResult from '../../classes/interfaces/cardSearchResult';
 import Leg from '../../classes/leg';
+import Trade from '../../classes/trade';
 
 @Component({})
 
@@ -27,11 +28,11 @@ export default class LegComponent extends Vue {
   @Prop() title: string;
 
   /**
-   * The leg
+   * The trade
    * @name LegComponent#value
-   * @type {Leg}
+   * @type {Trade}
    */
-  @Prop() value: Leg;
+  @Prop() value: Trade;
 
   /**
    * Whether this leg has the greater value or not
@@ -39,6 +40,13 @@ export default class LegComponent extends Vue {
    * @type {boolean}
    */
   @Prop() greater: boolean;
+
+  /**
+   * The index of this leg in the trade
+   * @name LegComponent#index
+   * @type {number}
+   */
+  @Prop() index: number;
 
   @Mutation linkCardInfo;
 
@@ -101,7 +109,8 @@ export default class LegComponent extends Vue {
    */
   updateCash(amount: number) {
     this.leg.cash = amount;
-    this.$emit('input', this.leg);
+    this.value.legs[this.index] = this.leg;
+    this.$emit('input', this.value);
   }
 
   /**
@@ -199,6 +208,6 @@ export default class LegComponent extends Vue {
    */
   @Watch('value')
   onValueChanged() {
-    this.leg = this.value;
+    this.leg = this.value.legs[this.index];
   }
 }
