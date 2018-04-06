@@ -39,6 +39,14 @@ export default class Leg {
     return Math.round(value * 100) / 100;
   }
 
+  get cashString(): string {
+    if (Number(this.cash) === 0) {
+      return '';
+    } else {
+      return `${this.cash}`;
+    }
+  }
+
   /**
    * @constructs
    */

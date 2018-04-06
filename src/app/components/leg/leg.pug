@@ -17,7 +17,7 @@ md-card
     md-field
       md-icon attach_money
       label Cash Amount
-      md-input(@input="updateCash",type="number")
+      md-input(@input="updateCash",type="number",:value="leg.cashString")
     md-autocomplete(v-model="becomingCard.name",:md-options="searchResults",@md-changed="autocomplete",@md-selected="fetchPrintings(becomingCard)")
       label Card Name
     .fields(v-if="stage > 0")

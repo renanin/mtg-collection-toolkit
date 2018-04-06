@@ -6,7 +6,7 @@
         md-icon add
   .trades-list
     md-card(md-with-hover,v-for="(trade, key) in trades",:key="key",@click.native="edit(key)")
-      .trade-inner
+      md-ripple.trade-inner
         div(v-for="(leg, key) in trade.legs",:key="key")
           .md-title ${{leg.value}}
           .md-subhead ${{leg.cash}} cash - ${{leg.value - leg.cash}} cards
