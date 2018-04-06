@@ -6,4 +6,8 @@ export default interface state {
     [id: string]: CardResult;
   };
   trades: Trade[];
+  config: {
+    useLatest: boolean;
+    quickAdd: boolean;
+  };
 }

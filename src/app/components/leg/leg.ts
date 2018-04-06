@@ -1,5 +1,5 @@
-import { Mutation } from 'vuex-class';
 import { Prop, Watch } from 'vue-property-decorator';
+import { State, Mutation } from 'vuex-class';
 import Component from 'vue-class-component';
 import Vue from 'vue';
 import request from 'request';
@@ -17,6 +17,8 @@ import Leg from '../../classes/leg';
  * @extends Vue
  */
 export default class LegComponent extends Vue {
+  @State config;
+
   /**
    * The title to be displayed in the top toolbar
    * @name LegComponent#title
@@ -77,22 +79,6 @@ export default class LegComponent extends Vue {
    * @private
    */
   private searchResults: Promise<string[]> = new Promise((resolve) => resolve([]));
-
-  /**
-   * Config option to automatically select the latest printing of a card
-   * @name LegComponent#useLatest
-   * @type {boolean}
-   * @private
-   */
-  private useLatest: boolean = true;
-
-  /**
-   * Config option to automatically add the card after its name is entered
-   * @name LegComponent#quickAdd
-   * @type {boolean}
-   * @private
-   */
-  private quickAdd: boolean = false;
 
   /**
    * The total value of the cash and cards in the leg
@@ -167,10 +153,10 @@ export default class LegComponent extends Vue {
           });
           card.printings = printings;
           this.stage += 1;
-          if (this.useLatest || this.quickAdd) {
+          if (this.config.useLatest || this.config.quickAdd) {
             card.printing = printings[0].code;
             this.stage += 1;
-            if (this.quickAdd) {
+            if (this.config.quickAdd) {
               this.addCard();
             }
           }
