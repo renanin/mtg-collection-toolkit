@@ -135,7 +135,8 @@ export default class LegComponent extends Vue {
       marketPrice: 0,
     };
     this.stage = 0;
-    this.$emit('input', this.leg);
+    this.value.legs[this.index] = this.leg;
+    this.$emit('input', this.value);
     this.$forceUpdate();
   }
 
