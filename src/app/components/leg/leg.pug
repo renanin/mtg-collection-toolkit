@@ -45,7 +45,10 @@ md-card
         md-table-cell {{$store.state.cardInfo[card.id].set_name}}
         md-table-cell {{card.quantity}}
         md-table-cell NM
-        md-table-cell ${{card.marketPrice}}
+        md-table-cell
+          md-field(md-inline)
+            label Price
+            md-input(v-model="card.marketPrice",md-inline)
         md-table-cell
           md-button.md-accent.md-icon-button(@click="deleteCard(key)")
             md-icon delete
