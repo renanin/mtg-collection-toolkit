@@ -1,10 +1,12 @@
 import request from 'request';
 import BecomesCard from '../../classes/interfaces/becomesCard';
+import MarketPriceSearchResult from '../../classes/interfaces/marketPriceSearchResult';
 
 /**
  * Fetches the current TCGPlayer price of the supplied card
+ * @returns {Promise<number>} A promise that will resolve with the price of the card
  */
-export default function fetchPrice({ dispatch, state }, card: BecomesCard) {
+export default function fetchPrice({ dispatch, state }, card: BecomesCard): Promise<number> {
   return new Promise(async (resolve, reject) => {
     const sku = await dispatch('fetchSKU', card);
     request.get(
@@ -19,8 +21,7 @@ export default function fetchPrice({ dispatch, state }, card: BecomesCard) {
           reject(err);
         } else {
           try {
-            const result = JSON.parse(body);
-            console.log(result.results[0].price);
+            const result: MarketPriceSearchResult = JSON.parse(body);
             resolve(result.results[0].price);
           } catch (e) {
             reject(e);

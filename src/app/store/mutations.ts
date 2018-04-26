@@ -1,5 +1,6 @@
 import CardResult from '../classes/interfaces/cardResult';
 import Trade from '../classes/trade';
+import TransactionPayload from '../classes/interfaces/transactionPayload';
 import state from './state';
 
 export default {
@@ -30,12 +31,9 @@ export default {
   /**
    * Updates information about the specified transaction
    * @param {state} state The Vuex state
-   * @param {Object} payload The index in state.trades & the new trade object
+   * @param {TransactionPayload} payload The index in state.trades & the new trade object
    */
-  setTransaction(state: state, payload: {
-    index: number,
-    trade: Trade,
-  }) {
+  setTransaction(state: state, payload: TransactionPayload) {
     state.trades[payload.index] = payload.trade;
   },
   /**

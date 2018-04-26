@@ -11,7 +11,11 @@ import Trade from '../../classes/trade';
  * @extends Vue
  */
 export default class Trades extends Vue {
-  @Mutation setActiveTrade;
+  /**
+   * Sets the specified index for editing
+   * @param {number} index The index of the trade
+   */
+  @Mutation setActiveTrade: (index: number) => void;
 
   /**
    * A list of trades in the memory

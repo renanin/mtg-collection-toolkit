@@ -7,8 +7,10 @@ import request from 'request';
 import AutocompleteResults from '../../classes/interfaces/autocompleteResults';
 import BecomesCard from '../../classes/interfaces/becomesCard';
 import Card from '../../classes/card';
+import CardResult from '../../classes/interfaces/cardResult';
 import CardSearchResult from '../../classes/interfaces/cardSearchResult';
 import CategoryResult from '../../classes/interfaces/categoryResult';
+import Config from '../../classes/interfaces/config';
 import Leg from '../../classes/leg';
 import Trade from '../../classes/trade';
 
@@ -20,8 +22,6 @@ import Trade from '../../classes/trade';
  * @extends Vue
  */
 export default class LegComponent extends Vue {
-  @State config;
-
   /**
    * The title to be displayed in the top toolbar
    * @name LegComponent#title
@@ -50,10 +50,39 @@ export default class LegComponent extends Vue {
    */
   @Prop() index: number;
 
+  /**
+   * The global configuration state
+   * @name LegComponent#config
+   * @type {Config}
+   */
+  @State config: Config;
+
+  /**
+   * TCGPlayer access token
+   * @name LegComponent#accessToken
+   * @type {string}
+   */
   @State accessToken: string;
+
+  /**
+   * A list of TCGPlayer categories
+   * @name LegComponent#categories
+   * @type {CategoryResult[]}
+   */
   @State categories: CategoryResult[];
-  @Mutation linkCardInfo;
-  @Action fetchPrice;
+
+  /**
+   * Links local card info with the Vuex store
+   * @param {CardResult} printing The card printing
+   */
+  @Mutation linkCardInfo: (printing: CardResult) => void;
+
+  /**
+   * Fetches the current TCGPlayer mid price for the specified card
+   * @param {BecomesCard} card The card to use
+   * @returns {number} The price of the card
+   */
+  @Action fetchPrice: (card: BecomesCard) => number;
 
   /**
    * A local copy of the leg being edited

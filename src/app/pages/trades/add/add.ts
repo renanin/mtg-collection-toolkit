@@ -4,6 +4,7 @@ import Vue from 'vue';
 import { Watch } from 'vue-property-decorator';
 import Leg from '../../../components/leg/leg.vue';
 import Trade from '../../../classes/trade';
+import TransactionPayload from '../../../classes/interfaces/transactionPayload';
 
 @Component({
   components: {
@@ -18,9 +19,23 @@ import Trade from '../../../classes/trade';
  * @see Trade
  */
 export default class Add extends Vue {
-  @Mutation addTransaction;
-  @Mutation setActiveTrade;
-  @Mutation setTransaction;
+  /**
+   * Adds a transaction to the state
+   * @param {Trade} trade The new trade
+   */
+  @Mutation addTransaction: (trade: Trade) => void;
+
+  /**
+   * Sets the specified index for editing
+   * @param {number} index The index of the trade
+   */
+  @Mutation setActiveTrade: (index: number) => void;
+
+  /**
+   * Updates information about the specified transaction
+   * @param {TransactionPayload} payload The index in state.trades & the new trade object
+   */
+  @Mutation setTransaction: (payload: TransactionPayload) => void;
 
   /**
    * The index of the trade being edited
@@ -62,6 +77,9 @@ export default class Add extends Vue {
    */
   private backDialog: boolean = false;
 
+  /**
+   * Saves the transaction to the memory
+   */
   save() {
     this.setTransaction({
       index: this.index,
@@ -75,6 +93,9 @@ export default class Add extends Vue {
     this.updateTrade();
   }
 
+  /**
+   * Coordinates the local state with the global state
+   */
   @Watch('index')
   updateTrade() {
     if (this.index < 0) {

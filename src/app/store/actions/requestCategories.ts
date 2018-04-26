@@ -6,6 +6,7 @@ import CategorySearchResults from '../../classes/interfaces/categorySearchResult
 
 /**
  * Gets a new list of categories from TCGPlayer & caches it
+ * @returns {Promise<CategoryResult[]>} A promise that will resolve with a list of categories from the API
  */
 export default function requestCategories({ state: state }): Promise<CategoryResult[]> {
   return new Promise((resolve, reject) => {

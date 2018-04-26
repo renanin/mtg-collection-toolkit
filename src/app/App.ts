@@ -5,6 +5,7 @@ import credentials from '../../credentials.json';
 import router from '../bootstrap';
 import store from './store';
 import request from 'request';
+import CategoryResult from './classes/interfaces/categoryResult';
 
 @Component({
   router,
@@ -17,11 +18,22 @@ import request from 'request';
  * @extends Vue
  */
 export default class App extends Vue {
-  @Mutation setAccessToken;
-  @Action fetchCategories;
+  /**
+   * Sets the TCGPlayer access token for the session
+   * @param {string} token The access token
+   */
+  @Mutation setAccessToken: (token: string) => void;
 
-  created() {
-    // Fetch access token
+  /**
+   * Fetches TCGPlayer category information from the cache or API
+   * @returns {Promise<CategoryResult[]>} A promise that will resolve with the list of categories
+   */
+  @Action fetchCategories: () => Promise<CategoryResult[]>;
+
+  /**
+   * Fetches the access token
+   */
+  fetchAccessToken() {
     request.post(
       {
         url: 'https://api.tcgplayer.com/token',

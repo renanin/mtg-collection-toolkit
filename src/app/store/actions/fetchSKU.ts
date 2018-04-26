@@ -5,6 +5,7 @@ import SKUSearchResults from '../../classes/interfaces/skuSearchResults';
 
 /**
  * Gets the TCGPlayer SKU for the specified card
+ * @returns {Promise<number>} A promise that will resolve with the SKU
  */
 export default function fetchSKU({ state }, card: BecomesCard): Promise<number> {
   return new Promise(async (resolve, reject) => {
