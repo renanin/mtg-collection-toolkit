@@ -1,12 +1,13 @@
 {
   "name": "mtg-collection-toolkit",
-  "version": "0.56.2",
+  "version": "0.58.0",
   "main": "app.js",
   "description": "Manage your Magic: The Gathering collection, trades and more.",
   "author": "nmde <nmde@protonmail.com>",
   "private": true,
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "gource": "gource -s 3 -a 1 --start-date '2018-03-01'"
   },
   "devDependencies": {
     "@types/node": "^9.3.0",
@@ -19,6 +20,7 @@
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.6.1",
     "file-loader": "^0.11.2",
+    "json-loader": "^0.5.7",
     "pug": "^2.0.0-rc.2",
     "style-loader": "^0.18.2",
     "ts-loader": "^3.1.1",

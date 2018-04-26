@@ -100,3 +100,6 @@ cache/
 
 # My collection
 userdata/
+
+# TCGPlayer credentials
+credentials.json

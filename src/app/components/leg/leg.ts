@@ -1,12 +1,14 @@
+import { Action, Mutation, State } from 'vuex-class';
 import { Prop, Watch } from 'vue-property-decorator';
-import { State, Mutation } from 'vuex-class';
 import Component from 'vue-class-component';
 import Vue from 'vue';
+import async from 'async';
 import request from 'request';
 import AutocompleteResults from '../../classes/interfaces/autocompleteResults';
 import BecomesCard from '../../classes/interfaces/becomesCard';
 import Card from '../../classes/card';
 import CardSearchResult from '../../classes/interfaces/cardSearchResult';
+import CategoryResult from '../../classes/interfaces/categoryResult';
 import Leg from '../../classes/leg';
 import Trade from '../../classes/trade';
 
@@ -48,7 +50,10 @@ export default class LegComponent extends Vue {
    */
   @Prop() index: number;
 
+  @State accessToken: string;
+  @State categories: CategoryResult[];
   @Mutation linkCardInfo;
+  @Action fetchPrice;
 
   /**
    * A local copy of the leg being edited
@@ -119,10 +124,10 @@ export default class LegComponent extends Vue {
   addCard() {
     let id = '';
     let price = 0;
-    this.becomingCard.printings.forEach((printing) => {
+    this.becomingCard.printings.forEach(async (printing) => {
       if (printing.code === this.becomingCard.printing) {
         id = printing.id;
-        price = printing.price;
+        price = await this.fetchPrice(this.becomingCard);
       }
     });
     const card = new Card(id, this.becomingCard.quantity, this.becomingCard.condition, price);
@@ -158,7 +163,7 @@ export default class LegComponent extends Vue {
             printings.push({
               code: printing.set,
               id: printing.id,
-              price: Number(printing.usd),
+              price: 0,
             });
           });
           card.printings = printings;

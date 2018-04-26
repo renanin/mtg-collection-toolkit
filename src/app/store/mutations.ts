@@ -27,10 +27,23 @@ export default {
   setActiveTrade(state: state, index: number) {
     state.activeTrade = index;
   },
+  /**
+   * Updates information about the specified transaction
+   * @param {state} state The Vuex state
+   * @param {Object} payload The index in state.trades & the new trade object
+   */
   setTransaction(state: state, payload: {
     index: number,
     trade: Trade,
   }) {
     state.trades[payload.index] = payload.trade;
-  }
+  },
+  /**
+   * Sets the TCGPlayer access token for the session
+   * @param {state} state The Vuex state
+   * @param {string} token The access token
+   */
+  setAccessToken(state: state, token: string) {
+    state.accessToken = token;
+  },
 };

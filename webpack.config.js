@@ -9,7 +9,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
-    extensions: ['.js', '.vue', '.ts'],
+    extensions: ['.js', '.vue', '.ts', '.json'],
     alias: {
       vue: 'vue/dist/vue.js',
     },
@@ -40,6 +40,9 @@ module.exports = {
       }, {
         test: /\.(eot|woff|ttf|woff2)$/,
         loader: 'url-loader',
+      }, {
+        test: /\.json$/,
+        loader: 'json-loader',
       },
     ],
   },
