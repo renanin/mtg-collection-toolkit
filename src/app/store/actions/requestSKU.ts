@@ -1,3 +1,4 @@
+import fs from 'fs';
 import request from 'request';
 import SKURequestPayload from '../../classes/interfaces/skuRequestPayload';
 import SKUSearchResults from '../../classes/interfaces/skuSearchResults';
@@ -23,8 +24,14 @@ export default function requestSKU({ state }, payload: SKURequestPayload): Promi
           try {
             const results: SKUSearchResults = JSON.parse(body);
             if (results.totalItems === 1) {
-              // @TODO
-              resolve(results.results[0].productConditions[0].productConditionId);
+              fs.writeFile('cache/skus.json', JSON.stringify(results), (err) => {
+                if (err) {
+                  // @TODO
+                  console.error(err);
+                }
+                // @TODO
+                resolve(results.results[0].productConditions[0].productConditionId);
+              });
             } else {
               // @TODO
             }

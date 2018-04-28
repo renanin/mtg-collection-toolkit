@@ -16,7 +16,6 @@ export default function fetchCategories({ dispatch, state }): Promise<CategoryRe
       } else {
         categories = await read('cache/categories.json', true);
       }
-      console.log(categories);
       resolve(categories);
     });
   });

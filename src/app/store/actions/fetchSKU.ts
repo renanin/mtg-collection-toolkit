@@ -34,9 +34,8 @@ export default function fetchSKU({ dispatch, state }, card: BecomesCard): Promis
           const skus: SKUDictionary = await read('cache/skus.json', true);
           sku = skus[id][card.name];
         }
+        resolve(sku);
       });
-      console.log(`Got SKU: ${sku}`);
-      resolve(sku);
     }
   });
 }
