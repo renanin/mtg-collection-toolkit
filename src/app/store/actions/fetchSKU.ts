@@ -3,6 +3,7 @@ import read from 'read-big-file';
 import request from 'request';
 import BecomesCard from '../../classes/interfaces/becomesCard';
 import CategoryResult from '../../classes/interfaces/tcgplayer/categoryResult';
+import PricePayload from '../../classes/interfaces/pricePayload';
 import SKUDictionary from '../../classes/interfaces/skuDictionary';
 import SKUSearchResults from '../../classes/interfaces/tcgplayer/skuSearchResults';
 
@@ -10,12 +11,12 @@ import SKUSearchResults from '../../classes/interfaces/tcgplayer/skuSearchResult
  * Gets the TCGPlayer SKU for the specified card
  * @returns {Promise<number>} A promise that will resolve with the SKU
  */
-export default function fetchSKU({ dispatch, state }, card: BecomesCard): Promise<number> {
+export default function fetchSKU({ dispatch, state }, payload: PricePayload): Promise<number> {
   return new Promise(async (resolve, reject) => {
     let id;
     const categories = await dispatch('fetchCategories');
     categories.forEach((category: CategoryResult) => {
-      if (typeof category.abbreviation === 'string' && category.abbreviation.toUpperCase() === card.printing.toUpperCase()) {
+      if (typeof category.abbreviation === 'string' && category.abbreviation.toUpperCase() === payload.printing.toUpperCase()) {
         id = category.groupId;
       }
     });
@@ -28,11 +29,11 @@ export default function fetchSKU({ dispatch, state }, card: BecomesCard): Promis
           console.error(err);
           sku = await dispatch('requestSKU', {
             groupId: id,
-            name: card.name,
+            name: payload.name,
           });
         } else {
           const skus: SKUDictionary = await read('cache/skus.json', true);
-          sku = skus[id][card.name];
+          sku = skus[id][payload.name];
         }
         resolve(sku);
       });

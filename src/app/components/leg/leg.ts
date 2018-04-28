@@ -12,6 +12,7 @@ import CardSearchResult from '../../classes/interfaces/scryfall/cardSearchResult
 import CategoryResult from '../../classes/interfaces/tcgplayer/categoryResult';
 import Config from '../../classes/interfaces/config';
 import Leg from '../../classes/leg';
+import PricePayload from '../../classes/interfaces/pricePayload';
 import Trade from '../../classes/trade';
 
 @Component({})
@@ -79,10 +80,10 @@ export default class LegComponent extends Vue {
 
   /**
    * Fetches the current TCGPlayer mid price for the specified card
-   * @param {BecomesCard} card The card to use
+   * @param {PricePayload} payload Payload with card name and printing code
    * @returns {number} The price of the card
    */
-  @Action fetchPrice: (card: BecomesCard) => number;
+  @Action fetchPrice: (payload: PricePayload) => number;
 
   /**
    * A local copy of the leg being edited
@@ -156,10 +157,10 @@ export default class LegComponent extends Vue {
     this.becomingCard.printings.forEach(async (printing) => {
       if (printing.code === this.becomingCard.printing) {
         id = printing.id;
-        price = await this.fetchPrice(this.becomingCard);
+        price = printing.price;
       }
     });
-    const card = new Card(id, this.becomingCard.quantity, this.becomingCard.condition, price);
+    const card = new Card(id, this.becomingCard.quantity, price);
     this.leg.cards.push(card);
     this.becomingCard = {
       name: '',
@@ -187,23 +188,32 @@ export default class LegComponent extends Vue {
         } else {
           const result: CardSearchResult = JSON.parse(body);
           const printings = [];
-          result.data.forEach((printing) => {
-            this.linkCardInfo(printing);
-            printings.push({
-              code: printing.set,
-              id: printing.id,
-              price: 0,
-            });
-          });
-          card.printings = printings;
-          this.stage += 1;
-          if (this.config.useLatest || this.config.quickAdd) {
-            card.printing = printings[0].code;
-            this.stage += 1;
-            if (this.config.quickAdd) {
-              this.addCard();
-            }
-          }
+          async.eachSeries(
+            result.data,
+            async (printing, next) => {
+              this.linkCardInfo(printing);
+              printings.push({
+                code: printing.set,
+                id: printing.id,
+                price: await this.fetchPrice({
+                  name: card.name,
+                  printing: printing.set
+                }),
+              });
+              next();
+            },
+            () => {
+              card.printings = printings;
+              this.stage += 1;
+              if (this.config.useLatest || this.config.quickAdd) {
+                card.printing = printings[0].code;
+                this.stage += 1;
+                if (this.config.quickAdd) {
+                  this.addCard();
+                }
+              }
+            },
+          );
         }
       },
     );
