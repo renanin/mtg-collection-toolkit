@@ -33,7 +33,19 @@ export default function fetchSKU({ dispatch, state }, payload: PricePayload): Pr
           });
         } else {
           const skus: SKUDictionary = await read('cache/skus.json', true);
-          sku = skus[id][payload.name];
+          let found = false;
+          if (skus[id]) {
+            if (skus[id][payload.name]) {
+              sku = skus[id][payload.name];
+              found = true;
+            }
+          }
+          if (!found) {
+            sku = await dispatch('requestSKU', {
+              groupId: id,
+              name: payload.name,
+            });
+          }
         }
         resolve(sku);
       });
