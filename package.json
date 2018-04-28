@@ -1,13 +1,13 @@
 {
   "name": "mtg-collection-toolkit",
-  "version": "0.58.0",
+  "version": "0.58.2",
   "main": "app.js",
   "description": "Manage your Magic: The Gathering collection, trades and more.",
   "author": "nmde <nmde@protonmail.com>",
   "private": true,
   "scripts": {
     "start": "electron .",
-    "gource": "gource -s 3 -a 1 --start-date '2018-03-01'"
+    "gource": "gource -s 3 -a 1"
   },
   "devDependencies": {
     "@types/node": "^9.3.0",

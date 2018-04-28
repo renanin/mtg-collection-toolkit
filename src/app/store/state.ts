@@ -11,5 +11,4 @@ export default interface state {
   config: Config;
   activeTrade: number;
   accessToken: string;
-  categories: CategoryResult[];
 }

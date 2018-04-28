@@ -25,12 +25,6 @@ export default class App extends Vue {
   @Mutation setAccessToken: (token: string) => void;
 
   /**
-   * Fetches TCGPlayer category information from the cache or API
-   * @returns {Promise<CategoryResult[]>} A promise that will resolve with the list of categories
-   */
-  @Action fetchCategories: () => Promise<CategoryResult[]>;
-
-  /**
    * Fetches the access token
    */
   fetchAccessToken() {
@@ -51,7 +45,6 @@ export default class App extends Vue {
           try {
             const res = JSON.parse(body);
             this.setAccessToken(res.access_token);
-            this.fetchCategories();
           } catch (e) {
             // @TODO
             console.error(e);
@@ -59,5 +52,9 @@ export default class App extends Vue {
         }
       },
     );
+  }
+
+  created() {
+    this.fetchAccessToken();
   }
 }

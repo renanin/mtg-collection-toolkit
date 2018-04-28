@@ -14,11 +14,10 @@ export default function fetchCategories({ dispatch, state }): Promise<CategoryRe
         console.error(err);
         categories = await dispatch('requestCategories');
       } else {
-        console.log('Used categories from cache');
         categories = await read('cache/categories.json', true);
       }
-      state.categories = categories;
-      console.log(state.categories);
+      console.log(categories);
+      resolve(categories);
     });
   });
 };
