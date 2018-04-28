@@ -1,7 +1,7 @@
 import fs from 'fs';
 import request from 'request';
 import SKURequestPayload from '../../classes/interfaces/skuRequestPayload';
-import SKUSearchResults from '../../classes/interfaces/skuSearchResults';
+import SKUSearchResults from '../../classes/interfaces/tcgplayer/skuSearchResults';
 
 /**
  * Requests SKU information from TCGPlayer & caches it

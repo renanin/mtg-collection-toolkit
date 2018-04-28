@@ -1,4 +1,4 @@
-import CardResult from '../classes/interfaces/cardResult';
+import CardResult from '../classes/interfaces/scryfall/cardResult';
 import Trade from '../classes/trade';
 import TransactionPayload from '../classes/interfaces/transactionPayload';
 import state from './state';

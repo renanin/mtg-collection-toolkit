@@ -1,5 +1,3 @@
-import Condition from './condition';
-
 /**
  * @interface BecomesCard
  * @desc Contains information that will be used to resolve to a card
@@ -36,13 +34,6 @@ export default interface BecomesCard {
    * @type {string}
    */
   printing?: string;
-
-  /**
-   * The condition of the card
-   * @name BecomesCard#condition
-   * @type {Condition}
-   */
-  condition?: Condition;
 
   /**
    * The ID of the card

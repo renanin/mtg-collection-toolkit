@@ -2,9 +2,9 @@ import fs from 'fs';
 import read from 'read-big-file';
 import request from 'request';
 import BecomesCard from '../../classes/interfaces/becomesCard';
-import CategoryResult from '../../classes/interfaces/categoryResult';
+import CategoryResult from '../../classes/interfaces/tcgplayer/categoryResult';
 import SKUDictionary from '../../classes/interfaces/skuDictionary';
-import SKUSearchResults from '../../classes/interfaces/skuSearchResults';
+import SKUSearchResults from '../../classes/interfaces/tcgplayer/skuSearchResults';
 
 /**
  * Gets the TCGPlayer SKU for the specified card

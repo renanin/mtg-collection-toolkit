@@ -1,8 +1,8 @@
 import async from 'async';
 import fs from 'fs';
 import request from 'request';
-import CategoryResult from "../../classes/interfaces/categoryResult";
-import CategorySearchResults from '../../classes/interfaces/categorySearchResults';
+import CategoryResult from "../../classes/interfaces/tcgplayer/categoryResult";
+import CategorySearchResults from '../../classes/interfaces/tcgplayer/categorySearchResults';
 
 /**
  * Gets a new list of categories from TCGPlayer & caches it

@@ -1,6 +1,6 @@
 import request from 'request';
 import BecomesCard from '../../classes/interfaces/becomesCard';
-import MarketPriceSearchResult from '../../classes/interfaces/marketPriceSearchResult';
+import MarketPriceSearchResult from '../../classes/interfaces/tcgplayer/marketPriceSearchResult';
 
 /**
  * Fetches the current TCGPlayer price of the supplied card

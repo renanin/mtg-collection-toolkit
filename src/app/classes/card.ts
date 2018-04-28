@@ -1,5 +1,3 @@
-import Condition from './interfaces/condition';
-
 /**
  * @class Card
  * @classdesc Represents a card
@@ -20,13 +18,6 @@ export default class Card {
   quantity: number;
 
   /**
-   * The condition of the card
-   * @name Card#condition
-   * @type {Condition}
-   */
-  condition: Condition;
-
-  /**
    * The latest market price of the card
    * @name Card#marketPrice
    * @type {number}
@@ -40,10 +31,9 @@ export default class Card {
    * @prop {Condition} condition The condition of the card
    * @prop {number} marketPrice The base market price of the card
    */
-  constructor(id: string, quantity: number, condition: Condition, marketPrice: number) {
+  constructor(id: string, quantity: number, marketPrice: number) {
     this.id = id;
     this.quantity = quantity;
-    this.condition = condition;
     this.marketPrice = marketPrice;
   }
 }

@@ -1,5 +1,4 @@
-import CardResult from '../classes/interfaces/cardResult';
-import CategoryResult from '../classes/interfaces/categoryResult';
+import CardResult from '../classes/interfaces/scryfall/cardResult';
 import Config from '../classes/interfaces/config';
 import Trade from '../classes/trade';
 

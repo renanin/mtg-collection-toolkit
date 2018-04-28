@@ -1,6 +1,6 @@
 import fs from 'fs';
 import read from 'read-big-file';
-import CategoryResult from '../../classes/interfaces/categoryResult';
+import CategoryResult from '../../classes/interfaces/tcgplayer/categoryResult';
 
 /**
  * Fetches TCGPlayer category information from the cache or API

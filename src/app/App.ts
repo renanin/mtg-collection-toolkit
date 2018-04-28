@@ -5,7 +5,7 @@ import credentials from '../../credentials.json';
 import router from '../bootstrap';
 import store from './store';
 import request from 'request';
-import CategoryResult from './classes/interfaces/categoryResult';
+import CategoryResult from './classes/interfaces/tcgplayer/categoryResult';
 
 @Component({
   router,
