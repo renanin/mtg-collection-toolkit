@@ -13,42 +13,36 @@ import SKUSearchResults from '../../classes/interfaces/tcgplayer/skuSearchResult
  */
 export default function fetchSKU({ dispatch, state }, payload: PricePayload): Promise<number> {
   return new Promise(async (resolve, reject) => {
-    let id;
-    const categories = await dispatch('fetchCategories');
-    categories.forEach((category: CategoryResult) => {
-      if (typeof category.abbreviation === 'string' && category.abbreviation.toUpperCase() === payload.printing.toUpperCase()) {
-        id = category.groupId;
-      }
-    });
-    if (!id) {
-      reject('No id');
-    } else {
+    try {
+      let id = await dispatch('getCategoryID', payload);
       let sku: number;
       fs.stat('cache/skus.json', async (err) => {
         if (err) {
           console.error(err);
           sku = await dispatch('requestSKU', {
             groupId: id,
-            name: payload.name,
+            name: payload.card.name,
           });
         } else {
           const skus: SKUDictionary = await read('cache/skus.json', true);
           let found = false;
           if (skus[id]) {
-            if (skus[id][payload.name]) {
-              sku = skus[id][payload.name];
+            if (skus[id][payload.card.name]) {
+              sku = skus[id][payload.card.name];
               found = true;
             }
           }
           if (!found) {
             sku = await dispatch('requestSKU', {
               groupId: id,
-              name: payload.name,
+              name: payload.card.name,
             });
           }
         }
         resolve(sku);
       });
+    } catch (e) {
+      reject(e);
     }
   });
 }

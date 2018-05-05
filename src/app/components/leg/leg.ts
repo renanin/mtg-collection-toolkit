@@ -11,6 +11,7 @@ import CardResult from '../../classes/interfaces/scryfall/cardResult';
 import CardSearchResult from '../../classes/interfaces/scryfall/cardSearchResult';
 import CategoryResult from '../../classes/interfaces/tcgplayer/categoryResult';
 import Config from '../../classes/interfaces/config';
+import ErrorMessage from '../../classes/interfaces/errorMessage';
 import Leg from '../../classes/leg';
 import PricePayload from '../../classes/interfaces/pricePayload';
 import Trade from '../../classes/trade';
@@ -190,26 +191,39 @@ export default class LegComponent extends Vue {
           const printings = [];
           async.eachSeries(
             result.data,
-            async (printing, next) => {
+            async (printing: CardResult, next) => {
               this.linkCardInfo(printing);
-              printings.push({
-                code: printing.set,
-                id: printing.id,
-                price: await this.fetchPrice({
-                  name: card.name,
-                  printing: printing.set
-                }),
-              });
-              next();
+              try {
+                printings.push({
+                  price: await this.fetchPrice({
+                    card: printing,
+                    printing: printing.set,
+                  }),
+                  code: printing.set,
+                  id: printing.id,
+                });
+                next();
+              } catch (e) {
+                const error = <ErrorMessage>e;
+                if (error.code === 1) {
+                  next(error.message);
+                } else {
+                  next(e);
+                }
+              }
             },
-            () => {
-              card.printings = printings;
-              this.stage += 1;
-              if (this.config.useLatest || this.config.quickAdd) {
-                card.printing = printings[0].code;
+            (err) => {
+              if (err) {
+                console.error(err);
+              } else {
+                card.printings = printings;
                 this.stage += 1;
-                if (this.config.quickAdd) {
-                  this.addCard();
+                if (this.config.useLatest || this.config.quickAdd) {
+                  card.printing = printings[0].code;
+                  this.stage += 1;
+                  if (this.config.quickAdd) {
+                    this.addCard();
+                  }
                 }
               }
             },
