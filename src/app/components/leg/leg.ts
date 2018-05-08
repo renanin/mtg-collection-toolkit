@@ -194,6 +194,7 @@ export default class LegComponent extends Vue {
             async (printing: CardResult, next) => {
               this.linkCardInfo(printing);
               try {
+                console.log(`Getting pricing information for ${printing.set}`);
                 printings.push({
                   price: await this.fetchPrice({
                     card: printing,

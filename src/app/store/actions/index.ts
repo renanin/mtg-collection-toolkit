@@ -4,6 +4,7 @@ import fetchSKU from './fetchSKU';
 import getCategoryID from './getCategoryID';
 import requestCategories from './requestCategories';
 import requestSKU from './requestSKU';
+import requestSetCodeMap from './requestSetCodeMap';
 
 export default {
   fetchCategories,
@@ -12,4 +13,5 @@ export default {
   getCategoryID,
   requestCategories,
   requestSKU,
+  requestSetCodeMap,
 };
