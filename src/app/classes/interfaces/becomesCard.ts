@@ -1,3 +1,5 @@
+import Printing from './printing';
+
 /**
  * @interface BecomesCard
  * @desc Contains information that will be used to resolve to a card
@@ -20,13 +22,9 @@ export default interface BecomesCard {
   /**
    * The possible printings and IDs of the card
    * @name BecomesCard#printings
-   * @type {Object[]}
+   * @type {Printing[]}
    */
-  printings: {
-    code: string;
-    id: string;
-    price: number;
-  }[];
+  printings: Printing[];
 
   /**
    * The actual printing of the card

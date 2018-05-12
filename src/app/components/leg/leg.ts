@@ -15,6 +15,7 @@ import Config from '../../classes/interfaces/config';
 import ErrorMessage from '../../classes/interfaces/errorMessage';
 import Leg from '../../classes/leg';
 import PricePayload from '../../classes/interfaces/pricePayload';
+import Printing from '../../classes/interfaces/printing';
 import Trade from '../../classes/trade';
 
 @Component({})
@@ -156,25 +157,41 @@ export default class LegComponent extends Vue {
   addCard() {
     let id = '';
     let price = 0;
-    this.becomingCard.printings.forEach(async (printing) => {
-      if (printing.code === this.becomingCard.printing) {
-        id = printing.id;
-        price = printing.price;
-      }
-    });
-    const card = new Card(id, this.becomingCard.quantity, price);
-    this.leg.cards.push(card);
-    this.becomingCard = {
-      name: '',
-      quantity: 1,
-      printings: [],
-      id: '',
-      marketPrice: 0,
-    };
-    this.stage = 0;
-    this.value.legs[this.index] = this.leg;
-    this.$emit('input', this.value);
-    this.$forceUpdate();
+    let searching = true;
+    let i = 0;
+    async.whilst(
+      () => searching,
+      async (nextPrinting) => {
+        const printing = this.becomingCard.printings[i];
+        i += 1;
+        if (printing.code === this.becomingCard.printing) {
+          id = printing.id;
+          price = await this.fetchPrice({
+            card: this.becomingCard,
+            printing,
+          });
+          searching = false;
+          nextPrinting();
+        } else {
+          nextPrinting();
+        }
+      },
+      () => {
+        const card = new Card(id, this.becomingCard.quantity, price);
+        this.leg.cards.push(card);
+        this.becomingCard = {
+          name: '',
+          quantity: 1,
+          printings: [],
+          id: '',
+          marketPrice: 0,
+        };
+        this.stage = 0;
+        this.value.legs[this.index] = this.leg;
+        this.$emit('input', this.value);
+        this.$forceUpdate();
+      },
+    );
   }
 
   /**
@@ -196,12 +213,10 @@ export default class LegComponent extends Vue {
               this.linkCardInfo(printing);
               try {
                 printings.push({
-                  price: await this.fetchPrice({
-                    card: printing,
-                    printing: printing.set,
-                  }),
+                  price: 0,
                   code: printing.set,
                   id: printing.id,
+                  tcgp: printing.purchase_uris.tcgplayer,
                 });
                 next();
               } catch (e) {

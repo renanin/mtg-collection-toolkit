@@ -14,7 +14,7 @@ import SKUSearchResults from '../../classes/interfaces/tcgplayer/skuSearchResult
  */
 export default function fetchPrice({ dispatch, state }, payload: PricePayload): Promise<number> {
   return new Promise(async (resolve, reject) => {
-    console.group(`Fetching price for "${payload.card.name}" in ${payload.printing}...`);
+    console.group(`Fetching price for "${payload.card.name}" in ${payload.printing.name}...`);
     const categories = <CategoryResult[]>await (() => {
       return new Promise((resolveCategories) => {
         console.log('Attempting to read categories from cache...');
@@ -33,9 +33,9 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
       const id = <number>await (() => {
         return new Promise(async (resolveID, rejectID) => {
           let found = false;
-          console.group(`Search for group ID for ${payload.printing} in category list...`);
+          console.group(`Search for group ID for ${payload.printing.code} in category list...`);
           categories.forEach((category) => {
-            if (typeof category.abbreviation === 'string' && category.abbreviation.toUpperCase() === payload.printing.toUpperCase()) {
+            if (typeof category.abbreviation === 'string' && category.abbreviation.toUpperCase() === payload.printing.code.toUpperCase()) {
               console.log(`Found group ID: ${category.groupId}`);
               console.groupEnd();
               found = true;
@@ -57,22 +57,22 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
                   });
               });
             })();
-            if (typeof setCodeMap[payload.printing.toUpperCase()] === 'string') {
-              console.log(`Found category ID in set code map: ${setCodeMap[payload.printing.toUpperCase()]}`);
+            if (typeof setCodeMap[payload.printing.code.toUpperCase()] === 'string') {
+              console.log(`Found category ID in set code map: ${setCodeMap[payload.printing.code.toUpperCase()]}`);
               console.groupEnd();
               console.groupEnd();
               found = true;
-              resolveID(setCodeMap[payload.printing.toUpperCase()]);
+              resolveID(setCodeMap[payload.printing.code.toUpperCase()]);
             } else {
-              console.group(`No match in set code map. Attempting to search by name "${payload.card.set_name}"`);
-              console.log(`Resolving ${payload.card.purchase_uris.tcgplayer}`);
+              console.group(`No match in set code map. Attempting to search by name "${payload.printing.name}"`);
+              console.log(`Resolving ${payload.printing.tcgp}`);
               request(
                 // This makes sure we get the same name TCGPlayer uses
-                payload.card.purchase_uris.tcgplayer,
+                payload.printing.tcgp,
                 (err, res, body) => {
                   if (err) {
                     // Fatal error - No options left
-                    console.error(`Error resolving ${payload.card.purchase_uris.tcgplayer}: ${err}. Could not determine a category ID!`);
+                    console.error(`Error resolving ${payload.printing.tcgp}: ${err}. Could not determine a category ID!`);
                     console.groupEnd();
                     console.groupEnd();
                     console.groupEnd();
@@ -98,7 +98,7 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
                       }
                     });
                     if (!found) {
-                      console.error(`No category ID could be determined for ${payload.printing} / ${setName}.`);
+                      console.error(`No category ID could be determined for ${payload.printing.code} / ${setName}.`);
                       console.groupEnd();
                       console.groupEnd();
                       console.groupEnd();
@@ -133,7 +133,7 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
             console.groupEnd();
             resolveSKU(skus[id][payload.card.name]);
           } else {
-            console.group('No SKU for "${payload.card.name}" in group ${id} found in cache. Requesting TCGPlayer...');
+            console.group(`No SKU for "${payload.card.name}" in group ${id} found in cache. Requesting TCGPlayer...`);
             request.get(
               {
                 url: `http://api.tcgplayer.com/catalog/products?categoryId=1&groupId=${id}&productName=${encodeURIComponent(payload.card.name)}`,

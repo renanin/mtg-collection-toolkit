@@ -1,10 +1,11 @@
-import CardResult from './scryfall/cardResult';
+import BecomesCard from './becomesCard';
+import Printing from './printing';
 
 /**
  * @interface PricePayload
  * @desc Payload for fetchPrice and fetchSKU
  */
 export default interface PricePayload {
-  card: CardResult;
-  printing: string;
+  card: BecomesCard;
+  printing: Printing;
 }
