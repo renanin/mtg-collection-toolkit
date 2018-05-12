@@ -206,7 +206,7 @@ export default class LegComponent extends Vue {
           // @TODO
         } else {
           const result: CardSearchResult = JSON.parse(body);
-          const printings = [];
+          const printings: Printing[] = [];
           async.eachSeries(
             result.data,
             async (printing: CardResult, next) => {
@@ -217,6 +217,7 @@ export default class LegComponent extends Vue {
                   code: printing.set,
                   id: printing.id,
                   tcgp: printing.purchase_uris.tcgplayer,
+                  name: printing.name,
                 });
                 next();
               } catch (e) {

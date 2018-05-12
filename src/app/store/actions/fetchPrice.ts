@@ -1,3 +1,4 @@
+import async from 'async';
 import fs from 'fs';
 import read from 'read-big-file';
 import request from 'request';
@@ -22,10 +23,10 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
           .then((categoriesFromCache) => {
             resolveCategories(categoriesFromCache);
           })
-          .catch((err) => {
+          .catch(async (err) => {
             console.warn(`Error reading categories from cache: ${err}`);
             // Nonfatal error
-            resolveCategories([]);
+            resolveCategories(await dispatch('requestCategories'));
           });
       });
     })();
@@ -46,7 +47,7 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
             console.group('No match in category list. Searching in set code map...');
             const setCodeMap = <SetCodeMap>await (() => {
               return new Promise((resolveSCM) => {
-                read('cache/setCodeMap.json')
+                read('cache/setCodeMap.json', true)
                   .then((map) => {
                     resolveSCM(map);
                   })
@@ -81,30 +82,40 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
                     const setName = res.request.path.replace(/^\/magic\/([a-z\-]+)\/.*$/, '$1').replace(/\-/g, ' ').toUpperCase();
                     console.log(`Determined set name: "${setName}". Searching in category list...`);
                     let found = false;
-                    categories.forEach((category) => {
-                      if (category.name.replace(/[^a-zA-Z\s]/g, '').toUpperCase() === setName) {
-                        console.log(`Found category ID: ${category.groupId}. Writing changes to cache...`);
-                        found = true;
-                        fs.writeFile('cache/setCodeMap.json', JSON.stringify(setCodeMap), (err) => {
-                          if (err) {
-                            console.warn(`Error writing to set code map: ${err}`);
-                          }
-                          // Nonfatal error
+                    let id: number;
+                    async.eachSeries(
+                      categories,
+                      (category: CategoryResult, nextCategory) => {
+                        if (!found && category.name.replace(/[^a-zA-Z\s]/g, '').toUpperCase() === setName) {
+                          found = true;
+                          id = category.groupId;
+                        }
+                        nextCategory();
+                      },
+                      () => {
+                        if (found) {
+                          console.log(`Found category ID: ${id}. Writing changes to cache...`);
+                          setCodeMap[payload.printing.code.toUpperCase()] = id;
+                          fs.writeFile('cache/setCodeMap.json', JSON.stringify(setCodeMap), (err) => {
+                            if (err) {
+                              console.warn(`Error writing to set code map: ${err}`);
+                            }
+                            // Nonfatal error
+                            console.groupEnd();
+                            console.groupEnd();
+                            console.groupEnd();
+                            resolveID(id);
+                          });
+                        } else {
+                          console.error(`No category ID could be determined for ${payload.printing.code} / ${setName}.`);
                           console.groupEnd();
                           console.groupEnd();
                           console.groupEnd();
-                          resolveID(category.groupId);
-                        });
-                      }
-                    });
-                    if (!found) {
-                      console.error(`No category ID could be determined for ${payload.printing.code} / ${setName}.`);
-                      console.groupEnd();
-                      console.groupEnd();
-                      console.groupEnd();
-                      // This message will be displayed in the error popup
-                      rejectID('No pricing information available');
-                    }
+                          // This message will be displayed in the error popup
+                          rejectID('No pricing information available');
+                        }
+                      },
+                    );
                   }
                 },
               );

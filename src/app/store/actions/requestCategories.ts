@@ -10,12 +10,14 @@ import CategorySearchResults from '../../classes/interfaces/tcgplayer/categorySe
  */
 export default function requestCategories({ state: state }): Promise<CategoryResult[]> {
   return new Promise((resolve, reject) => {
+    console.group('Requesting list of category groups from TCGPlayer...');
     let offset = 0;
     let results: CategoryResult[] = [];
     let hasMore = true;
     async.whilst(
       () => hasMore,
       (next) => {
+        console.log('Getting categories...');
         request.get(
           {
             url: `http://api.tcgplayer.com/catalog/categories/1/groups?offset=${offset}`,
@@ -25,19 +27,19 @@ export default function requestCategories({ state: state }): Promise<CategoryRes
           },
           (err, res, body) => {
             if (err) {
+              console.error(`Error getting http://api.tcgplayer.com/catalog/categories/1/groups?offset=${offset}: ${err}`);
+              // Fatal error
               next(err);
             } else {
-              try {
-                const searchResults: CategorySearchResults = JSON.parse(body);
-                offset += 10;
-                results = results.concat(searchResults.results);
-                if (offset > searchResults.totalItems) {
-                  hasMore = false;
-                }
-                next();
-              } catch (e) {
-                next(e);
+              const searchResults: CategorySearchResults = JSON.parse(body);
+              offset += 10;
+              console.log(`Got categories, ${offset} retrieved so far.`);
+              results = results.concat(searchResults.results);
+              if (offset > searchResults.totalItems) {
+                hasMore = false;
+                console.log('Done.');
               }
+              next();
             }
           },
         );
@@ -46,11 +48,14 @@ export default function requestCategories({ state: state }): Promise<CategoryRes
         if (err) {
           reject(err);
         } else {
+          console.log('Writing categories to cache...')
           fs.writeFile('cache/categories.json', JSON.stringify(results), (err) => {
             if (err) {
-              console.error(err);
+              // Nonfatal error
+              console.warn(`Error writing categories to cache: ${err}`);
             }
             resolve(results);
+            console.groupEnd();
           });
         }
       },
