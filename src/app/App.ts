@@ -1,6 +1,7 @@
 import { Action, Mutation } from 'vuex-class';
 import Component from 'vue-class-component';
 import Vue from 'vue';
+import bus from '../bus';
 import credentials from '../../credentials.json';
 import router from '../bootstrap';
 import store from './store';
@@ -23,6 +24,22 @@ export default class App extends Vue {
    * @param {string} token The access token
    */
   @Mutation setAccessToken: (token: string) => void;
+
+  /**
+   * Whether the error message is shown or not
+   * @name LegComponent#showError
+   * @type {boolean}
+   * @private
+   */
+  private showError: boolean = false;
+  
+    /**
+     * The error message
+     * @name LegComponent#error
+     * @type {string}
+     * @private
+     */
+    private error: string = '';
 
   /**
    * Fetches the access token
@@ -56,5 +73,9 @@ export default class App extends Vue {
 
   created() {
     this.fetchAccessToken();
+    bus.$on('error', (message) => {
+      this.error = message;
+      this.showError = true;
+    });
   }
 }

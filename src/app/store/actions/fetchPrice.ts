@@ -102,7 +102,8 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
                       console.groupEnd();
                       console.groupEnd();
                       console.groupEnd();
-                      rejectID('No ID found');
+                      // This message will be displayed in the error popup
+                      rejectID('No pricing information available');
                     }
                   }
                 },

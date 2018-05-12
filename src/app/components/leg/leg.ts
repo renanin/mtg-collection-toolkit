@@ -4,6 +4,7 @@ import Component from 'vue-class-component';
 import Vue from 'vue';
 import async from 'async';
 import request from 'request';
+import bus from '../../../bus';
 import AutocompleteResults from '../../classes/interfaces/scryfall/autocompleteResults';
 import BecomesCard from '../../classes/interfaces/becomesCard';
 import Card from '../../classes/card';
@@ -204,12 +205,9 @@ export default class LegComponent extends Vue {
                 });
                 next();
               } catch (e) {
-                const error = <ErrorMessage>e;
-                if (error.code === 1) {
-                  next(error.message);
-                } else {
-                  next(e);
-                }
+                console.error(e);
+                bus.$emit('error', `Error getting price for "${printing.set_name}": ${e}`);
+                next();
               }
             },
             (err) => {
