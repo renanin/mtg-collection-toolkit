@@ -217,7 +217,7 @@ export default class LegComponent extends Vue {
                   code: printing.set,
                   id: printing.id,
                   tcgp: printing.purchase_uris.tcgplayer,
-                  name: printing.name,
+                  name: printing.set_name,
                 });
                 next();
               } catch (e) {

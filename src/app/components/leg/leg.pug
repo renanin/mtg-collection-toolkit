@@ -14,7 +14,6 @@ md-card
               md-list-item
                 md-checkbox(v-model="config.quickAdd") Quick Add
   md-card-content
-    p {{leg}}
     md-field
       md-icon attach_money
       label Cash Amount
@@ -24,7 +23,7 @@ md-card
     .fields(v-if="stage > 0")
       md-field
         md-select(v-model="becomingCard.printing",@md-selected="stage += 1")
-          md-option(v-for="(printing, key) in becomingCard.printings",:key="key",:value="printing.code") {{printing.code}}
+          md-option(v-for="(printing, key) in becomingCard.printings",:key="key",:value="printing.code") {{printing.name}}
       .quantity
         md-button.md-primary.md-icon-button(@click="becomingCard.quantity -= 1")
           md-icon remove

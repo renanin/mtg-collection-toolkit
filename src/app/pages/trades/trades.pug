@@ -11,7 +11,6 @@
           .md-title ${{leg.value}}
           .md-subhead ${{leg.cash}} cash - ${{leg.value - leg.cash}} cards
   md-dialog(:md-active.sync="showEditDialog")
-    p {{activeTrade}}
     md-dialog-actions
       md-button(@click="showCancelDialog = true") Cancel
       md-button.md-primary.md-raised(@click="saveTrade()") Save
