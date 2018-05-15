@@ -21,14 +21,6 @@ export default {
     state.trades.push(trade);
   },
   /**
-   * Sets the specified index for editing
-   * @param {state} state The Vuex state
-   * @param {number} index The index of the trade
-   */
-  setActiveTrade(state: state, index: number) {
-    state.activeTrade = index;
-  },
-  /**
    * Updates information about the specified transaction
    * @param {state} state The Vuex state
    * @param {TransactionPayload} payload The index in state.trades & the new trade object

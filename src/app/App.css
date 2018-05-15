@@ -9,3 +9,7 @@ body {
 .red {
   color: #F44336;
 }
+
+.md-menu-content {
+  z-index: 10;
+}

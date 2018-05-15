@@ -8,6 +8,5 @@ export default interface state {
   };
   trades: Trade[];
   config: Config;
-  activeTrade: number;
   accessToken: string;
 }

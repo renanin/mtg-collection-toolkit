@@ -8,8 +8,5 @@ export default [
   }, {
     path: '/trades',
     component: Trades,
-  }, {
-    path: '/trades/add',
-    component: Add,
-  },
+  }
 ];

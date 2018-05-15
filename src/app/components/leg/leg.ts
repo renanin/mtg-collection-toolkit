@@ -279,7 +279,10 @@ export default class LegComponent extends Vue {
   /**
    * Syncs Leg#leg and Leg#value
    */
-  @Watch('value')
+  @Watch('value', {
+    immediate: true,
+    deep: true,
+  })
   onValueChanged() {
     this.leg = this.value.legs[this.index];
   }

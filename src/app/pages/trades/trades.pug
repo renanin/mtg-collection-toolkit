@@ -2,7 +2,7 @@
   md-toolbar
     h1.md-title Trades
     .md-toolbar-section-end
-      router-link.md-raised.md-primary.md-icon-button(tag="md-button",to="/trades/add")
+      md-button.md-raised.md-primary.md-icon-button(@click="newTrade()")
         md-icon add
   .trades-list
     md-card(md-with-hover,v-for="(trade, key) in trades",:key="key",@click.native="edit(key)")
@@ -10,3 +10,17 @@
         div(v-for="(leg, key) in trade.legs",:key="key")
           .md-title ${{leg.value}}
           .md-subhead ${{leg.cash}} cash - ${{leg.value - leg.cash}} cards
+  md-dialog(:md-active.sync="showEditDialog")
+    p {{activeTrade}}
+    md-dialog-actions
+      md-button(@click="showCancelDialog = true") Cancel
+      md-button.md-primary.md-raised(@click="saveTrade()") Save
+    .add-content
+      leg(title="My Items",v-model="activeTrade",:index="0",:greater="activeTrade.isGreater(0)")
+      leg(title="Their Items",v-model="activeTrade",:index="1",:greater="activeTrade.isGreater(1)")
+  md-dialog(:md-active.sync="showCancelDialog")
+    md-dialog-title Close without saving?
+    .close-dialog-content Your changes to this trade have not yet been saved. Are you sure you want to exit?
+    md-dialog-actions
+      md-button.md-danger.md-raised(@click="closeTrade()") Exit
+      md-button.md-primary.md-raised(@click="showCancelDialog = false") Resume Editing

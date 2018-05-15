@@ -16,6 +16,5 @@ export default new Vuex.Store({
       useLatest: true,
       quickAdd: false,
     },
-    activeTrade: -1,
   },
 }) as Store<state>;
