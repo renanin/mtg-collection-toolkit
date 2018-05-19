@@ -90,7 +90,7 @@ export default class Trades extends Vue {
    * Saves the currently open trade to the state
    */
   saveTrade() {
-    if (this.editIndex) {
+    if (typeof this.editIndex === 'number') {
       this.setTransaction({
         trade: this.activeTrade,
         index: this.editIndex,
