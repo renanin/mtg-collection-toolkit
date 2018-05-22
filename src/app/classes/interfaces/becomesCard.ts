@@ -46,4 +46,11 @@ export default interface BecomesCard {
    * @type {number}
    */
   marketPrice: number;
+
+  /**
+   * The condition of the card
+   * @name BecomesCard#condition
+   * @type {string}
+   */
+  condition: string;
 }

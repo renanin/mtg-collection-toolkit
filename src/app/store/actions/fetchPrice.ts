@@ -7,6 +7,7 @@ import CategoryResult from '../../classes/interfaces/tcgplayer/categoryResult';
 import MarketPriceSearchResult from '../../classes/interfaces/tcgplayer/marketPriceSearchResult';
 import PricePayload from '../../classes/interfaces/pricePayload';
 import SetCodeMap from '../../classes/interfaces/setCodeMap';
+import SKUDictionary from '../../classes/interfaces/skuDictionary';
 import SKUSearchResults from '../../classes/interfaces/tcgplayer/skuSearchResults';
 
 /**
@@ -15,7 +16,7 @@ import SKUSearchResults from '../../classes/interfaces/tcgplayer/skuSearchResult
  */
 export default function fetchPrice({ dispatch, state }, payload: PricePayload): Promise<number> {
   return new Promise(async (resolve, reject) => {
-    console.group(`Fetching price for "${payload.card.name}" in ${payload.printing.name}...`);
+    console.group(`Fetching price for ${payload.card.condition} "${payload.card.name}" in ${payload.printing.name}...`);
     const categories = <CategoryResult[]>await (() => {
       return new Promise((resolveCategories) => {
         console.log('Attempting to read categories from cache...');
@@ -126,7 +127,7 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
       const sku = await (() => {
         return new Promise(async (resolveSKU, rejectSKU) => {
           console.group(`Finding SKU for "${payload.card.name}" in group ${id}`);
-          const skus = await (() => {
+          const skus = <SKUDictionary>await (() => {
             return new Promise((resolveSKUs) => {
               read('cache/skus.json', true)
                 .then((skus) => {
@@ -139,12 +140,12 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
                 });
             });
           })();
-          if (skus[id] && skus[id][payload.card.name]) {
-            console.log(`Found SKU: ${skus[id][payload.card.name]}`);
+          if (skus[id] && skus[id][payload.card.name] && skus[id][payload.card.condition]) {
+            console.log(`Found SKU: ${skus[id][payload.card.name][payload.card.condition]}`);
             console.groupEnd();
-            resolveSKU(skus[id][payload.card.name]);
+            resolveSKU(skus[id][payload.card.name][payload.card.condition]);
           } else {
-            console.group(`No SKU for "${payload.card.name}" in group ${id} found in cache. Requesting TCGPlayer...`);
+            console.group(`No SKU for ${payload.card.condition} "${payload.card.name}" in group ${id} found in cache. Requesting TCGPlayer...`);
             request.get(
               {
                 url: `http://api.tcgplayer.com/catalog/products?categoryId=1&groupId=${id}&productName=${encodeURIComponent(payload.card.name)}`,
@@ -155,7 +156,7 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
               (err, res, body) => {
                 if (err) {
                   // Fatal error, no SKU can be determined
-                  console.error(`Could not get SKU for "${payload.card.name}" in group ${id} from TCGPlayer: ${err}`);
+                  console.error(`Could not get SKUs for "${payload.card.name}" in group ${id} from TCGPlayer: ${err}`);
                   console.groupEnd();
                   console.groupEnd();
                   rejectSKU(err);
@@ -164,27 +165,48 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
                   const results: SKUSearchResults = JSON.parse(body);
                   // @TODO: Handle multiple results (is this possible?)
                   if (results.totalItems === 1) {
-                    // @TODO: Different conditions (picks near mint automatically)
-                    const sku = results.results[0].productConditions[0].productConditionId;
-                    console.log(`Determined SKU: ${sku}`);
-                    if (!skus[id]) {
-                      skus[id] = {};
+                    const conditions = results.results[0].productConditions;
+                    let sku;
+                    let foundCondition = false;
+                    for (let i = 0; i < conditions.length; i += 1) {
+                      if (conditions[i].name === payload.card.condition) {
+                        sku = conditions[i].productConditionId;
+                        foundCondition = true;
+                        break;
+                      }
                     }
-                    skus[id][payload.card.name] = sku;
-                    console.log('Writing new SKU to cache...');
-                    fs.writeFile(
-                      'cache/skus.json',
-                      JSON.stringify(skus),
-                      (err) => {
-                        if (err) {
-                          console.warn(`Error writing to cache: ${err}`);
-                        }
-                        console.groupEnd();
-                        console.groupEnd();
-                        // Nonfatal error, we can still resolve the SKU
-                        resolveSKU(sku);
-                      },
-                    );
+                    if (foundCondition) {
+                      console.log(`Determined SKU at ${payload.card.condition}: ${sku}`);
+                      if (!skus[id]) {
+                        skus[id] = {};
+                      }
+                      if (!skus[id][payload.card.name]) {
+                        skus[id][payload.card.name] = {};
+                      }
+                      conditions.forEach((condition) => {
+                        skus[id][payload.card.name][condition.name] = condition.productConditionId;
+                      });
+                      console.log('Writing new SKUs to cache...');
+                      fs.writeFile(
+                        'cache/skus.json',
+                        JSON.stringify(skus),
+                        (err) => {
+                          if (err) {
+                            console.warn(`Error writing to cache: ${err}`);
+                          }
+                          console.groupEnd();
+                          console.groupEnd();
+                          // Nonfatal error, we can still resolve the SKU
+                          resolveSKU(sku);
+                        },
+                      );
+                    } else {
+                      // Fatal error - No SKU can be determined
+                      console.error(`Could not get SKU for "${payload.card.name}" in group ${id} from TCGPlayer: No SKU at ${payload.card.condition} exists!`);
+                      console.groupEnd();
+                      console.groupEnd();
+                      rejectSKU(err);
+                    }
                   }
                 }
               },

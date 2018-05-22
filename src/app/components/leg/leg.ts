@@ -108,6 +108,7 @@ export default class LegComponent extends Vue {
     printings: [],
     id: '',
     marketPrice: 0,
+    condition: 'Near Mint',
   };
 
   /**
@@ -193,6 +194,7 @@ export default class LegComponent extends Vue {
           printings: [],
           id: '',
           marketPrice: 0,
+          condition: 'Near Mint',
         };
         this.stage = 0;
         this.value.legs[this.index] = this.leg;

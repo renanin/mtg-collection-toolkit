@@ -3,7 +3,9 @@
  * @desc Dictionary of SKUs from the cache
  */
 export default interface SKUDictionary {
-  [groupId: number]: {
-    [name: string]: number;
+  [group: string]: {
+    [name: string]: {
+      [condition: string]: number;
+    };
   };
 }

@@ -18,16 +18,28 @@ md-card
       md-input(@input="updateCash",type="number",:value="leg.cashString")
     md-autocomplete(v-model="becomingCard.name",:md-options="searchResults",@md-changed="autocomplete",@md-selected="fetchPrintings(becomingCard)")
       label Card Name
-    .fields(v-if="stage > 0")
-      md-field
-        md-select(v-model="becomingCard.printing",@md-selected="stage += 1")
-          md-option(v-for="(printing, key) in becomingCard.printings",:key="key",:value="printing.code") {{printing.name}}
-      .quantity
-        md-button.md-primary.md-icon-button(@click="becomingCard.quantity -= 1")
-          md-icon remove
-        p {{becomingCard.quantity}}
-        md-button.md-primary.md-icon-button(@click="becomingCard.quantity += 1")
-          md-icon add
+    template(v-if="stage > 0")
+      .fields
+        md-field
+          label Printing
+          md-select(v-model="becomingCard.printing",@md-selected="stage += 1")
+            md-option(v-for="(printing, key) in becomingCard.printings",:key="key",:value="printing.code") {{printing.name}}
+        .quantity
+          md-button.md-primary.md-icon-button(@click="becomingCard.quantity -= 1")
+            md-icon remove
+          p {{becomingCard.quantity}}
+          md-button.md-primary.md-icon-button(@click="becomingCard.quantity += 1")
+            md-icon add
+      .fields
+        md-field
+          label Condition
+          md-select(v-model="becomingCard.condition")
+            md-option(value="Near Mint") Near Mint
+            md-option(value="Lightly Played") Lightly Played
+            md-option(value="Moderately Played") Moderately Played
+            md-option(value="Heavily Played") Heavily Played
+            md-option(value="Damaged") Damaged
+        md-checkbox Foil
     .placeholder.fields-placeholder(v-else)
     md-button.md-raised.md-primary(@click="addCard()",v-if="stage > 1") Add Card
     .placeholder.add-placeholder(v-else)
