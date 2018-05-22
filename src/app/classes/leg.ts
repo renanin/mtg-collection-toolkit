@@ -54,4 +54,15 @@ export default class Leg {
     this.cash = 0;
     this.cards = [];
   }
+
+  /**
+   * Clones the leg
+   * @returns {Leg}
+   */
+  clone(): Leg {
+    const clone = new Leg();
+    clone.cash = this.cash;
+    clone.cards = this.cards
+    return clone;
+  }
 }

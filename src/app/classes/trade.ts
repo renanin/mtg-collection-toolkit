@@ -37,4 +37,16 @@ export default class Trade {
     });
     return !(greatestValue > this.legs[index].value);
   }
+
+  /**
+   * Returns an identical clone of this trade
+   * @return {Trade}
+   */
+  clone(): Trade {
+    const clone = new Trade(0);
+    this.legs.forEach((leg: Leg) => {
+      clone.legs.push(leg.clone());
+    });
+    return clone;
+  }
 }

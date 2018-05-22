@@ -106,7 +106,8 @@ export default class Trades extends Vue {
    * @param {number} key The index of the desired trade
    */
   edit(key: number) {
-    this.activeTrade = this.trades[key];
+    this.activeTrade = this.trades[key].clone();
+    console.log(this.activeTrade);
     this.editIndex = key;    
     this.showEditDialog = true;
   }
