@@ -107,8 +107,16 @@ export default class Trades extends Vue {
    */
   edit(key: number) {
     this.activeTrade = this.trades[key].clone();
-    console.log(this.activeTrade);
-    this.editIndex = key;    
+    this.editIndex = key;
     this.showEditDialog = true;
+  }
+
+  /**
+   * Returns whether the specified leg has the greatest total value
+   * @param {number} index The index of the leg
+   * @returns {boolean}
+   */
+  isGreater(index: number): boolean {
+    return this.activeTrade.isGreater(index);
   }
 }
