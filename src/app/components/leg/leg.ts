@@ -167,10 +167,14 @@ export default class LegComponent extends Vue {
         if (printing.code === this.becomingCard.printing) {
           id = printing.id;
           try {
-            price = await this.fetchPrice({
-              card: this.becomingCard,
-              printing,
-            });
+            if (this.config.autoFetchPrice) {
+              price = await this.fetchPrice({
+                card: this.becomingCard,
+                printing,
+              });
+            } else {
+              price = null;
+            }
           } catch (e) {
             bus.$emit('error', e);
           }
@@ -235,14 +239,9 @@ export default class LegComponent extends Vue {
                 console.error(err);
               } else {
                 card.printings = printings;
-                this.stage += 1;
-                if (this.config.useLatest || this.config.quickAdd) {
-                  card.printing = printings[0].code;
-                  this.stage += 1;
-                  if (this.config.quickAdd) {
-                    this.addCard();
-                  }
-                }
+                // @TODO: Remember last selected printing
+                card.printing = printings[0].code;
+                this.stage += 2;
               }
             },
           );

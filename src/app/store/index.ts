@@ -13,8 +13,7 @@ export default new Vuex.Store({
     cardInfo: {},
     trades: [],
     config: {
-      useLatest: true,
-      quickAdd: false,
+      autoFetchPrice: true,
     },
   },
 }) as Store<state>;
