@@ -112,7 +112,7 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
                           console.groupEnd();
                           console.groupEnd();
                           // This message will be displayed in the error popup
-                          rejectID('No pricing information available');
+                          rejectID(`No pricing information available for ${payload.printing.name}`);
                         }
                       },
                     );

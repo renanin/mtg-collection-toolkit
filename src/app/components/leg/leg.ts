@@ -166,10 +166,14 @@ export default class LegComponent extends Vue {
         i += 1;
         if (printing.code === this.becomingCard.printing) {
           id = printing.id;
-          price = await this.fetchPrice({
-            card: this.becomingCard,
-            printing,
-          });
+          try {
+            price = await this.fetchPrice({
+              card: this.becomingCard,
+              printing,
+            });
+          } catch (e) {
+            bus.$emit('error', e);
+          }
           searching = false;
           nextPrinting();
         } else {
