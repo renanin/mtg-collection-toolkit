@@ -1,6 +1,7 @@
 import { Action, Mutation } from 'vuex-class';
 import Component from 'vue-class-component';
 import Vue from 'vue';
+import fs from 'fs';
 import bus from '../bus';
 import credentials from '../../credentials.json';
 import router from '../bootstrap';
@@ -45,6 +46,7 @@ export default class App extends Vue {
    * Fetches the access token
    */
   fetchAccessToken() {
+    console.group('Fetching access token...');
     request.post(
       {
         url: 'https://api.tcgplayer.com/token',
@@ -56,17 +58,18 @@ export default class App extends Vue {
       },
       (err, res, body) => {
         if (err) {
-          // @TODO
-          console.error(err);
+          console.error(`Error fetching access token: ${err}`);
+          bus.$emit('error', 'Could not connect to TCGPlayer. Pricing information will not be available.');
         } else {
           try {
             const res = JSON.parse(body);
             this.setAccessToken(res.access_token);
           } catch (e) {
-            // @TODO
-            console.error(e);
+            console.error(`Error parsing access token: ${e}`);
+            bus.$emit('error', 'Could not connect to TCGPlayer. Pricing information will not be available.');
           }
         }
+        console.groupEnd();
       },
     );
   }
@@ -76,6 +79,24 @@ export default class App extends Vue {
     bus.$on('error', (message) => {
       this.error = message;
       this.showError = true;
+    });
+    fs.stat('cache', (err, stats) => {
+      if (err) {
+        console.warn(`Error checking validity of cache: ${err}. Attempting to create folder...`);
+        fs.mkdir('cache', (err2) => {
+          if (err2) {
+            console.warn(`Error creating cache folder: ${err2}`);
+          } else{
+            console.log('Created new cache folder');
+          }
+        });
+      } else {
+        if (stats.isDirectory()) {
+          console.log('Cache seems valid');
+        } else  {
+          console.warn('Cache is not a directory!');
+        }
+      }
     });
   }
 }
