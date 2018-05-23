@@ -53,4 +53,11 @@ export default interface BecomesCard {
    * @type {string}
    */
   condition: string;
+
+  /**
+   * Whether the card is foil or not
+   * @name BecomesCard#foil
+   * @type {boolean}
+   */
+  foil: boolean;
 }

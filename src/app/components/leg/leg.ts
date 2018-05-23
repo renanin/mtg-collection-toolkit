@@ -109,6 +109,7 @@ export default class LegComponent extends Vue {
     id: '',
     marketPrice: 0,
     condition: 'Near Mint',
+    foil: false,
   };
 
   /**
@@ -195,6 +196,7 @@ export default class LegComponent extends Vue {
           id: '',
           marketPrice: 0,
           condition: 'Near Mint',
+          foil: false,
         };
         this.stage = 0;
         this.value.legs[this.index] = this.leg;

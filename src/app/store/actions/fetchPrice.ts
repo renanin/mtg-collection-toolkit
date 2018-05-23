@@ -126,7 +126,13 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
       })();
       const sku = await (() => {
         return new Promise(async (resolveSKU, rejectSKU) => {
-          console.group(`Finding SKU for "${payload.card.name}" in group ${id}`);
+          let foilText = '';
+          let targetCondition = payload.card.condition;
+          if (payload.card.foil) {
+            foilText = 'Foil ';
+            targetCondition = `${payload.card.condition} Foil`;
+          }
+          console.group(`Finding SKU for ${foilText}${targetCondition} "${payload.card.name}" in group ${id}`);
           const skus = <SKUDictionary>await (() => {
             return new Promise((resolveSKUs) => {
               read('cache/skus.json', true)
@@ -140,12 +146,12 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
                 });
             });
           })();
-          if (skus[id] && skus[id][payload.card.name] && skus[id][payload.card.condition]) {
-            console.log(`Found SKU: ${skus[id][payload.card.name][payload.card.condition]}`);
+          if (skus[id] && skus[id][payload.card.name] && skus[id][payload.card.name][targetCondition]) {
+            console.log(`Found SKU: ${skus[id][payload.card.name][targetCondition]}`);
             console.groupEnd();
-            resolveSKU(skus[id][payload.card.name][payload.card.condition]);
+            resolveSKU(skus[id][payload.card.name][targetCondition]);
           } else {
-            console.group(`No SKU for ${payload.card.condition} "${payload.card.name}" in group ${id} found in cache. Requesting TCGPlayer...`);
+            console.group(`No SKU for ${foilText}${targetCondition} "${payload.card.name}" in group ${id} found in cache. Requesting TCGPlayer...`);
             request.get(
               {
                 url: `http://api.tcgplayer.com/catalog/products?categoryId=1&groupId=${id}&productName=${encodeURIComponent(payload.card.name)}`,
@@ -156,12 +162,12 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
               (err, res, body) => {
                 if (err) {
                   // Fatal error, no SKU can be determined
-                  console.error(`Could not get SKUs for "${payload.card.name}" in group ${id} from TCGPlayer: ${err}`);
+                  console.error(`Could not get SKUs for ${foilText}${targetCondition} "${payload.card.name}" in group ${id} from TCGPlayer: ${err}`);
                   console.groupEnd();
                   console.groupEnd();
                   rejectSKU(err);
                 } else {
-                  console.log(`Got SKU results for "${payload.card.name}" in group ${id} from TCGPlayer`);
+                  console.log(`Got SKU results for ${foilText}${targetCondition} "${payload.card.name}" in group ${id} from TCGPlayer`);
                   const results: SKUSearchResults = JSON.parse(body);
                   // @TODO: Handle multiple results (is this possible?)
                   if (results.totalItems === 1) {
@@ -169,14 +175,14 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
                     let sku;
                     let foundCondition = false;
                     for (let i = 0; i < conditions.length; i += 1) {
-                      if (conditions[i].name === payload.card.condition) {
+                      if (conditions[i].name === targetCondition) {
                         sku = conditions[i].productConditionId;
                         foundCondition = true;
                         break;
                       }
                     }
                     if (foundCondition) {
-                      console.log(`Determined SKU at ${payload.card.condition}: ${sku}`);
+                      console.log(`Determined SKU at ${foilText}${targetCondition}: ${sku}`);
                       if (!skus[id]) {
                         skus[id] = {};
                       }
@@ -202,10 +208,10 @@ export default function fetchPrice({ dispatch, state }, payload: PricePayload): 
                       );
                     } else {
                       // Fatal error - No SKU can be determined
-                      console.error(`Could not get SKU for "${payload.card.name}" in group ${id} from TCGPlayer: No SKU at ${payload.card.condition} exists!`);
+                      console.error(`Could not get SKU for ${foilText}${targetCondition} "${payload.card.name}" in group ${id} from TCGPlayer: No SKU at ${payload.card.condition} exists!`);
                       console.groupEnd();
                       console.groupEnd();
-                      rejectSKU(err);
+                      rejectSKU(`Could not find price for ${foilText}${targetCondition} ${payload.card.name}`);
                     }
                   }
                 }

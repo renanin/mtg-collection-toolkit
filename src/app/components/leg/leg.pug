@@ -39,7 +39,7 @@ md-card
             md-option(value="Moderately Played") Moderately Played
             md-option(value="Heavily Played") Heavily Played
             md-option(value="Damaged") Damaged
-        md-checkbox Foil
+        md-checkbox(v-model="becomingCard.foil") Foil
     .placeholder.fields-placeholder(v-else)
     md-button.md-raised.md-primary(@click="addCard()",v-if="stage > 1") Add Card
     .placeholder.add-placeholder(v-else)
