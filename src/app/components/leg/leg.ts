@@ -76,12 +76,6 @@ export default class LegComponent extends Vue {
   @State categories: CategoryResult[];
 
   /**
-   * Links local card info with the Vuex store
-   * @param {CardResult} printing The card printing
-   */
-  @Mutation linkCardInfo: (printing: CardResult) => void;
-
-  /**
    * Fetches the current TCGPlayer mid price for the specified card
    * @param {PricePayload} payload Payload with card name and printing code
    * @returns {number} The price of the card
@@ -138,7 +132,7 @@ export default class LegComponent extends Vue {
     let sum = 0;
     sum += Number(this.leg.cash);
     this.leg.cards.forEach((card) => {
-      sum += Number(card.marketPrice);
+      sum += Number(card.price);
     });
     return sum;
   }
@@ -161,6 +155,7 @@ export default class LegComponent extends Vue {
     let price = 0;
     let searching = true;
     let i = 0;
+    let printName = '';
     async.whilst(
       () => searching,
       async (nextPrinting) => {
@@ -168,6 +163,7 @@ export default class LegComponent extends Vue {
         i += 1;
         if (printing.code === this.becomingCard.printing) {
           id = printing.id;
+          printName = printing.name;
           try {
             if (this.config.autoFetchPrice) {
               price = await this.fetchPrice({
@@ -187,8 +183,15 @@ export default class LegComponent extends Vue {
         }
       },
       () => {
-        const card = new Card(id, this.becomingCard.quantity, price);
-        this.leg.cards.push(card);
+        this.leg.cards.push(
+          new Card(
+            this.becomingCard.name,
+            printName,
+            price,
+            this.becomingCard.condition,
+            this.becomingCard.foil,
+          ),
+        );
         this.becomingCard = {
           name: '',
           quantity: 1,
@@ -222,7 +225,6 @@ export default class LegComponent extends Vue {
           async.eachSeries(
             result.data,
             async (printing: CardResult, next) => {
-              this.linkCardInfo(printing);
               try {
                 printings.push({
                   price: 0,

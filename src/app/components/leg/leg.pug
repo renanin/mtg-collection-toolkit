@@ -1,24 +1,24 @@
-md-card
-  md-card-header
-    md-toolbar.md-transparent(md-elevation="0")
-      .md-title {{title}}
-      .md-toolbar-section-end
-        .md-subhead(:class="{ red: greater }") ${{leg.value}}
-        md-menu(md-align-trigger,md-size="auto",md-direction="bottom-end")
-          md-button.md-icon-button(md-menu-trigger)
-            md-icon more_vert
-          md-menu-content
-            md-list
-              md-list-item
-                md-checkbox(v-model="config.autoFetchPrice") Automatically fetch price
-  md-card-content
-    md-field
-      md-icon attach_money
-      label Cash Amount
-      md-input(@input="updateCash",type="number",:value="leg.cashString")
-    md-autocomplete(v-model="becomingCard.name",:md-options="searchResults",@md-changed="autocomplete",@md-selected="fetchPrintings(becomingCard)")
-      label Card Name
-    template(v-if="stage > 0")
+div
+  md-card
+    md-card-header
+      md-toolbar.md-transparent(md-elevation="0")
+        .md-title {{title}}
+        .md-toolbar-section-end
+          .md-subhead(:class="{ red: greater }") ${{leg.value}}
+          md-menu(md-align-trigger,md-size="auto",md-direction="bottom-end")
+            md-button.md-icon-button(md-menu-trigger)
+              md-icon more_vert
+            md-menu-content
+              md-list
+                md-list-item
+                  md-checkbox(v-model="config.autoFetchPrice") Automatically fetch price
+    md-card-content
+      md-field
+        md-icon attach_money
+        label Cash
+        md-input(@input="updateCash",type="number",:value="leg.cashString")
+      md-autocomplete(v-model="becomingCard.name",:md-options="searchResults",@md-changed="autocomplete",@md-selected="fetchPrintings(becomingCard)")
+        label Card Name
       .fields
         md-field
           label Printing
@@ -30,35 +30,28 @@ md-card
           p {{becomingCard.quantity}}
           md-button.md-primary.md-icon-button(@click="becomingCard.quantity += 1")
             md-icon add
-      .fields
-        md-field
-          label Condition
-          md-select(v-model="becomingCard.condition")
-            md-option(value="Near Mint") Near Mint
-            md-option(value="Lightly Played") Lightly Played
-            md-option(value="Moderately Played") Moderately Played
-            md-option(value="Heavily Played") Heavily Played
-            md-option(value="Damaged") Damaged
-        md-checkbox(v-model="becomingCard.foil") Foil
-    .placeholder.fields-placeholder(v-else)
+      md-field
+        label Condition
+        md-select(v-model="becomingCard.condition")
+          md-option(value="Near Mint") Near Mint
+          md-option(value="Lightly Played") Lightly Played
+          md-option(value="Moderately Played") Moderately Played
+          md-option(value="Heavily Played") Heavily Played
+          md-option(value="Damaged") Damaged
+      md-checkbox(v-model="becomingCard.foil") Foil
     md-button.md-raised.md-primary(@click="addCard()",v-if="stage > 1") Add Card
-    .placeholder.add-placeholder(v-else)
-    md-table
-      md-table-row
-        md-table-head Name
-        md-table-head Printing
-        md-table-head Quantity
-        md-table-head Condition
-        md-table-head Price
-      md-table-row(v-for="(card, key) in leg.cards",:key="key")
-        md-table-cell {{$store.state.cardInfo[card.id].name}}
-        md-table-cell {{$store.state.cardInfo[card.id].set_name}}
-        md-table-cell {{card.quantity}}
-        md-table-cell NM
-        md-table-cell
-          md-field(md-inline)
-            label Price
-            md-input(v-model="card.marketPrice",md-inline)
-        md-table-cell
-          md-button.md-accent.md-icon-button(@click="deleteCard(key)")
-            md-icon delete
+  md-table
+    md-table-row
+      md-table-head Name
+      md-table-head Printing
+      md-table-head Condition
+      md-table-head Price
+    md-table-row(v-for="(card, key) in leg.cards",:key="key")
+      md-table-cell {{card.name}}
+      md-table-cell {{card.set}}
+      md-table-cell {{card.condition}}
+        template(v-if="card.foil") /Foil
+      md-table-cell ${{card.price}}
+      md-table-cell
+        md-button.md-accent.md-icon-button(@click="deleteCard(key)")
+          md-icon delete

@@ -32,8 +32,8 @@ export default class Leg {
       value = Number(this.cash);
     }
     this.cards.forEach((card) => {
-      if (!isNaN(Number(card.marketPrice))) {
-        value += Number(card.marketPrice) * card.quantity;
+      if (!isNaN(Number(card.price))) {
+        value += Number(card.price);
       }
     });
     return Math.round(value * 100) / 100;

@@ -4,36 +4,48 @@
  */
 export default class Card {
   /**
-   * The multiverse ID of the card
-   * @name Card#id
+   * The name of the card
+   * @name Card#name
    * @type {string}
    */
-  id: string;
+  name: string;
 
   /**
-   * The quantity of the card
-   * @name Card#quantity
-   * @type {number}
+   * The set code the card was printed in
+   * @name Card#set
+   * @type {string}
    */
-  quantity: number;
+  set: string;
 
   /**
-   * The latest market price of the card
-   * @name Card#marketPrice
+   * The user's price for the card
+   * @name Card#price
    * @type {number}
    */
-  marketPrice: number;
+  price: number;
+
+  /**
+   * The condition of the card
+   * @name Card#condition
+   * @type {string}
+   */
+  condition: string;
+
+  /**
+   * Whether the card is foil or not
+   * @name Card#foil
+   * @type {boolean}
+   */
+  foil: boolean;
 
   /**
    * @constructs
-   * @prop {string} id The ID of the card
-   * @prop {number} quantity The quantity of the card
-   * @prop {Condition} condition The condition of the card
-   * @prop {number} marketPrice The base market price of the card
    */
-  constructor(id: string, quantity: number, marketPrice: number) {
-    this.id = id;
-    this.quantity = quantity;
-    this.marketPrice = marketPrice;
+  constructor(name: string, set: string, price: number, condition: string, foil: boolean) {
+    this.name = name;
+    this.set = set;
+    this.price = price;
+    this.condition = condition;
+    this.foil = foil;
   }
 }

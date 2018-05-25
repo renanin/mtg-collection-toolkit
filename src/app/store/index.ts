@@ -10,7 +10,6 @@ export default new Vuex.Store({
   mutations,
   actions,
   state: {
-    cardInfo: {},
     trades: [],
     config: {
       autoFetchPrice: true,
